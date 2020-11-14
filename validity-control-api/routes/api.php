@@ -21,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResource('products', ProductController::class)->except(['create', 'edit']);
 Route::get('products/search/{barcode}', ProductController::class.'@search')->name('products.search');
+Route::apiResource('shelflifes', ProductController::class)->except(['create', 'edit']);
