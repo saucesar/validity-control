@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ShelfLifeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResource('products', ProductController::class)->except(['create', 'edit']);
 Route::get('products/search/{barcode}', ProductController::class.'@search')->name('products.search');
-Route::apiResource('shelflifes', ProductController::class)->except(['create', 'edit']);
+Route::apiResource('shelflifes', ShelfLifeController::class)->except(['create', 'edit']);
