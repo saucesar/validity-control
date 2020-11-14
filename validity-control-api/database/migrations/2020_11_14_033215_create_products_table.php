@@ -11,7 +11,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('barcode')->unique();
-            $table->string('description')->unique();
+            $table->string('description');
             $table->timestamps();
             $table->softDeletes();
         });
