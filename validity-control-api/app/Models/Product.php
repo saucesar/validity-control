@@ -16,6 +16,12 @@ class Product extends Model
         return [
             'barcode' => $this->barcode,
             'description' => $this->description,
+            'shelflifes' => $this->shelflifes,
         ];
+    }
+
+    public function shelflifes()
+    {
+        return $this->hasMany(ShelfLife::class, 'product_id', 'id');
     }
 }
