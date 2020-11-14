@@ -56,9 +56,14 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if(isset($product)) {
-            $product->update($request->all());
+            $validation = Validator::make($request->all(), $this->rules);
 
-            return response()->json(['message' => 'Product updated!']);
+            if($validation->fails()){
+                return response()->json(['message' => $validation->errors()]);
+            } else {
+                $product->update($request->all());
+                return response()->json(['message' => 'Product updated!']);
+            }
         } else {
             return response()->json(['message' => 'Product not found!'], 404);
         }
@@ -66,7 +71,7 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        $product = Product::find($id);
+        $product = Product::find($id) ?? Product::where('barcode', $id)->first();
 
         if(isset($product)) {
             $product->delete();
