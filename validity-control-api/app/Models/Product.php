@@ -10,4 +10,12 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = ['barcode', 'description'];
+
+    public function toArray()
+    {
+        return [
+            'barcode' => $this->barcode,
+            'description' => $this->description,
+        ];
+    }
 }
