@@ -1,2 +1,2 @@
-# validity-control
-Flutter App and Laravel API for validity control in supermarkets.
+# validity-control-api
+Laravel API for validity control in supermarkets.
