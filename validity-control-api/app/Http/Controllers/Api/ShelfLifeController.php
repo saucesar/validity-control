@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ShelfLife;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 
 class ShelfLifeController extends Controller
 {
@@ -69,4 +70,16 @@ class ShelfLifeController extends Controller
             return response()->json(['message' => 'ShelfLife not found!'], 404);
         }
     }
+
+    public function daysOfValidity($days)
+    {
+        $initialdate = Carbon::now();
+        $finaldate = Carbon::now()->addDays($days);
+        
+        $dates = ShelfLife::whereDate('shelf_lives.date', '>=', $initialdate)
+                          ->whereDate('shelf_lives.date', '<=', $finaldate)
+                          ->get()->toJson();
+        
+        return response($dates);
+    }    
 }
