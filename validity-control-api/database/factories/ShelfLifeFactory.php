@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\ShelfLife;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ShelfLifeFactory extends Factory
@@ -13,7 +14,7 @@ class ShelfLifeFactory extends Factory
     {
         return [
             'amount' => $this->faker->numberBetween(1, 100),
-            'date' => $this->faker->date(),
+            'date' => Carbon::now()->addDays($this->faker->numberBetween(10, 60)),
             'product_id' => $this->faker->numberBetween(1, 30),
         ];
     }
