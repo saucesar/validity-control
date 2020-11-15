@@ -9,15 +9,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use HasFactory, SoftDeletes;
+
     protected $fillable = ['barcode', 'description'];
 
-    public function toArray()
+    public function toArray($withshelflifes = true)
     {
-        return [
+        $array = [
+            'id' => $this->id,
             'barcode' => $this->barcode,
             'description' => $this->description,
-            'shelflifes' => $this->shelflifes,
         ];
+        
+        $withshelflifes ? $array['shelflifes'] = $this->shelflifes->toArray() : '';
+
+        return $array;
     }
 
     public function shelflifes()

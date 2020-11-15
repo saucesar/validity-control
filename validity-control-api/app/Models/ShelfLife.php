@@ -14,11 +14,13 @@ class ShelfLife extends Model
 
     public function toArray()
     {
-        return [
+        $array = [
             'amount' => $this->amount,
             'date' => $this->date,
-            'product_id'=> $this->product_id,
+            'product' => $this->product->toArray(false),
         ];
+
+        return $array;
     }
 
     public function product()
