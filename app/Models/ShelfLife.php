@@ -15,6 +15,7 @@ class ShelfLife extends Model
     public function toArray()
     {
         $array = [
+            'id' => $this->id,
             'amount' => $this->amount,
             'date' => $this->date,
             'product' => $this->product->toArray(false),
