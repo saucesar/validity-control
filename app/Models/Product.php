@@ -12,15 +12,14 @@ class Product extends Model
 
     protected $fillable = ['barcode', 'description'];
 
-    public function toArray($withshelflifes = true)
+    public function toArray()
     {
         $array = [
             'id' => $this->id,
             'barcode' => $this->barcode,
             'description' => $this->description,
+            'shelflifes' => $this->shelflifes->toArray(),
         ];
-        
-        $withshelflifes ? $array['shelflifes'] = $this->shelflifes->toArray() : '';
 
         return $array;
     }
