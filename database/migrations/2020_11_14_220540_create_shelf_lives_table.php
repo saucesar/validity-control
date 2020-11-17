@@ -11,7 +11,7 @@ class CreateShelfLivesTable extends Migration
         Schema::create('shelf_lives', function (Blueprint $table) {
             $table->id();
             $table->integer('amount');
-            $table->timestamp('date');
+            $table->date('date');
             $table->integer('product_id');
             $table->foreign('product_id')->references('id')->on('products');
             $table->timestamps();
