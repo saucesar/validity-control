@@ -22,5 +22,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResource('products', ProductController::class)->except(['create', 'edit']);
 Route::get('products/search/{barcode}', ProductController::class.'@search')->name('products.search');
-Route::get('shelflifes/daysofvalidity/{days}', ShelfLifeController::class.'@daysOfValidity')->name('shelflifes.perDays');
-Route::apiResource('shelflifes', ShelfLifeController::class)->except(['create', 'edit']);
+Route::get('products/daysofvalidity/{days}', ProductController::class.'@daysOfValidity')->name('products.perDays');
+Route::apiResource('shelflifes', ShelfLifeController::class)->except(['create', 'edit', 'update']);
