@@ -6,11 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 
 class ProductController extends Controller
 {
     private $rules = [
         'barcode' => 'required|unique:products|min:8|max:13',
+        'description' => 'required|min:5|max:256',
+    ];
+
+    private $rulesToUpdate = [
+        'barcode' => 'required|min:8|max:13',
         'description' => 'required|min:5|max:256',
     ];
 
@@ -20,7 +26,6 @@ class ProductController extends Controller
     }
     public function store(Request $request)
     {
-        //Request body type URLencoded form data
         $validation = Validator::make($request->all(), $this->rules);
 
         if($validation->fails()){
@@ -56,7 +61,7 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if(isset($product)) {
-            $validation = Validator::make($request->all(), $this->rules);
+            $validation = Validator::make($request->all(), $this->rulesToUpdate);
 
             if($validation->fails()){
                 return response()->json(['message' => $validation->errors()]);
@@ -81,4 +86,18 @@ class ProductController extends Controller
             return response()->json(['message' => 'Product not found!'], 404);
         }
     }
+    
+    public function daysOfValidity($days)
+    {
+        $initialdate = Carbon::now();
+        $finaldate = Carbon::now()->addDays($days);
+        
+        $products = Product::join('shelf_lives', 'products.id', '=', 'shelf_lives.product_id')
+                           ->whereDate('shelf_lives.date', '>=', $initialdate)
+                           ->whereDate('shelf_lives.date', '<=', $finaldate)
+                           ->get(['products.*', 'shelf_lives.date', 'shelf_lives.amount'])
+                           ->toJson();
+        
+        return response($products);
+    }  
 }
