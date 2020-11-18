@@ -29,7 +29,7 @@ class ProductController extends Controller
         $validation = Validator::make($request->all(), $this->rules);
 
         if($validation->fails()){
-            return response()->json(['message' => $validation->errors()]);
+            return response()->json(['message' => $validation->errors()], 404 );
         } else {
             Product::create($request->all());
             return response()->json(['message' => 'Product created!']);
@@ -64,7 +64,7 @@ class ProductController extends Controller
             $validation = Validator::make($request->all(), $this->rulesToUpdate);
 
             if($validation->fails()){
-                return response()->json(['message' => $validation->errors()]);
+                return response()->json(['message' => $validation->errors()], 404);
             } else {
                 $product->update($request->all());
                 return response()->json(['message' => 'Product updated!']);
