@@ -27,7 +27,7 @@ class ProductController extends Controller
         if(isset($request->company_id)){
             return response(Product::where('company_id', $request->company_id)->get()->toJson());            
         } else {
-            return response()->json(['message' => 'Informe a empresa nos query params!'], 404);            
+            return response()->json(['message' => 'Informe a empresa nos query params!'], 400);            
         }
     }
     public function store(Request $request)
@@ -35,14 +35,14 @@ class ProductController extends Controller
         $validation = Validator::make($request->all(), $this->rules);
 
         if($validation->fails()){
-            return response()->json(['message' => $validation->errors()], 404 );
+            return response()->json(['message' => $validation->errors()], 400);
         } else {
             $product = Product::where('company_id', $request->company_id)
                               ->where('barcode', $request->barcode)
                               ->get()->first();
                               
             if(isset($product)){
-                return response()->json(['message' => 'bacorde already exists.'], 404 );
+                return response()->json(['message' => 'bacorde already exists.'], 400);
             } else {
                 Product::create($request->all());
                 return response()->json(['message' => 'Product created!']);                
@@ -57,7 +57,7 @@ class ProductController extends Controller
         if($product->exists()) {
             return response($product->first()->toJson());
         } else {
-            return response()->json(['message' => 'Product not found!'], 404);
+            return response()->json(['message' => 'Product not found!'], 400);
         }
     }
 
@@ -67,7 +67,7 @@ class ProductController extends Controller
         if(isset($product)) {
             return response($product->first()->toJson());
         } else {
-            return response()->json(['message' => 'Product not found!'], 404);
+            return response()->json(['message' => 'Product not found!'], 400);
         }
     }
 
@@ -79,13 +79,13 @@ class ProductController extends Controller
             $validation = Validator::make($request->all(), $this->rulesToUpdate);
 
             if($validation->fails()){
-                return response()->json(['message' => $validation->errors()], 404);
+                return response()->json(['message' => $validation->errors()], 400);
             } else {
                 $product->update($request->all());
                 return response()->json(['message' => 'Product updated!']);
             }
         } else {
-            return response()->json(['message' => 'Product not found!'], 404);
+            return response()->json(['message' => 'Product not found!'], 400);
         }
     }
 
@@ -98,14 +98,14 @@ class ProductController extends Controller
 
             return response()->json(['message' => 'Product deleted!']);
         } else {
-            return response()->json(['message' => 'Product not found!'], 404);
+            return response()->json(['message' => 'Product not found!'], 400);
         }
     }
     
     public function daysOfValidity(Request $request, $days)
     {
         if(!isset( $request->company_id)){
-            return response()->json(['message' => 'company_id is required.']);
+            return response()->json(['message' => 'company_id is required.'], 400);
         }
             
         $initialdate = Carbon::now();
