@@ -10,8 +10,10 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('barcode')->unique();
+            $table->string('barcode');
             $table->string('description');
+            $table->integer('company_id')->nullable();
+            $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
             $table->softDeletes();
         });
