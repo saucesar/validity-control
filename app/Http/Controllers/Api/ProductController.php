@@ -11,18 +11,24 @@ use Illuminate\Support\Carbon;
 class ProductController extends Controller
 {
     private $rules = [
-        'barcode' => 'required|unique:products|min:8|max:13',
+        'barcode' => 'required|min:8|max:13',
         'description' => 'required|min:5|max:256',
+        'company_id' => 'required|numeric|min:1',
     ];
 
     private $rulesToUpdate = [
         'barcode' => 'required|min:8|max:13',
         'description' => 'required|min:5|max:256',
+        'company_id' => 'required|numeric|min:1',
     ];
 
-    public function index()
+    public function index(Request $request)
     {
-        return response(Product::all()->toJson());
+        if(isset($request->company_id)){
+            return response(Product::where('company_id', $request->company_id)->get()->toJson());            
+        } else {
+            return response()->json(['message' => 'Informe a empresa nos query params!'], 404);            
+        }
     }
     public function store(Request $request)
     {
@@ -31,13 +37,22 @@ class ProductController extends Controller
         if($validation->fails()){
             return response()->json(['message' => $validation->errors()], 404 );
         } else {
-            Product::create($request->all());
-            return response()->json(['message' => 'Product created!']);
+            $product = Product::where('company_id', $request->company_id)
+                              ->where('barcode', $request->barcode)
+                              ->get()->first();
+                              
+            if(isset($product)){
+                return response()->json(['message' => 'bacorde already exists.'], 404 );
+            } else {
+                Product::create($request->all());
+                return response()->json(['message' => 'Product created!']);                
+            }
         }
     }
 
-    public function search($barcode){
-        $product = Product::where('barcode', $barcode);
+    public function search(Request $request, $barcode){
+        $product = Product::where('barcode', $barcode)
+                          ->where('company_id', $request->company_id);
 
         if($product->exists()) {
             return response($product->first()->toJson());
@@ -76,7 +91,7 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        $product = Product::find($id) ?? Product::where('barcode', $id)->first();
+        $product = Product::find($id);
 
         if(isset($product)) {
             $product->delete();
@@ -87,12 +102,17 @@ class ProductController extends Controller
         }
     }
     
-    public function daysOfValidity($days)
+    public function daysOfValidity(Request $request, $days)
     {
+        if(!isset( $request->company_id)){
+            return response()->json(['message' => 'company_id is required.']);
+        }
+            
         $initialdate = Carbon::now();
         $finaldate = Carbon::now()->addDays($days);
         
         $products = Product::join('shelf_lives', 'products.id', '=', 'shelf_lives.product_id')
+                           ->where('products.company_id', '=', $request->company_id)
                            ->whereDate('shelf_lives.date', '>=', $initialdate)
                            ->whereDate('shelf_lives.date', '<=', $finaldate)
                            ->get(['products.*', 'shelf_lives.date', 'shelf_lives.amount'])
