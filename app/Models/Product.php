@@ -10,7 +10,7 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['barcode', 'description'];
+    protected $fillable = ['barcode', 'description', 'company_id'];
 
     public function toArray()
     {
@@ -19,6 +19,7 @@ class Product extends Model
             'barcode' => $this->barcode,
             'description' => $this->description,
             'shelflifes' => $this->shelflifes->toArray(),
+            'company_id' => $this->company_id,
         ];
 
         return $array;
@@ -27,5 +28,10 @@ class Product extends Model
     public function shelflifes()
     {
         return $this->hasMany(ShelfLife::class, 'product_id', 'id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 }
