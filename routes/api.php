@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ShelfLifeController;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::apiResource('companies', CompanyController::class)->except(['create', 'edit']);
 Route::apiResource('products', ProductController::class)->except(['create', 'edit']);
 Route::get('products/search/{barcode}', ProductController::class.'@search')->name('products.search');
 Route::get('products/daysofvalidity/{days}', ProductController::class.'@daysOfValidity')->name('products.perDays');
