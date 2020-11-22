@@ -9,9 +9,13 @@ use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Company::all());
+        if(isset($request->user_id)){
+            return response()->json(Company::where('user_id', $request->user_id)->get()->toArray());            
+        } else {
+            return response()->json(['message' => 'user_id is required in query params!'], 400);   
+        }
     }
 
     public function store(Request $request)
@@ -49,8 +53,7 @@ class CompanyController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        
+    {   
         $validation = Validator::make($request->all(), ['name' => 'required|min:5']);
         
         if($validation->fails()){
