@@ -15,13 +15,25 @@ class CompanyController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validation = Validator::make($request->all(), ['name' => 'required|min:5']);
-
+    {        
+        $validation = Validator::make($request->all(), [
+            'name' => 'required|min:5',
+            'user_id' => 'required|min:1|numeric',
+        ]);
+        
         if($validation->fails()){
             return response()->json($validation->errors());
         } else {
-            return response()->json(['message' => 'Company created!']);
+            $company = Company::where('name', $request->name)
+                              ->where('user_id', $request->user_id)
+                              ->get()->first();
+            
+            if(isset($company)){
+                return response()->json(['message' => 'Company name exists!'], 400);   
+            } else {
+                Company::create($request->all());                
+                return response()->json(['message' => 'Company created!']);
+            }
         }
     }
 
@@ -38,13 +50,14 @@ class CompanyController extends Controller
 
     public function update(Request $request, $id)
     {
-        $company = Company::find($id);
         
         $validation = Validator::make($request->all(), ['name' => 'required|min:5']);
         
         if($validation->fails()){
             return response()->json($validation->errors());
         } else { 
+            $company = Company::find($id);
+
             if(isset($company)){
                 $company->update($request->all());
                 return response()->json(['Company updated!']);
