@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ShelfLifeController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +27,4 @@ Route::apiResource('products', ProductController::class)->except(['create', 'edi
 Route::get('products/search/{barcode}', ProductController::class.'@search')->name('products.search');
 Route::get('products/daysofvalidity/{days}', ProductController::class.'@daysOfValidity')->name('products.perDays');
 Route::apiResource('shelflifes', ShelfLifeController::class)->except(['create', 'edit', 'update']);
+Route::apiResource('users', UserController::class)->except(['create', 'edit']);
