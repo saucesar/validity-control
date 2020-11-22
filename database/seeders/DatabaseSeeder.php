@@ -17,8 +17,10 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123456'),
         ]);
         
-        $this->call(CompanySeeder::class);
-        $this->call(ProductSeeder::class);
-        $this->call(ShelfLifeSeeder::class);
+        if(env('APP_ENV') == 'local'){
+            $this->call(CompanySeeder::class);
+            $this->call(ProductSeeder::class);
+            $this->call(ShelfLifeSeeder::class);            
+        }
     }
 }
