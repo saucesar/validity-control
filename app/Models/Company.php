@@ -10,11 +10,16 @@ class Company extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'user_id'];
 
     public function products()
     {
         return $this->hasMany(Product::class, 'company_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function toArray()
