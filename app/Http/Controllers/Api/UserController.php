@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -16,6 +17,13 @@ class UserController extends Controller
         'password_confirm' => 'required|min:8',
     ];
 
+    public function login(Request $request)
+    {
+        $logged = Auth::attempt($request->only(['email', 'password']));
+        
+        return response()->json(['logged' => $logged], ($logged ? 200 : 400));
+    }
+    
     public function index()
     {
         return response()->json(User::all());
