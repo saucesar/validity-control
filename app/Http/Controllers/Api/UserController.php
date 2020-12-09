@@ -19,9 +19,18 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $logged = Auth::attempt($request->only(['email', 'password']));
-        
-        return response()->json(['logged' => $logged], ($logged ? 200 : 400));
+        $logged = Auth::attempt($request->only(['email', 'password']), isset($request->remember));
+        if(isset($request->webmode)){
+            return redirect()->route('home.index');
+        } else {
+            return response()->json(['logged' => $logged], ($logged ? 200 : 400));
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return redirect()->route('users.login');
     }
     
     public function index()
