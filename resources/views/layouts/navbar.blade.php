@@ -13,4 +13,26 @@
             </li>
         </ul>
     </div>
+
+    <div class="btn-group dropleft">
+        <button class="btn btn-outline-light btn-sm" type="button" id="dropPerfil" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-cog"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropPerfil">
+            <div class="dropdown-item dropright">
+                <a class="btn" href="{{ '#' }}" title="Configuração padrão do sistema.">
+                    Configurações
+                </a>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item dropright d-flex justify-content-center">
+                <form class="form-inline my-2 my-lg-0" action="{{ route('users.logout') }}" method="post">
+                    @csrf
+                    <button type="submit" class="btn" title="Sair">Sair</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </nav>
