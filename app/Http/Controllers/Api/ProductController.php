@@ -30,6 +30,7 @@ class ProductController extends Controller
             return response()->json(['message' => 'Informe a empresa nos query params!'], 400);            
         }
     }
+    
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), $this->rules);
