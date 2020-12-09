@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +23,8 @@ Route::get('/', function () {
         return view('users.login');
     }
 });
-
+Route::resource('users', UserController::class)->except(['create', 'edit']);
+Route::post('users/login', UserController::class.'@login')->name('users.login');
 Route::post('logout', UserController::class.'@logout')->name('users.logout');
 
 Route::get('/home', HomeController::class."@index")->name('home.index');
