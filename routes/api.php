@@ -28,4 +28,4 @@ Route::get('products/search/{barcode}', ProductController::class.'@search')->nam
 Route::get('products/daysofvalidity/{days}', ProductController::class.'@daysOfValidity')->name('products.perDays');
 Route::apiResource('shelflifes', ShelfLifeController::class)->except(['create', 'edit', 'update']);
 Route::apiResource('users', UserController::class)->except(['create', 'edit']);
-Route::post('users/login', UserController::class.'@login');
+Route::post('users/login', UserController::class.'@login')->name('users.login');
