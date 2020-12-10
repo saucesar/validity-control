@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
 
@@ -48,6 +49,67 @@ class ProductController extends Controller
                 Product::create($request->all());
                 return response()->json(['message' => 'Product created!']);                
             }
+        }
+    }
+
+    public function generalSearch(Request $request)
+    {
+        $search = $request->search;
+        $user = User::find($request->user_id);
+
+        $products = Product::orWhere('barcode', 'like', "%$search%")
+                           ->orWhere('description', 'like', "%$search%")
+                           ->orWhereJsonContains('expiration_dates', [$search])
+                           ->where('company_id', $user->company->id);
+            
+        if(isset($request->webmode)){
+            $params = [
+                'user' => $user,
+                'products' => $products->paginate(10),
+                'searchData' => $request->except('_token'),
+            ];
+
+            return view('home/index', $params);
+        } else {
+            return response()->json($products->get()->toArray());
+        }
+    }
+
+    public function addDate(Request $request, $id)
+    {
+        $product = Product::find($id);
+        $date = Carbon::parse($request->date)->format('d-m-Y');
+
+        $array = $product->expiration_dates;
+        $array[] = ['date' => $date, 'amount' => $request->amount];
+        $product->expiration_dates = $array;
+        
+        $product->save();
+        if(isset($request->webmode)){
+            return redirect()->route('home.index')->with('success', 'Data adicionada!');
+        } else {
+            return response()->json(['message' => 'Date is added']);
+        }
+    }
+
+    public function removeDate(Request $request, $id)
+    {
+        $product = Product::find($id);
+        $expiration_dates = $product->expiration_dates;
+        
+        foreach($expiration_dates as $key => $exp_date){
+            if($exp_date['date'] == $request->date){
+                unset($expiration_dates[$key]);
+            }
+        }
+
+        $product->expiration_dates = count($expiration_dates) > 0 ? $expiration_dates : null;
+        $product->save();
+
+        if(isset($request->webmode)){
+            return redirect()->route('home.index')->with('success', 'Data removida com sucesso!');
+        } else {
+            return response()->json(['message' => 'Date is removed!']);
         }
     }
 
