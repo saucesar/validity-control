@@ -9,14 +9,19 @@ class HomeController extends Controller
 {
     public function index(){
         $user = Auth::user();
-        
+
         $params = [
             'user' => $user,
-            'products' => Product::where('company_id', $user->company->id)
-                                 ->where('expiration_dates', '<>', null)
-                                 ->orderBy('description')->paginate(15),
+            'products' => $user->approved_access ? $this->getProducts($user) : null,
         ];
 
         return view('home/index', $params);
+    }
+
+    private function getProducts($user)
+    {
+        return Product::where('company_id', $user->company->id)
+                      ->where('expiration_dates', '<>', null)
+                      ->orderBy('description')->paginate(15);
     }
 }
