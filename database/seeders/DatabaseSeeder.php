@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         if(env('APP_ENV') == 'local'){
             $this->call(CompanySeeder::class);
             $this->call(ProductSeeder::class);
-            $this->call(ShelfLifeSeeder::class);            
+            //$this->call(ShelfLifeSeeder::class);            
         }
     }
 }
