@@ -15,6 +15,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'company_id',
     ];
 
     protected $hidden = [
@@ -28,6 +29,6 @@ class User extends Authenticatable
 
     public function company()
     {
-        return $this->hasOne(Company::class, 'user_id', 'id');
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 }
