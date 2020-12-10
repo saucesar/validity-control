@@ -16,6 +16,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'cesar@vc.com',
             'password' => bcrypt('123456'),
         ]);
+
+        DB::table('users')->insert([
+            'name' => 'cesar',
+            'email' => 'cesar2@vc.com',
+            'password' => bcrypt('123456'),
+        ]);
         
         if(env('APP_ENV') == 'local'){
             $this->call(CompanySeeder::class);
