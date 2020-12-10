@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Api\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,6 @@ Route::post('users/login', UserController::class.'@login')->name('users.login');
 Route::post('logout', UserController::class.'@logout')->name('users.logout');
 
 Route::get('/home', HomeController::class."@index")->name('home.index');
+Route::post('products/add-date/{product}', ProductController::class.'@addDate')->name('product.addDate');
+Route::any('products/search', ProductController::class.'@generalSearch')->name('products.search');
+Route::delete('products/remove-date/{product}', ProductController::class.'@removeDate')->name('product.removeDate');
