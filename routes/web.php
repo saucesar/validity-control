@@ -24,11 +24,11 @@ Route::get('/', function () {
         return view('users.login');
     }
 });
-Route::resource('users', UserController::class)->except(['create', 'edit']);
+Route::resource('users', UserController::class)->except(['edit']);
 Route::post('users/login', UserController::class.'@login')->name('users.login');
-Route::post('logout', UserController::class.'@logout')->name('users.logout');
+Route::post('users/logout', UserController::class.'@logout')->name('users.logout');
 
 Route::get('/home', HomeController::class."@index")->name('home.index');
 Route::post('products/add-date/{product}', ProductController::class.'@addDate')->name('product.addDate');
-Route::any('products/search', ProductController::class.'@generalSearch')->name('products.search');
+Route::match(['get', 'post'], 'products/search', ProductController::class.'@generalSearch')->name('products.search');
 Route::delete('products/remove-date/{product}', ProductController::class.'@removeDate')->name('product.removeDate');
