@@ -37,16 +37,25 @@
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Senha</label>
+                                    <label for="password">Senha</label>
                                     <input type="password" class="form-control" id="password" name="password"
                                         value="{{ old('password') }}" required>
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="remember" name="remember"
-                                            value="1">
-                                        <label class="form-check-label" for="remember">Lembrar?</label>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="remember" name="remember"
+                                                    value="1">
+                                                <label class="form-check-label" for="remember">Lembrar?</label>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-check">
+                                                <a href="{{ route('users.create') }}">É novo? cadastre-se.</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <br>
