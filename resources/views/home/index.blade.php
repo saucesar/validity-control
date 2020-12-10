@@ -30,78 +30,60 @@
                     @include('components.messages')
                 </div>
             </div>
-            <div class="row ml-5 mr-5 mt-5">
-                <table class="table table-hover">
-                    <thead class="thead-dark">
-                        <th>EAN</th>
-                        <th>Descrição</th>
-                        <th>
-                            <button class="btn btn-link btn-secondary" type="button" title="Exibir tudo."
-                                    data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false">
-                                <i class="far fa-caret-square-down"></i>
-                            </button>
-                        </th>
-                    </thead>
-                    <tbody>
-                        @foreach($products as $product)
-                        <tr>
-                            <td>{{ $product->barcode }}</td>
-                            <td>{{ $product->description }}</td>
-                            <td>
-                                <button class="btn btn-link" type="button" title="Mostrar todas as datas."
-                                        data-toggle="collapse" data-target="#collapseDate{{ $product->id }}" aria-expanded="false">
-                                    <i class="far fa-caret-square-down"></i>
+            <div class="row ml-4 mr-4 mt-4 d-flex justify-content-start">
+                @foreach($products as $product)
+                <div class="row mb-2 ml-2">
+                    <div class="col-6">
+                        <div class="card" style="min-width: 20em;min-height: 15em;">
+                            <div class="card-header d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">{{ $product->description }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ $product->barcode }}</h6>
+                                </div>
+                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalAddDate{{ $product->id }}">
+                                    <i class="fas fa-plus-circle"></i>
                                 </button>
-                                <a href="#" title="Veja mais detalhes.">
-                                    <i class="fas fa-info-circle"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="collapse multi-collapse" id="collapseDate{{ $product->id }}">
-                                    <div class="card card-body">
-                                        <table class="table text-center">
-                                            <thead>
-                                                <th>Data</th>
-                                                <th>Quantidade</th>
-                                                <th>
-                                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalAddDate{{ $product->id }}">
-                                                        <i class="fas fa-plus-circle"></i>
-                                                    </button>
-                                                    @include('components.modalAddDate', ['product' => $product])
-                                                </th>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($product->expiration_dates as $ep)
-                                                <tr>
-                                                    <td>{{ $ep['date'] }}</td>
-                                                    <td>{{ $ep['amount'] }}</td>
-                                                    <td>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <small>
+                                            <div class="row">
+                                                <div class="col">Data</div>
+                                                <div class="col">Quantidade</div>
+                                                <div class="col"></div>
+                                            </div>
+                                        </small>
+                                        @foreach($product->expiration_dates as $expdate)
+                                            <small>
+                                                <div class="row mb-1">
+                                                    <div class="col">{{ $expdate['date'] }}</div>
+                                                    <div class="col">{{ $expdate['amount'] }}</div>
+                                                    <div class="col">
                                                         <form action="{{ route('product.removeDate', $product) }}" method="post">
                                                             @csrf
                                                             @method('delete')
-                                                            <input type="hidden" name="date" value="{{ $ep['date'] }}">
+                                                            <input type="hidden" name="date" value="{{ $expdate['date'] }}">
                                                             <input type="hidden" name="webmode" value="true">
 
-                                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Deseja remover?');">
-                                                              <i class="fas fa-trash"></i>
+                                                            <button type="submit" style="zoom: 60%;" class="btn btn-sm btn-outline-danger" onclick="return confirm('Deseja remover?');">
+                                                                    <i class="fas fa-trash"></i>
                                                             </button>
                                                         </form>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
+                                                    </div>
+                                                </div>
+                                            </small>
+                                        @endforeach
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-
-                        @endforeach
-                    </tbody>
-                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @include('components.modalAddDate', ['product' => $product])
+                @endforeach
             </div>
+            <br>
             <div class="row ml-5 mr-5">
                 @if(isset($searchData))
                     {{ $products->appends($searchData)->links() }}
