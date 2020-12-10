@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <a class="navbar-brand" href="{{ '' }}">
-        <i class="fab fa-ethereum"></i>
+        <i class="fab fa-rebel"></i>
         <small>VC</small>
     </a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
