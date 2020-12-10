@@ -12,22 +12,21 @@ class Product extends Model
 
     protected $fillable = ['barcode', 'description', 'company_id'];
 
+    protected $casts = [
+        'expiration_dates' => 'array',
+    ];
+
     public function toArray()
     {
         $array = [
             'id' => $this->id,
             'barcode' => $this->barcode,
             'description' => $this->description,
-            'shelflifes' => $this->shelflifes->toArray(),
+            'shelflifes' => $this->expiration_dates,
             'company_id' => $this->company_id,
         ];
 
         return $array;
-    }
-
-    public function shelflifes()
-    {
-        return $this->hasMany(ShelfLife::class, 'product_id', 'id');
     }
 
     public function company()
