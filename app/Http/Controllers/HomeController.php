@@ -12,7 +12,9 @@ class HomeController extends Controller
         $user = Auth::user();
         $params = [
             'user' => $user,
-            'products' => Product::where('company_id', $user->company->id)->paginate(10),
+            'products' => Product::where('company_id', $user->company->id)
+                                 ->where('expiration_dates', '<>', null)
+                                 ->orderBy('description')->paginate(15),
         ];
 
         return view('home/index', $params);
