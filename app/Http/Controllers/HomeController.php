@@ -21,7 +21,6 @@ class HomeController extends Controller
     private function getProducts($user)
     {
         return Product::where('company_id', $user->company->id)
-                      ->where('expiration_dates', '<>', null)
                       ->orderBy('description')->paginate(15);
     }
 }
