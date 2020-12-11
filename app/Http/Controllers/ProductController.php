@@ -74,14 +74,10 @@ class ProductController extends Controller
 
     public function addDate(Request $request, $id)
     {
-        $product = Product::find($id);
-        $date = Carbon::parse($request->date)->format('d-m-Y');
+        $data = $request->all();
+        $data['product_id'] = $id;
 
-        $array = $product->expiration_dates;
-        $array[] = ['date' => $date, 'amount' => $request->amount];
-        $product->expiration_dates = $array;
-        
-        $product->save();
+        ExpirationDate::create($data);
 
         return redirect()->route('home.index')->with('success', 'Data adicionada!');
     }
