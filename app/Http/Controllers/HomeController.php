@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -12,7 +13,8 @@ class HomeController extends Controller
 
         $params = [
             'user' => $user,
-            'products' => $user->approved_access ? $this->getProducts($user) : null,
+            'products' => $this->getProducts($user),
+            'access_requests' => $this->getAccessRequests($user),
         ];
 
         return view('home/index', $params);
@@ -20,7 +22,15 @@ class HomeController extends Controller
 
     private function getProducts($user)
     {
-        return Product::where('company_id', $user->company->id)
-                      ->orderBy('description')->paginate(15);
+        return $user->access_granted ? Product::where('company_id', $user->company->id)->orderBy('description')->paginate(15) : null;
+    }
+
+    private function getAccessRequests($user)
+    {
+        $requests = User::where('company_id', $user->company->id)
+                        ->where('access_granted', false)
+                        ->where('access_denied', false);
+        
+        return $requests->exists() ? $requests->get() : null;
     }
 }
