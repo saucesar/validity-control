@@ -13,6 +13,7 @@ class CompanyFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'owner_id' => $this->faker->numberBetween(1, 2),
         ];
     }
 }

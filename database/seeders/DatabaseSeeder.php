@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'cesar@vc.com',
             'password' => bcrypt('123456'),
             'company_id' => 1,
-            'approved_access' => true,
+            'access_granted' => true,
         ]);
 
         DB::table('users')->insert([
@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'cesar2@vc.com',
             'password' => bcrypt('123456'),
             'company_id' => 1,
-            'approved_access' => true,
+            'access_granted' => true,
         ]);
     }
 }
