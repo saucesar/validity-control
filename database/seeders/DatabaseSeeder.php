@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
         
         if(env('APP_ENV') == 'local'){
             $this->call(CompanySeeder::class);
-            $this->call(ProductSeeder::class);        
+            $this->call(ProductSeeder::class);
+            $this->call(ExpirationDateSeeder::class);
         }
 
         DB::table('users')->insert([
