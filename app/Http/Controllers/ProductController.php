@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ExpirationDate;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
@@ -87,17 +88,8 @@ class ProductController extends Controller
 
     public function removeDate(Request $request, $id)
     {
-        $product = Product::find($id);
-        $expiration_dates = $product->expiration_dates;
-        
-        foreach($expiration_dates as $key => $exp_date){
-            if($exp_date['date'] == $request->date){
-                unset($expiration_dates[$key]);
-            }
-        }
-
-        $product->expiration_dates = count($expiration_dates) > 0 ? $expiration_dates : null;
-        $product->save();
+        $date = ExpirationDate::find($id);
+        $date->delete();
 
         return redirect()->route('home.index')->with('success', 'Data removida com sucesso!');
     }
