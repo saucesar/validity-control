@@ -23,12 +23,16 @@ Route::get('/', function () {
     } else {
         return view('users.login');
     }
-});
-Route::resource('users', UserController::class)->except(['edit']);
-Route::post('users/login', UserController::class.'@login')->name('users.login');
-Route::post('users/logout', UserController::class.'@logout')->name('users.logout');
+})->name('root');
 
-Route::get('/home', HomeController::class."@index")->name('home.index');
-Route::post('products/add-date/{product}', ProductController::class.'@addDate')->name('product.addDate');
-Route::match(['get', 'post'], 'products/search', ProductController::class.'@generalSearch')->name('products.search');
-Route::delete('products/remove-date/{expiration_date}', ProductController::class.'@removeDate')->name('product.removeDate');
+Route::post('users/login', UserController::class.'@login')->name('users.login');
+
+Route::middleware(['auth'])->group(function (){
+    Route::resource('users', UserController::class)->except(['edit']);
+    Route::post('users/logout', UserController::class.'@logout')->name('users.logout');
+
+    Route::get('/home', HomeController::class."@index")->name('home.index');
+    Route::post('products/add-date/{product}', ProductController::class.'@addDate')->name('product.addDate');
+    Route::match(['get', 'post'], 'products/search', ProductController::class.'@generalSearch')->name('products.search');
+    Route::delete('products/remove-date/{expiration_date}', ProductController::class.'@removeDate')->name('product.removeDate');
+});
