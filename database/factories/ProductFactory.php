@@ -16,16 +16,6 @@ class ProductFactory extends Factory
             'barcode' => $this->faker->numberBetween(10000, 99999).''.$this->faker->numberBetween(10000, 99999).''.$this->faker->numberBetween(100, 999),
             'description' => $this->faker->name,
             'company_id' => 1,
-            'expiration_dates' => [
-                [
-                    'date' => Carbon::now()->addDays($this->faker->numberBetween(10, 60))->format('d-m-Y'),
-                    'amount' => $this->faker->numberBetween(10, 999),
-                ],
-                [
-                    'date' => Carbon::now()->addDays($this->faker->numberBetween(10, 60))->format('d-m-Y'),
-                    'amount' => $this->faker->numberBetween(10, 999),
-                ],
-            ],
         ];
     }
 }
