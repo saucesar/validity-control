@@ -34,7 +34,7 @@
                             @method('delete')
 
                             <button type="submit" style="zoom: 60%;" class="btn btn-sm btn-outline-danger"
-                                onclick="return confirm('Deseja remover?');">
+                                onclick="return confirm('Deseja remover?');" title="remover {{ $expdate->date }} ?">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
