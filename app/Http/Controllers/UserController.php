@@ -49,20 +49,16 @@ class UserController extends Controller
         $validation = Validator::make($request->all(), $this->rules);
 
         if($validation->fails()) {
-            if(isset($request->webmode)){
-                return back()->with('errors', $validation->errors())->withInput();
-            } else {
-                return response()->json($validation->errors(), 400);
-            }
+            return back()->with('errors', $validation->errors())->withInput();
         } else {
             if($request->password == $request->password_confirm){
-                $approved_access = false;
+                $access_granted = false;
 
                 if(is_numeric($request->company)){
                     $company = Company::find($request->company);
                 } else {
                     $company = Company::create(['name' => $request->company]);
-                    $approved_access = true;
+                    $access_granted = true;
                 }
                 
                 if(!isset($company)){
@@ -71,7 +67,7 @@ class UserController extends Controller
 
                 $data = $request->all();
                 $data['company_id'] = $company->id;
-                $data['approved_access'] = $approved_access;
+                $data['access_granted'] = $access_granted;
 
                 $user = User::create($data);
 
@@ -82,11 +78,7 @@ class UserController extends Controller
                     return response()->json(['message' => 'User created!']);                
                 }
             } else {
-                if(isset($request->webmode)){
-                    return back()->with('error', 'As senhas não conferem')->withInput();
-                } else {
-                    return response()->json(['message' => 'The password and confirmation do not match!'], 400);
-                }
+                return back()->with('error', 'As senhas não conferem')->withInput();
             }
         }
     }
