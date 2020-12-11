@@ -31,13 +31,14 @@
                 </div>
             </div>
             <div class="row ml-4 mr-4 mt-4 d-flex justify-content-start">
+            @if(isset($products))
                 @foreach($products as $product)
                 <div class="row mb-2 ml-2">
                     <div class="col-6">
                         <div class="card" style="min-width: 20em;min-height: 15em;">
                             <div class="card-header d-flex justify-content-between">
                                 <div>
-                                    <h5 class="card-title">{{ $product->description }}</h5>
+                                    <h6 class="card-title">{{ $product->description }}</h6>
                                     <h6 class="card-subtitle mb-2 text-muted">{{ $product->barcode }}</h6>
                                 </div>
                                 <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalAddDate{{ $product->id }}">
@@ -64,7 +65,6 @@
                                                             @csrf
                                                             @method('delete')
                                                             <input type="hidden" name="date" value="{{ $expdate['date'] }}">
-                                                            <input type="hidden" name="webmode" value="true">
 
                                                             <button type="submit" style="zoom: 60%;" class="btn btn-sm btn-outline-danger" onclick="return confirm('Deseja remover?');">
                                                                     <i class="fas fa-trash"></i>
@@ -82,15 +82,24 @@
                 </div>
                 @include('components.modalAddDate', ['product' => $product])
                 @endforeach
+            @else
+                <div class="row text-center">
+                    <div class="col">
+                        <h4>Você ainda não tem acesso aos produtos da empresa <b>{{ $user->company->name  }}</b>.</h4>
+                    </div>
+                </div>
+            @endif
             </div>
             <br>
-            <div class="row ml-5 mr-5">
-                @if(isset($searchData))
-                    {{ $products->appends($searchData)->links() }}
-                @else
-                    {{ $products->links() }}
-                @endif
-            </div>
+            @if(isset($products))
+                <div class="row ml-5 mr-5">
+                    @if(isset($searchData))
+                        {{ $products->appends($searchData)->links() }}
+                    @else
+                        {{ $products->links() }}
+                    @endif
+                </div>
+            @endif
         </div>
     </div>
 @endsection
