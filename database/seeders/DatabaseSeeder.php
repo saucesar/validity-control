@@ -16,19 +16,35 @@ class DatabaseSeeder extends Seeder
             $this->call(CompanySeeder::class);
             $this->call(ProductSeeder::class);
             $this->call(ExpirationDateSeeder::class);
+
+            DB::table('users')->insert([
+                'name' => 'cesar',
+                'email' => 'cesar2@vc.com',
+                'password' => bcrypt('123456'),
+                'company_id' => 1,
+                'access_granted' => true,
+            ]);
+
+            DB::table('users')->insert([
+                'name' => 'cesar3',
+                'email' => 'cesar3@vc.com',
+                'password' => bcrypt('123456'),
+                'company_id' => 1,
+                'access_granted' => false,
+            ]);
+
+            DB::table('users')->insert([
+                'name' => 'cesar4',
+                'email' => 'cesar4@vc.com',
+                'password' => bcrypt('123456'),
+                'company_id' => 1,
+                'access_granted' => false,
+            ]);
         }
 
         DB::table('users')->insert([
             'name' => 'cesar',
             'email' => 'cesar@vc.com',
-            'password' => bcrypt('123456'),
-            'company_id' => 1,
-            'access_granted' => true,
-        ]);
-
-        DB::table('users')->insert([
-            'name' => 'cesar',
-            'email' => 'cesar2@vc.com',
             'password' => bcrypt('123456'),
             'company_id' => 1,
             'access_granted' => true,
