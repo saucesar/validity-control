@@ -16,8 +16,6 @@
                     <br>
                     <label for="amount">Quantidade</label>
                     <input type="number" name="amount" class="form-control" value="1" required>
-
-                    <input type="hidden" name="webmode" value="true">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
