@@ -11,11 +11,23 @@
                 @csrf
                 <div class="modal-body text-left">
                     <h4>Produto: {{ $product->description }}</h4>
-                    <label for="date">Data</label>
-                    <input type="date" name="date" class="form-control" min="{{ now()->format('Y-m-d') }}" required>
+                    <div class="row">
+                        <div class="col">
+                            <label for="date">Data</label>
+                            <input type="date" name="date" class="form-control" min="{{ now()->format('Y-m-d') }}" required>
+                        </div>
+                    </div>
                     <br>
-                    <label for="amount">Quantidade</label>
-                    <input type="number" name="amount" class="form-control" value="1" required>
+                    <div class="row">
+                        <div class="col">
+                            <label for="amount">Quantidade</label>
+                            <input type="number" name="amount" class="form-control" value="1" required>
+                        </div>
+                        <div class="col">
+                            <label for="lote">Lote</label>
+                            <input type="text" name="lote" class="form-control">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
