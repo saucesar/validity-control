@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -55,24 +55,20 @@ class ProductController extends Controller
     public function generalSearch(Request $request)
     {
         $search = $request->search;
-        $user = User::find($request->user_id);
+        $user = Auth::user();
 
         $products = Product::orWhere('barcode', 'like', "%$search%")
                            ->orWhere('description', 'like', "%$search%")
                            ->orWhereJsonContains('expiration_dates', [$search])
                            ->where('company_id', $user->company->id);
-            
-        if(isset($request->webmode)){
-            $params = [
-                'user' => $user,
-                'products' => $products->paginate(10),
-                'searchData' => $request->except('_token'),
-            ];
+        
+        $params = [
+            'user' => $user,
+            'products' => $products->paginate(10),
+            'searchData' => $request->except('_token'),
+        ];
 
-            return view('home/index', $params);
-        } else {
-            return response()->json($products->get()->toArray());
-        }
+        return view('home/index', $params);
     }
 
     public function addDate(Request $request, $id)
@@ -85,11 +81,8 @@ class ProductController extends Controller
         $product->expiration_dates = $array;
         
         $product->save();
-        if(isset($request->webmode)){
-            return redirect()->route('home.index')->with('success', 'Data adicionada!');
-        } else {
-            return response()->json(['message' => 'Date is added']);
-        }
+
+        return redirect()->route('home.index')->with('success', 'Data adicionada!');
     }
 
     public function removeDate(Request $request, $id)
@@ -106,22 +99,7 @@ class ProductController extends Controller
         $product->expiration_dates = count($expiration_dates) > 0 ? $expiration_dates : null;
         $product->save();
 
-        if(isset($request->webmode)){
-            return redirect()->route('home.index')->with('success', 'Data removida com sucesso!');
-        } else {
-            return response()->json(['message' => 'Date is removed!']);
-        }
-    }
-
-    public function search(Request $request, $barcode){
-        $product = Product::where('barcode', $barcode)
-                          ->where('company_id', $request->company_id);
-
-        if($product->exists()) {
-            return response($product->first()->toJson());
-        } else {
-            return response()->json(['message' => 'Product not found!'], 400);
-        }
+        return redirect()->route('home.index')->with('success', 'Data removida com sucesso!');
     }
 
     public function show($id){
@@ -142,13 +120,13 @@ class ProductController extends Controller
             $validation = Validator::make($request->all(), $this->rulesToUpdate);
 
             if($validation->fails()){
-                return response()->json(['message' => $validation->errors()], 400);
+                return back()->with('errors', $validation->errors())->withInput();
             } else {
                 $product->update($request->all());
-                return response()->json(['message' => 'Product updated!']);
+                return back()->with('success', 'Produto atualizado!')->withInput();
             }
         } else {
-            return response()->json(['message' => 'Product not found!'], 400);
+            return back()->with('error', 'Product not found!')->withInput();
         }
     }
 
@@ -158,29 +136,9 @@ class ProductController extends Controller
 
         if(isset($product)) {
             $product->delete();
-
-            return response()->json(['message' => 'Product deleted!']);
+            return back()->with('success', 'Produto deletado!');
         } else {
-            return response()->json(['message' => 'Product not found!'], 400);
+            return back()->with('error', 'Produto não encontrado!');
         }
     }
-    
-    public function daysOfValidity(Request $request, $days)
-    {
-        if(!isset( $request->company_id)){
-            return response()->json(['message' => 'company_id is required.'], 400);
-        }
-            
-        $initialdate = Carbon::now();
-        $finaldate = Carbon::now()->addDays($days);
-        
-        $products = Product::join('shelf_lives', 'products.id', '=', 'shelf_lives.product_id')
-                           ->where('products.company_id', '=', $request->company_id)
-                           ->whereDate('shelf_lives.date', '>=', $initialdate)
-                           ->whereDate('shelf_lives.date', '<=', $finaldate)
-                           ->get(['products.*', 'shelf_lives.date', 'shelf_lives.amount'])
-                           ->toJson();
-        
-        return response($products);
-    }  
 }
