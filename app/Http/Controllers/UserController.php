@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,7 @@ class UserController extends Controller
     private $rules = [
         'name' => 'required|min:5',
         'email' => 'required|email:rfc|unique:users',
+        'company' => 'required',
         'password' => 'required|min:8',
         'password_confirm' => 'required|min:8',
     ];
@@ -47,13 +49,44 @@ class UserController extends Controller
         $validation = Validator::make($request->all(), $this->rules);
 
         if($validation->fails()) {
-            return response()->json($validation->errors(), 400);
+            if(isset($request->webmode)){
+                return back()->with('errors', $validation->errors())->withInput();
+            } else {
+                return response()->json($validation->errors(), 400);
+            }
         } else {
             if($request->password == $request->password_confirm){
-                User::create($request->all());
-                return response()->json(['message' => 'User created!']);                
+                $approved_access = false;
+
+                if(is_numeric($request->company)){
+                    $company = Company::find($request->company);
+                } else {
+                    $company = Company::create(['name' => $request->company]);
+                    $approved_access = true;
+                }
+                
+                if(!isset($company)){
+                    return back()->with('error', 'Empresa informada não existe!');
+                }
+
+                $data = $request->all();
+                $data['company_id'] = $company->id;
+                $data['approved_access'] = $approved_access;
+
+                $user = User::create($data);
+
+                if(isset($request->webmode)){
+                    Auth::login($user, true);
+                    return redirect()->route('home.index');
+                } else {
+                    return response()->json(['message' => 'User created!']);                
+                }
             } else {
-                return response()->json(['message' => 'The password and confirmation do not match!'], 400);
+                if(isset($request->webmode)){
+                    return back()->with('error', 'As senhas não conferem')->withInput();
+                } else {
+                    return response()->json(['message' => 'The password and confirmation do not match!'], 400);
+                }
             }
         }
     }
@@ -67,6 +100,11 @@ class UserController extends Controller
         } else {
             return response()->json(['message' => 'User not found!'], 400);  
         }
+    }
+
+    public function create()
+    {
+        return view('users.new_user');
     }
 
     public function update(Request $request, $id)
