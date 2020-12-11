@@ -22,7 +22,7 @@ class Product extends Model
             'id' => $this->id,
             'barcode' => $this->barcode,
             'description' => $this->description,
-            'shelflifes' => $this->expiration_dates,
+            'expiration_dates' => $this->expiration_dates,
             'company_id' => $this->company_id,
         ];
 
@@ -32,5 +32,10 @@ class Product extends Model
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
+
+    public function expirationDates()
+    {
+        return $this->hasMany(ExpirationDate::class, 'product_id', 'id');
     }
 }
