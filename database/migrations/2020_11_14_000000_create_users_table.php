@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
@@ -22,18 +17,15 @@ class CreateUsersTable extends Migration
 
             $table->integer('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->boolean('approved_access')->default(false);
+            
+            $table->boolean('access_granted')->default(false);
+            $table->boolean('access_denied')->default(false);
 
             $table->rememberToken();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('users');
