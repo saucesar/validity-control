@@ -38,10 +38,23 @@ class UserController extends Controller
         Auth::logout();
         return redirect('/');
     }
-    
-    public function index()
+
+    public function accessRequest($user, $status)
     {
-        return response()->json(User::all());
+        $requesting_user = User::find($user);
+
+        if(!isset($requesting_user)){
+            return back()->with('error', 'Usuário não encontrado!');
+        }
+
+        $requesting_user->access_granted = ($status == 'granted');
+        $requesting_user->access_denied = !$requesting_user->access_granted;
+
+        $requesting_user->save();
+
+        $msg = $requesting_user->access_granted ? 'Acesso aprovado!' : 'Acesso negado!';
+
+        return back()->with('success', $msg);
     }
 
     public function store(Request $request)
@@ -80,17 +93,6 @@ class UserController extends Controller
             } else {
                 return back()->with('error', 'As senhas não conferem')->withInput();
             }
-        }
-    }
-
-    public function show($id)
-    {
-        $user = User::find($id);
-
-        if(isset($user)){
-            return response()->json($user);
-        } else {
-            return response()->json(['message' => 'User not found!'], 400);  
         }
     }
 
