@@ -22,14 +22,12 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $logged = Auth::attempt($request->only(['email', 'password']), isset($request->remember));
-        if(isset($request->webmode)){
-            if($logged){
-                return redirect()->route('home.index')->with('success', 'Bem Vindo!');
-            } else {
-                return back()->with('error', 'Login Inválido!')->withInput();
-            }
+    
+        if($logged){
+            $name = Auth::user()->name;
+            return redirect()->route('home.index')->with('success', "Bem Vindo $name!");
         } else {
-            return response()->json(['logged' => $logged], ($logged ? 200 : 400));
+            return back()->with('error', 'Login Inválido!')->withInput();
         }
     }
 
