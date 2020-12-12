@@ -36,6 +36,6 @@ class Product extends Model
 
     public function expirationDates()
     {
-        return $this->hasMany(ExpirationDate::class, 'product_id', 'id');
+        return $this->hasMany(ExpirationDate::class, 'product_id', 'id')->orderBy('date');
     }
 }
