@@ -11,6 +11,12 @@
                     Home
                 </a>
             </li>
+            <li class="nav-item nav-lg {{ isset($active) && $active == 'products' ? 'active' : '' }}">
+                <a class="nav-link btn-sm btn-primary" href="{{ route('products.index') }}">
+                    <i class="fas fa-home"></i>
+                    Produtos
+                </a>
+            </li>
         </ul>
     </div>
     <div class="btn-group">
