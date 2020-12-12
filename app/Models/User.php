@@ -33,4 +33,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Company::class, 'id', 'company_id');
     }
+
+    public function isCompanyOwner()
+    {
+        return ($this->company->owner->id == $this->id);
+    }
 }
