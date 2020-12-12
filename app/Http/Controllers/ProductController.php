@@ -23,13 +23,16 @@ class ProductController extends Controller
         'company_id' => 'required|numeric|min:1',
     ];
 
-    public function index(Request $request)
+    public function index()
     {
-        if(isset($request->company_id)){
-            return response(Product::where('company_id', $request->company_id)->get()->toJson());            
-        } else {
-            return response()->json(['message' => 'Informe a empresa nos query params!'], 400);            
-        }
+        $user = Auth::user();
+
+        $params = [
+            'user' => $user,
+            'products' => $user->getProducts(),
+        ];
+
+        return view('products/index', $params);
     }
     
     public function store(Request $request)
