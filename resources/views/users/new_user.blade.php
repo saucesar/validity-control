@@ -1,4 +1,4 @@
-@extends('layouts.app', ['navoff' => true, 'bodyclass' => "bg-login"])
+@extends('layouts.app', ['navoff' => true, 'bodyclass' => "bg-login", 'title' => 'VC - Novo Usuário'])
 
 @section('content')
 <div class="container">
