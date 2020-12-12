@@ -13,7 +13,6 @@ class HomeController extends Controller
 
         $params = [
             'user' => $user,
-            'products' => $user->getProducts(),
             'access_requests' => $user->getAccessRequests(),
         ];
 
