@@ -80,10 +80,9 @@ class ProductController extends Controller
         $params = [
             'user' => $user,
             'products' => $user->getProductsByExpiration(intval($days)),
-            'access_requests' => $user->getAccessRequests(),
         ];
 
-        return view('home/index', $params);
+        return view('products/index', $params);
     }
 
     public function addDate(Request $request, $id)
