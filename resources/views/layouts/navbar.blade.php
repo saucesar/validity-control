@@ -6,7 +6,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item nav-lg {{ !isset($active) ? 'active' : '' }}">
-                <a class="nav-link btn-sm btn-primary" href="{{ '' }}">
+                <a class="nav-link btn-sm btn-primary" href="{{ route('home.index') }}">
                     <i class="fas fa-home"></i>
                     Home
                 </a>
@@ -15,13 +15,19 @@
     </div>
     <div class="btn-group">
         <a class="btn btn-outline-light btn-sm" href="#">
-            Olá {{ explode(' ', $user->name)[0] }} ({{ $user->email }}) !
+            Olá {{ explode(' ', $user->name)[0] }} ({{ $user->email }})
         </a>
         <button class="btn btn-outline-light btn-sm" type="button" id="dropPerfil" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-cog"></i>
         </button>
         <div class="dropdown-menu" aria-labelledby="dropPerfil">
+            <div class="dropdown-item">
+                <a class="btn" href="{{ '#' }}" title="Informações sobre sua conta.">
+                    Informações
+                </a>
+            </div>
+            <div class="dropdown-divider"></div>
             <div class="dropdown-item">
                 <a class="btn" href="{{ '#' }}" title="Configuração padrão do sistema.">
                     Configurações
