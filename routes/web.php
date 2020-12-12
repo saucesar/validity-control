@@ -36,5 +36,5 @@ Route::middleware(['auth'])->group(function (){
     Route::post('products/add-date/{product}', ProductController::class.'@addDate')->name('product.addDate');
     Route::match(['get', 'post'], 'products/search', ProductController::class.'@generalSearch')->name('products.search');
     Route::delete('products/remove-date/{expiration_date}', ProductController::class.'@removeDate')->name('product.removeDate');
-
+    Route::get('products/by-expiration-days/{days}',  ProductController::class.'@expirationDays')->name('products.byExpiration');
 });
