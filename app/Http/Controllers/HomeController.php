@@ -27,6 +27,10 @@ class HomeController extends Controller
 
     private function getAccessRequests($user)
     {
+        if(!$user->isCompanyOwner()){
+            return null;
+        }
+        
         $requests = User::where('company_id', $user->company->id)
                         ->where('access_granted', false)
                         ->where('access_denied', false);
