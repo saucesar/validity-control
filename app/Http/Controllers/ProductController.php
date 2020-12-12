@@ -7,7 +7,6 @@ use App\Models\ExpirationDate;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -60,13 +59,25 @@ class ProductController extends Controller
 
         $products = Product::orWhere('barcode', 'like', "%$search%")
                            ->orWhere('description', 'like', "%$search%")
-                           ->orWhereJsonContains('expiration_dates', [$search])
                            ->where('company_id', $user->company->id);
         
         $params = [
             'user' => $user,
             'products' => $products->paginate(10),
             'searchData' => $request->except('_token'),
+        ];
+
+        return view('home/index', $params);
+    }
+
+    public function expirationDays($days)
+    {
+        $user = Auth::user();
+
+        $params = [
+            'user' => $user,
+            'products' => $user->getProductsByExpiration(intval($days)),
+            'access_requests' => $user->getAccessRequests(),
         ];
 
         return view('home/index', $params);
