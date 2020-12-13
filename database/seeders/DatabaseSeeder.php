@@ -27,29 +27,15 @@ class DatabaseSeeder extends Seeder
         ]);
 
         if(env('APP_ENV') == 'local'){
-            DB::table('users')->insert([
-                'name' => 'cesar2',
-                'email' => 'cesar2@vc.com',
-                'password' => bcrypt('123456'),
-                'company_id' => 1,
-                'access_granted' => true,
-            ]);
-
-            DB::table('users')->insert([
-                'name' => 'cesar3',
-                'email' => 'cesar3@vc.com',
-                'password' => bcrypt('123456'),
-                'company_id' => 1,
-                'access_granted' => false,
-            ]);
-
-            DB::table('users')->insert([
-                'name' => 'cesar4',
-                'email' => 'cesar4@vc.com',
-                'password' => bcrypt('123456'),
-                'company_id' => 1,
-                'access_granted' => false,
-            ]);
+            for($i = 1; $i <= 10; $i++){
+                DB::table('users')->insert([
+                    'name' => "cesar$i",
+                    'email' => "cesar$i@vc.com",
+                    'password' => bcrypt('123456'),
+                    'company_id' => 1,
+                    'access_granted' => false,
+                ]);
+            }
         }
     }
 }
