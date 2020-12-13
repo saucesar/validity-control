@@ -1,3 +1,5 @@
+@include('components.modalAddDate', ['product' => $product])
+
 <div class="card mb-2">
     <div class="card-body row d-flex justify-content-between">
         <div class="col">
