@@ -25,6 +25,9 @@
         </div>
         <div class="row mt-4 d-flex justify-content-start">
             <div class="col-4">
+                <div class="card card-body" style="min-width: 18em;">
+                Algo aqui...
+                </div>
             </div>
             <div class="col-4">
                 @if(isset($users_granted))
