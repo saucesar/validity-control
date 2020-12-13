@@ -1,15 +1,16 @@
 <div class="card mb-2">
     <div class="card-body row d-flex justify-content-between">
         <div class="col">
-            <h5 class="card-title">{{ $product->description }}</h5>
+            <h5 class="card-title" title="Detalhes do produto"><a href="{{ route('products.show', $product) }}">{{ $product->description }}</a></h5>
             <h6 class="card-subtitle mb-2 text-muted">{{ $product->barcode }}</h6>
         </div>
         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseproduct{{ $product->id }}" aria-expanded="false"
-                title="Mostrar todas as datas.">
+                title="Exibir datas.">
             <i class="far fa-caret-square-down"></i>
+            Mostrar
         </button>
     </div>
-    <div class="collapse" id="collapseproduct{{ $product->id }}">
+    <div class="collapse multi-collapse {{ $collapse_class ?? '' }}" id="collapseproduct{{ $product->id }}">
         <table class="table table-hover table-borderless text-center">
             <thead>
                 <th>Data</th>
@@ -19,6 +20,7 @@
                     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalAddDate{{ $product->id }}"
                             title="Adicionar uma data">
                         <i class="fas fa-plus-circle"></i>
+                        Adicionar
                     </button>
                 </th>
             </thead>
