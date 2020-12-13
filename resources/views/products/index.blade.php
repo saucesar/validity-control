@@ -38,7 +38,7 @@
                 <div class="card card-body mb-4" style="min-width: 18em;">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false"
                             title="Exibir datas.">
-                        Mostrar todos
+                        Expandir todos
                     </button>
                 </div>
                 <div class="card card-body mb-4" style="min-width: 18em;">
