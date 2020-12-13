@@ -97,7 +97,7 @@ class ProductController extends Controller
 
         ExpirationDate::create($data);
 
-        return redirect()->route('home.index')->with('success', 'Data adicionada!');
+        return back()->with('success', 'Data adicionada!');
     }
 
     public function removeDate(Request $request, $id)
@@ -105,16 +105,22 @@ class ProductController extends Controller
         $date = ExpirationDate::find($id);
         $date->delete();
 
-        return redirect()->route('home.index')->with('success', 'Data removida com sucesso!');
+        return back()->with('success', 'Data removida com sucesso!');
     }
 
     public function show($id){
         $product = Product::find($id);
 
-        if(isset($product)) {
-            return response($product->first()->toJson());
+        if(isset($product)){
+            $params = [
+                'user' => Auth::user(),
+                'product' => $product,
+                'historic' => ExpirationDate::where('product_id', $id)->where('deleted_at', '<>', null)->withTrashed()->orderBy('id', 'desc')->get(),
+            ];
+
+            return view('products/show', $params);
         } else {
-            return response()->json(['message' => 'Product not found!'], 400);
+            return back()->with('error', 'Produto não encontrado!');
         }
     }
 
