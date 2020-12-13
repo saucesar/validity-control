@@ -1,7 +1,6 @@
 @if(isset($products))
     @foreach($products as $product)
         @include('components.card_product', ['product' => $product])
-        @include('components.modalAddDate', ['product' => $product])
     @endforeach
     @if(isset($searchData))
         {{ $products->appends($searchData)->links() }}
