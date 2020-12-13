@@ -44,7 +44,7 @@
                 <div class="card card-body mb-4" style="min-width: 18em;">
                     <div class="row">
                         <div class="col">
-                            <small><b>Produtos com vencimento em ...</b></small>
+                            <small><b>Produtos a vencer em ...</b></small>
                         </div>
                     </div>
                     <div class="row">
