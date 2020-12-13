@@ -50,7 +50,7 @@ class UserController extends Controller
 
         $requesting_user->save();
 
-        $msg = $requesting_user->access_granted ? 'Acesso aprovado!' : 'Acesso negado!';
+        $msg = $requesting_user->access_granted ? 'Acesso permitido!' : 'Acesso bloqueado!';
 
         return back()->with('success', $msg);
     }
