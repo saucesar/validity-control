@@ -70,12 +70,17 @@ class ProductController extends Controller
             'searchData' => $request->except('_token'),
         ];
 
-        return view('home/index', $params);
+        return view('products/index', $params);
     }
 
-    public function expirationDays($days)
+    public function expirationDays(Request $request ,$days = null)
     {
         $user = Auth::user();
+
+        if(!isset($days)){
+            $days = intval($request->days);
+            !$days ? $days = 30 : $days;
+        }
 
         $params = [
             'user' => $user,
