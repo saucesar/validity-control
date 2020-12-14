@@ -51,7 +51,7 @@
                             <td><small>{{ $granted->email }}</small></td>
                             <td>
                                 <a class="btn btn-sm btn-danger" href="{{ route('users.accessRequest', [$granted, 'denied']) }}" style="zoom: 75%;" title="Revogar acesso.">
-                                    <i class="far fa-thumbs-down"></i>
+                                    <i class="fas fa-minus-circle"></i>
                                 </a>
                             </td>
                         </tr>
