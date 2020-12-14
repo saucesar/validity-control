@@ -9,13 +9,15 @@
         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseproduct{{ $product->id }}" aria-expanded="false"
                 title="Exibir datas.">
             <i class="far fa-caret-square-down"></i>
-            Mostrar
         </button>
     </div>
     <div class="collapse multi-collapse {{ $collapse_class ?? '' }}" id="collapseproduct{{ $product->id }}">
         <table class="table table-hover table-borderless text-center">
             <thead>
-                <th>Data</th>
+                <th>
+                    <i class="far fa-calendar-alt"></i>
+                    Data
+                </th>
                 <th>Quantidade</th>
                 <th>Lote</th>
                 <th>
