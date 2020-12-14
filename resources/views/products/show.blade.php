@@ -23,7 +23,10 @@
                 <div class="card card-body mb-4" style="min-width: 18em;">
                     <div class="row">
                         <div class="col">
-                            <h5 class="card-title">Historico de datas</h5>
+                            <h5 class="card-title">
+                                <i class="far fa-file-alt"></i>
+                                Historico de datas
+                            </h5>
                         </div>
                     </div>
                     <div class="row">
