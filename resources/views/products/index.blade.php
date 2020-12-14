@@ -14,7 +14,14 @@
             </div>
         </div>
         <br>
-        <br>
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-3"></div>
+            <div class="col-6">
+                @include('components.messages')
+            </div>
+            <div class="col-3"></div>
+        </div>
         <div class="row mt-4 d-flex justify-content-start">
             <div class="col-3">
                 @if(isset($products))
