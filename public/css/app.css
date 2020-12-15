@@ -1,3 +1,24 @@
 .bg-login{
     background-color: rgba(0, 120, 255, 0.8);
 }
+
+.min-card-width{
+    min-width: 18em;
+}
+
+.min-card-height{
+    min-height: 11.9em;
+}
+
+.min-card-width-2x{
+    min-width: 36em;
+}
+
+.min-card-height-2x{
+    min-height: 18em;
+}
+
+.action-card{
+    min-width: 18em;
+    min-height: 11.2em;
+}
