@@ -12,15 +12,14 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     private $rules = [
-        'barcode' => 'required|min:8|max:13',
+        'barcode' => 'required|digits:13',
         'description' => 'required|min:5|max:256',
         'company_id' => 'required|numeric|min:1',
     ];
 
     private $rulesToUpdate = [
-        'barcode' => 'required|min:8|max:13',
+        'barcode' => 'required|digits:13',
         'description' => 'required|min:5|max:256',
-        'company_id' => 'required|numeric|min:1',
     ];
 
     public function index()
@@ -100,7 +99,7 @@ class ProductController extends Controller
         return back()->with('success', 'Data adicionada!');
     }
 
-    public function removeDate(Request $request, $id)
+    public function removeDate($id)
     {
         $date = ExpirationDate::find($id);
         $date->delete();
@@ -138,7 +137,7 @@ class ProductController extends Controller
                 return back()->with('success', 'Produto atualizado!')->withInput();
             }
         } else {
-            return back()->with('error', 'Product not found!')->withInput();
+            return back()->with('error', 'Product não encontrado!')->withInput();
         }
     }
 
@@ -148,7 +147,7 @@ class ProductController extends Controller
 
         if(isset($product)) {
             $product->delete();
-            return back()->with('success', 'Produto deletado!');
+            return redirect()->route('products.index')->with('success', 'Produto deletado!');
         } else {
             return back()->with('error', 'Produto não encontrado!');
         }
