@@ -6,10 +6,12 @@
             <h5 class="card-title" title="Detalhes do produto"><a href="{{ route('products.show', $product) }}">{{ $product->description }}</a></h5>
             <h6 class="card-subtitle mb-2 text-muted">{{ $product->barcode }}</h6>
         </div>
+        @if(!isset($collapse_class ))
         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseproduct{{ $product->id }}" aria-expanded="false"
                 title="Exibir datas.">
             <i class="far fa-caret-square-down"></i>
         </button>
+        @endif
     </div>
     <div class="collapse multi-collapse {{ $collapse_class ?? '' }}" id="collapseproduct{{ $product->id }}">
         <table class="table table-hover table-borderless text-center">
@@ -18,13 +20,18 @@
                     <i class="far fa-calendar-alt"></i>
                     Data
                 </th>
-                <th>Quantidade</th>
-                <th>Lote</th>
+                <th>
+                    <i class="fas fa-boxes"></i>
+                    Quantidade
+                </th>
+                <th>
+                    <i class="fas fa-pallet"></i>
+                    Lote
+                </th>
                 <th>
                     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalAddDate{{ $product->id }}"
                             title="Adicionar uma data">
                         <i class="fas fa-plus-circle"></i>
-                        Adicionar
                     </button>
                 </th>
             </thead>
@@ -48,6 +55,6 @@
                 </tr>
                 @endforeach
             </tbody>
-        </table>
+        </table>    
     </div>
 </div>
