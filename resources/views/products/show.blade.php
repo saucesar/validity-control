@@ -27,22 +27,7 @@
                     <div class="row">
                         <div class="col min-card-height-2x">
                             @if(count($historic) > 0)
-                                <table class="table table-responsive" style="zoom: 80%;">
-                                    <thead>
-                                        <th><small>Data</small></th>
-                                        <th><small>Quantidade</small></th>
-                                        <th><small>Lote</small></th>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($historic as $hist)
-                                    <tr>
-                                        <td><small>{{ $hist->date }}</small></td>
-                                        <td><small>{{ $hist->amount }}</small></td>
-                                        <td><small>{{ $hist->lote }}</small></td>
-                                    </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                @include('components.table_exp_dates', ['dates' => $historic, 'table_historic_class' => 'historic-table'])
                             @else
                                 <p>Nada por aqui...</p>
                             @endif
