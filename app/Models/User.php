@@ -52,8 +52,7 @@ class User extends Authenticatable
 
         return $this->access_granted ? Product::where('company_id', $this->company->id)
                                               ->join('expiration_dates', 'expiration_dates.product_id', '=', 'products.id')
-                                              ->whereDate('expiration_dates.date', '>=', $initial_date)
-                                              ->whereDate('expiration_dates.date', '<=', $final_date)
+                                              ->whereBetween('expiration_dates.date', [$initial_date, $final_date])
                                               ->distinct(['products.id'])
                                               ->select('products.*')
                                               ->paginate(15)
