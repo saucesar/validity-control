@@ -13,7 +13,7 @@
             Lote
         </th>
         <th>
-            @if(!isset($table_historic_class))
+            @if(!isset($is_historic))
             <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalAddDate{{ $product->id }}"
                 title="Adicionar uma data">
                 <i class="fas fa-plus-circle"></i>
@@ -28,6 +28,7 @@
             <td>{{ $expdate->amount }}</td>
             <td>{{ $expdate->lote }}</td>
             <td>
+                @if(!isset($is_historic))
                 <form action="{{ route('product.removeDate', $expdate) }}" method="post">
                     @csrf
                     @method('delete')
@@ -37,6 +38,7 @@
                         <i class="fas fa-trash"></i>
                     </button>
                 </form>
+                @endif
             </td>
         </tr>
         @endforeach
