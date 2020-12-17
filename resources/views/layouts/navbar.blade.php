@@ -29,8 +29,8 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="dropPerfil">
             <div class="dropdown-item">
-                <a class="btn" href="{{ '#' }}" title="Informações sobre sua conta.">
-                    Informações
+                <a class="btn" href="{{ route('users.information') }}" title="Informações sobre sua conta.">
+                    Conta
                 </a>
             </div>
             <div class="dropdown-divider"></div>
