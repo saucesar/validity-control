@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -18,6 +19,14 @@ class UserController extends Controller
         'password' => 'required|min:8',
         'password_confirm' => 'required|min:8',
     ];
+
+    private $rules_to_update = [
+        'name' => 'required|min:5',
+        'oldpass' => 'required',
+        'newpass' => 'required|min:8',
+        'confirmnewpass' => 'required|min:8|same:newpass',
+    ];
+
 
     public function login(Request $request)
     {
@@ -101,20 +110,23 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validation = Validator::make($request->all(), $this->rules);
+        $validation = Validator::make($request->all(), $this->rules_to_update);
 
         if($validation->fails()) {
-            return response()->json($validation->errors(), 400);
+            return back()->with('errors', $validation->errors())->withInput();
         } else {
             $user = User::find($id);
             
             if(!isset($user)){
-                return response()->json(['message' => 'User not found!!'], 400);
-            } else if($request->password == $request->password_confirm){
-                $user->update($request->all());
-                return response()->json(['message' => 'User updated!']);                
+                return back()->with('error', 'Usuário não encontrado !!');
+            } else if(Hash::check($request->oldpass, $user->password)){
+                $data = $request->all();
+                $data['password'] = bcrypt($request->newpass);
+
+                $user->update($data);
+                return back()->with('success', 'Informações Atualizadas!');
             } else {
-                return response()->json(['message' => 'The password and confirmation do not match!'], 400);
+                return back()->with('error', 'A senha antiga está errada!')->withInput();
             }
         }
     }
@@ -125,9 +137,18 @@ class UserController extends Controller
             
         if(isset($user)){
             $user->delete();
-            return response()->json(['message' => 'User deleted!']);
+            return redirect()->route('root')->with('success', 'Usuário deletado!');
         } else {
-            return response()->json(['message' => 'User not found!!!'], 400);
+            return back()->with('error', 'Usuário não encontrado!');
         }
+    }
+
+    public function information()
+    {
+        $params = [
+            'user' => Auth::user(),
+        ];
+
+        return view('users/info', $params);
     }
 }
