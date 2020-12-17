@@ -28,7 +28,7 @@
             <i class="fas fa-cog"></i>
         </button>
         <div class="dropdown-menu" aria-labelledby="dropPerfil">
-            <div class="dropdown-item">
+            <div class="dropdown-item d-flex justify-content-center">
                 <a class="btn" href="{{ route('users.information') }}" title="Informações sobre sua conta.">
                     Conta
                 </a>
