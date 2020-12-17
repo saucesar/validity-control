@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-5">
                     <label for="email">Email</label>
-                    <input type="text" class="form-control" name="email" value="{{ $user->email }}" readonly>
+                    <input type="text" class="form-control" name="email" value="{{ $user->email }}" required>
                 </div>
             </div>
             <div class="collapse" id="changepass">
