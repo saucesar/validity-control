@@ -31,6 +31,7 @@ Route::resource('users', UserController::class)->except(['edit', 'index', 'show'
 Route::middleware(['auth'])->group(function (){
     Route::post('users/logout', UserController::class.'@logout')->name('users.logout');
     Route::get('users/access-request/{user}/{status}', UserController::class.'@accessRequest')->name('users.accessRequest');
+    Route::get('users/info', UserController::class.'@information')->name('users.information');
 
     Route::get('/home', HomeController::class."@index")->name('home.index');
     Route::resource('products', ProductController::class)->except(['edit']);
