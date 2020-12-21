@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('users/info', UserController::class.'@information')->name('users.information');
 
     Route::get('/home', HomeController::class."@index")->name('home.index');
-    Route::resource('products', ProductController::class)->except(['edit']);
+    Route::resource('products', ProductController::class)->except(['edit'])->middleware(['authorization']);
     Route::post('products/add-date/{product}', ProductController::class.'@addDate')->name('product.addDate');
     Route::match(['get', 'post'], 'products/search', ProductController::class.'@generalSearch')->name('products.search');
     Route::delete('products/remove-date/{expiration_date}', ProductController::class.'@removeDate')->name('product.removeDate');
