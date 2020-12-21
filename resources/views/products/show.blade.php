@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             <div class="col-3 text-center">
-                <div class="card card-body mb-4 mt-2 action-card">
+                <div class="card card-body mb-4 action-card">
                     <div class="row">
                         <div class="col">
                             <img src="https://www.cognex.com/api/Sitecore/Barcode/Get?data={{ $product->barcode }}&code=S_EAN13&width=300&imageType=PNG&foreColor=%23000000&backColor=%23FFFFFF&rotation=RotateNoneFlipNone"
@@ -36,8 +36,8 @@
                     </div>
                     <div class="row d-flex justify-content-around">
                         <div class="col-2">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalProduct{{ $product->id }}"
-                                    title="Editar produto">
+                            <button class="btn btn-primary" type="button" title="Editar produto" data-toggle="modal"
+                                    data-target="#modalProduct{{ $product->id }}" {{ $user->isCompanyOwner() ? '' : 'disabled' }}>
                                 <i class="fas fa-pen-square"></i>
                             </button>
                             @include('products.modal', ['product' => $product])
@@ -46,7 +46,8 @@
                             <form action="{{ route('products.destroy', $product) }}" method="post">
                                 @csrf
                                 @method('delete')
-                                <button class="btn btn-danger" type="submit" title="Deletar este produto" onclick="return confirm('Tem certeza?');">
+                                <button class="btn btn-danger" type="submit" title="Deletar este produto"
+                                        onclick="return confirm('Tem certeza?');" {{ $user->isCompanyOwner() ? '' : 'disabled' }}>
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
