@@ -26,7 +26,31 @@
         <div class="row mt-4 d-flex justify-content-start">
             <div class="col-4">
                 <div class="card card-body" style="min-width: 18em;">
-                Algo aqui...
+                    <div class="row">
+                        <div class="col">
+                            <small><b>Produtos em data critica ( 3 dias )</b></small>
+                        </div>
+                    </div>
+                    @if(isset($critical_date) && count($critical_date) > 0)
+                    <table class="table critical-date-table">
+                        <thead>
+                            <th>Data</th>
+                            <th>Quantidade</th>
+                            <th>Produto</th>
+                        </thead>
+                        <tbody>
+                            @foreach($critical_date as $cdate)
+                            <tr>
+                                <td>{{ $cdate->date }}</td>
+                                <td>{{ $cdate->amount }}</td>
+                                <td><a href="{{ route('products.show', $cdate->product->id) }}">{{ $cdate->product->description }}</a></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @else
+                        <h4>Nada aqui...</h4>
+                    @endif
                 </div>
             </div>
             <div class="col-4">
