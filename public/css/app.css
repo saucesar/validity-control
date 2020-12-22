@@ -23,6 +23,6 @@
     min-height: 11.2em;
 }
 
-.historic-table{
+.historic-table, .critical-date-table{
     zoom: 60%;
 }
