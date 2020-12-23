@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CompanyController;
+use App\Http\Controllers\Api\ProductApiController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,3 +29,14 @@ Route::post('products/add-date/{product}', ProductController::class.'@addDate');
 Route::any('products/search', ProductController::class.'@generalSearch');
 Route::delete('products/remove-date/{product}', ProductController::class.'@removeDate');
 */
+Route::post('auth/login', AuthController::class.'@login');
+
+Route::group(['middleware' => ['apiJWT'], 'prefix' => 'auth'], function() {
+    Route::post('logout', AuthController::class.'@logout');
+    Route::post('refresh', AuthController::class.'@refresh');
+    Route::post('me', AuthController::class.'@me');
+});
+
+Route::group(['middleware' => ['apiJWT']], function(){
+    Route::apiResource('products-api', ProductApiController::class);
+});
