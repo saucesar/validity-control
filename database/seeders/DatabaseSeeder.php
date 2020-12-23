@@ -10,8 +10,6 @@ class DatabaseSeeder extends Seeder
     
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        
         if(env('APP_ENV') == 'local'){
             $this->call(CompanySeeder::class);
             $this->call(ProductSeeder::class);
@@ -24,6 +22,11 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123456'),
             'company_id' => 1,
             'access_granted' => true,
+        ]);
+
+        DB::table('companies')->insert([
+            'name' => 'MY COMPANY',
+            'owner_id' => 1,
         ]);
 
         if(env('APP_ENV') == 'local'){
