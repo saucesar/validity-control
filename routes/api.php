@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ProductApiController;
-use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,14 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-/*
-Route::apiResource('products', ProductController::class)->except(['create', 'edit']);
-Route::get('products/search/{barcode}', ProductController::class.'@search')->name('products.search');
-Route::get('products/daysofvalidity/{days}', ProductController::class.'@daysOfValidity')->name('products.perDays');
-Route::post('products/add-date/{product}', ProductController::class.'@addDate');
-Route::any('products/search', ProductController::class.'@generalSearch');
-Route::delete('products/remove-date/{product}', ProductController::class.'@removeDate');
-*/
+
 Route::post('auth/login', AuthController::class.'@login');
 
 Route::group(['middleware' => ['apiJWT'], 'prefix' => 'auth'], function() {
