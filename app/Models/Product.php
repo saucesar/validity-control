@@ -12,17 +12,13 @@ class Product extends Model
 
     protected $fillable = ['barcode', 'description', 'company_id'];
 
-    protected $casts = [
-        'expiration_dates' => 'array',
-    ];
-
     public function toArray()
     {
         $array = [
             'id' => $this->id,
             'barcode' => $this->barcode,
             'description' => $this->description,
-            'expiration_dates' => $this->expiration_dates,
+            'expiration_dates' => $this->expirationDates,
             'company_id' => $this->company_id,
         ];
 

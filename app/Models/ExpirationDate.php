@@ -13,6 +13,16 @@ class ExpirationDate extends Model
 
     protected $fillable = ['date', 'amount', 'lote', 'product_id'];
 
+    public function toArray()
+    {
+        return [
+            'date' => $this->date,
+            'amount' => $this->amount,
+            'lote' => $this->lote,
+            'product_id' => $this->product_id,
+        ];
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id')->withTrashed();
