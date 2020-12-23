@@ -3,25 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Models\ExpirationDate;
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    private $rules = [
-        'barcode' => 'required|digits:13',
-        'description' => 'required|min:5|max:256',
-        'company_id' => 'required|numeric|min:1',
-    ];
-
-    private $rulesToUpdate = [
-        'barcode' => 'required|digits:13',
-        'description' => 'required|min:5|max:256',
-    ];
-
     public function index()
     {
         $user = Auth::user();
@@ -34,23 +24,17 @@ class ProductController extends Controller
         return view('products/index', $params);
     }
     
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        $validation = Validator::make($request->all(), $this->rules);
-
-        if($validation->fails()){
-            return response()->json(['message' => $validation->errors()], 400);
+        $exists = Product::where('barcode', $request->barcode)
+                         ->where('company_id', Auth::guard('api')->user()->company->id)
+                         ->first();
+        
+        if($exists){
+            return back()->with('error', 'Existe um produto com o codigo informado!');
         } else {
-            $product = Product::where('company_id', $request->company_id)
-                              ->where('barcode', $request->barcode)
-                              ->get()->first();
-                              
-            if(isset($product)){
-                return response()->json(['message' => 'bacorde already exists.'], 400);
-            } else {
-                Product::create($request->all());
-                return response()->json(['message' => 'Product created!']);                
-            }
+            Product::create($request->all());
+            return back()->with('success', 'Produto criado!');
         }
     }
 
@@ -123,19 +107,13 @@ class ProductController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(ProductUpdateRequest $request, $id)
     {
         $product = Product::find($id);
 
         if(isset($product)) {
-            $validation = Validator::make($request->all(), $this->rulesToUpdate);
-
-            if($validation->fails()){
-                return back()->with('errors', $validation->errors())->withInput();
-            } else {
-                $product->update($request->all());
-                return back()->with('success', 'Produto atualizado!')->withInput();
-            }
+            $product->update($request->all());
+            return back()->with('success', 'Produto atualizado!');
         } else {
             return back()->with('error', 'Product não encontrado!')->withInput();
         }
