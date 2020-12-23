@@ -22,7 +22,7 @@ class AuthController extends Controller
 
     public function me()
     {
-        return response()->json(guard('api')->user());
+        return response()->json(Auth::guard('api')->user());
     }
 
     public function logout()
