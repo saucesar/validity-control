@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
 class ProductApiController extends Controller
@@ -14,48 +16,50 @@ class ProductApiController extends Controller
         return response()->json(['products' => Auth::guard('api')->user()->company->products]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        //
+        $exists = Product::where('barcode', $request->barcode)
+                         ->where('company_id', Auth::guard('api')->user()->company->id)
+                         ->first();
+        
+        if($exists){
+            return response()->json(['message' => 'Existe um produto com o codigo informado!'], 409);
+        } else {
+            Product::create($request->all());
+
+            return response()->json(['message' => 'Produto criado!']);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $product = Product::find($id);
+        if(isset($product)){
+            return response()->json($product);
+        } else {
+            return response()->json(['message' => 'Produto não encontrado!'], 404);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(ProductUpdateRequest $request, $id)
     {
-        //
+        $product = Product::find($id);
+        if(isset($product)){
+            $product->update($request->all());
+            return response()->json(['message' => 'Produto atualizado!']);
+        } else {
+            return response()->json(['message' => 'Produto não encontrado!'], 404);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        if(isset($product)){
+            $product->delete();
+            return response()->json(['message' => 'Produto deletado!']);
+        } else {
+            return response()->json(['message' => 'Produto não encontrado!'], 404);
+        }
     }
 }
