@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ExpirationDateRequest;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Models\ExpirationDate;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,6 +62,20 @@ class ProductApiController extends Controller
             return response()->json(['message' => 'Produto deletado!']);
         } else {
             return response()->json(['message' => 'Produto não encontrado!'], 404);
+        }
+    }
+
+    public function addDate(ExpirationDateRequest $request, $id)
+    {
+        $data = $request->all();
+        $data['product_id'] = $id;
+
+        $expdate = ExpirationDate::create($data);
+
+        if(isset($expdate)){
+            return response()->json(['message' => 'Validade adicionada!']);
+        } else {
+            return response()->json(['message' => 'Problema ao adicionar validade!'], 417);
         }
     }
 }
