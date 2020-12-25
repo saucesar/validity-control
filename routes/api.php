@@ -30,4 +30,5 @@ Route::group(['middleware' => ['apiJWT'], 'prefix' => 'auth'], function() {
 
 Route::group(['middleware' => ['apiJWT']], function(){
     Route::apiResource('products-api', ProductApiController::class);
+    Route::post('products-api/add-date/{product}', ProductApiController::class.'@addDate');
 });
