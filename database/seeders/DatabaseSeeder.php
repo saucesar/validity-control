@@ -10,7 +10,7 @@ class DatabaseSeeder extends Seeder
     
     public function run()
     {
-        if(env('APP_ENV') == 'locaal'){
+        if(env('APP_ENV') == 'local'){
             $this->call(CompanySeeder::class);
             $this->call(ProductSeeder::class);
             $this->call(ExpirationDateSeeder::class);
