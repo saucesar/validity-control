@@ -30,6 +30,17 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function toArray()
+    {
+        return [
+            'name' => $this->name,
+            'email' => $this->email,
+            'company' => $this->company->name,
+            'access_granted' => $this->access_granted,
+            'access_denied' => $this->access_denied,
+        ];
+    }
     
     public function getJWTIdentifier()
     {
