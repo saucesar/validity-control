@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ExpirationDateRequest;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\ExpirationDate;
@@ -73,7 +74,7 @@ class ProductController extends Controller
         return view('products/index', $params);
     }
 
-    public function addDate(Request $request, $id)
+    public function addDate(ExpirationDateRequest $request, $id)
     {
         $data = $request->all();
         $data['product_id'] = $id;
