@@ -14,7 +14,6 @@
                         <form action="{{ route('users.store') }}" method="POST">
                             @csrf
                             @include('components/messages')
-                            <input type="hidden" name="webmode" value="true">
 
                             <div class="form-group">
                                 <div class="row">
@@ -43,7 +42,7 @@
                                     </div>
                                     <div class="col">
                                         <label for="password_confirm">Confirme Senha</label>
-                                        <input type="password" class="form-control" name="password_confirm" value="{{ old('password_confirm') }}" required>
+                                        <input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}" required>
                                     </div>
                                 </div>
                             </div>
