@@ -36,6 +36,26 @@
                     </div>
                 </div>
                 @endif
+                <div class="card card-body mb-4">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-2"><span class="btn bg-red"></span></div>
+                            <div class="col-10"><small>menos de 10 dias</small></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2"><span class="btn bg-orange"></span></div>
+                            <div class="col-10"><small>menos de 20 dias</small></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2"><span class="btn bg-light-green"></span></div>
+                            <div class="col-10"><small>menos de 30 dias</small></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2"><span class="btn bg-green"></span></div>
+                            <div class="col-10"><small>mais que 30 dias</small></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-6">
                 @include('components.products_list')
