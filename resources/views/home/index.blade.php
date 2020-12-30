@@ -25,13 +25,13 @@
         </div>
         <div class="row mt-4 d-flex justify-content-start">
             <div class="col-4">
+                @if(isset($critical_date) && count($critical_date) > 0)
                 <div class="card card-body" style="min-width: 18em;">
                     <div class="row">
                         <div class="col">
                             <small><b>Produtos em data critica ( 3 dias )</b></small>
                         </div>
                     </div>
-                    @if(isset($critical_date) && count($critical_date) > 0)
                     <table class="table critical-date-table">
                         <thead>
                             <th>Data</th>
@@ -48,10 +48,8 @@
                             @endforeach
                         </tbody>
                     </table>
-                    @else
-                        <h4>Nada aqui...</h4>
-                    @endif
                 </div>
+                @endif
             </div>
             <div class="col-4">
                 @if(isset($users_granted))
