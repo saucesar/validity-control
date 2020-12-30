@@ -26,3 +26,19 @@
 .historic-table, .critical-date-table{
     zoom: 60%;
 }
+
+.bg-red {
+    background-color: red;
+}
+
+.bg-orange {
+    background-color: orange;
+}
+
+.bg-light-green {
+    background-color: greenyellow;
+}
+
+.bg-green {
+    background-color: green;
+}
