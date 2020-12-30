@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserResquest;
+use App\Http\Requests\UpdateUserResquest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,22 +14,6 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    private $rules = [
-        'name' => 'required|min:5',
-        'email' => 'required|email:rfc|unique:users',
-        'company' => 'required',
-        'password' => 'required|min:8',
-        'password_confirm' => 'required|min:8',
-    ];
-
-    private $rules_to_update = [
-        'name' => 'required|min:5',
-        'oldpass' => 'required',
-        'newpass' => 'required|min:8',
-        'confirmnewpass' => 'required|min:8|same:newpass',
-    ];
-
-
     public function login(Request $request)
     {
         $logged = Auth::attempt($request->only(['email', 'password']), isset($request->remember));
@@ -64,42 +50,31 @@ class UserController extends Controller
         return back()->with('success', $msg);
     }
 
-    public function store(Request $request)
+    public function store(StoreUserResquest $request)
     {
-        $validation = Validator::make($request->all(), $this->rules);
+        $access_granted = false;
 
-        if($validation->fails()) {
-            return back()->with('errors', $validation->errors())->withInput();
+        if(is_numeric($request->company)){
+            $company = Company::find($request->company);
         } else {
-            if($request->password == $request->password_confirm){
-                $access_granted = false;
+            $company = Company::create(['name' => $request->company]);
+            $access_granted = true;
+        }        
+        if(!isset($company)){
+            return back()->with('error', 'Empresa informada não existe!');
+        }
 
-                if(is_numeric($request->company)){
-                    $company = Company::find($request->company);
-                } else {
-                    $company = Company::create(['name' => $request->company]);
-                    $access_granted = true;
-                }
-                
-                if(!isset($company)){
-                    return back()->with('error', 'Empresa informada não existe!');
-                }
+        $data = $request->all();
+        $data['company_id'] = $company->id;
+        $data['access_granted'] = $access_granted;
 
-                $data = $request->all();
-                $data['company_id'] = $company->id;
-                $data['access_granted'] = $access_granted;
+        $user = User::create($data);
 
-                $user = User::create($data);
-
-                if(isset($request->webmode)){
-                    Auth::login($user, true);
-                    return redirect()->route('home.index');
-                } else {
-                    return response()->json(['message' => 'User created!']);                
-                }
-            } else {
-                return back()->with('error', 'As senhas não conferem')->withInput();
-            }
+        if(isset($user)){
+            Auth::login($user, true);
+            return redirect()->route('home.index')->with('success', "Bem vindo {$user->name}");
+        } else {
+            return back()->with('error', 'Não foi possível completar o cadastro!');
         }
     }
 
@@ -108,26 +83,20 @@ class UserController extends Controller
         return view('users.new_user');
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateUserResquest $request, $id)
     {
-        $validation = Validator::make($request->all(), $this->rules_to_update);
-
-        if($validation->fails()) {
-            return back()->with('errors', $validation->errors())->withInput();
-        } else {
-            $user = User::find($id);
+        $user = User::find($id);
             
-            if(!isset($user)){
-                return back()->with('error', 'Usuário não encontrado !!');
-            } else if(Hash::check($request->oldpass, $user->password)){
-                $data = $request->all();
-                $data['password'] = bcrypt($request->newpass);
+        if(!isset($user)){
+            return back()->with('error', 'Usuário não encontrado !!');
+        } else if(Hash::check($request->oldpass, $user->password)){
+            $data = $request->all();
+            $data['password'] = bcrypt($request->newpass);
 
-                $user->update($data);
-                return back()->with('success', 'Informações Atualizadas!');
-            } else {
-                return back()->with('error', 'A senha antiga está errada!')->withInput();
-            }
+            $user->update($data);
+            return back()->with('success', 'Informações Atualizadas!');
+        } else {
+            return back()->with('error', 'A senha antiga está errada!')->withInput();
         }
     }
 
