@@ -42,8 +42,8 @@
                         <input type="password" class="form-control" name="newpass" value="{{ old('newpass') }}" required>
                     </div>
                     <div class="col-3">
-                        <label for="confirmnewpass">Confirme a nova senha</label>
-                        <input type="password" class="form-control" name="confirmnewpass" value="{{ old('confirmnewpass') }}" required>
+                        <label for="newpass_confirmation">Confirme a nova senha</label>
+                        <input type="password" class="form-control" name="newpass_confirmation" value="{{ old('newpass_confirmation') }}" required>
                     </div>
                 </div>
             </div>
