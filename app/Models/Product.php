@@ -34,4 +34,11 @@ class Product extends Model
     {
         return $this->hasMany(ExpirationDate::class, 'product_id', 'id')->orderBy('date');
     }
+
+    public function totalAmount()
+    {
+        return ExpirationDate::where('product_id', '=', $this->id)
+                             ->where('deleted_at', '=', null)
+                             ->sum('amount');
+    }
 }
