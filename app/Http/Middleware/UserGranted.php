@@ -13,7 +13,7 @@ class UserGranted
         if(Auth::user()->access_granted){
             return $next($request);
         } else {
-            return back()->with('error', 'Acesso não permitido!');
+            return back()->with('error', 'Acesso não permitido, aguardando aprovação!');
         }
     }
 }
