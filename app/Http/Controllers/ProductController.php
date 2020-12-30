@@ -102,7 +102,7 @@ class ProductController extends Controller
             $params = [
                 'user' => Auth::user(),
                 'product' => $product,
-                'historic' => ExpirationDate::where('product_id', $id)->where('deleted_at', '<>', null)->withTrashed()->orderBy('id', 'desc')->get(),
+                'historic' => ExpirationDate::where('product_id', $id)->where('deleted_at', '<>', null)->withTrashed()->orderBy('date', 'desc')->get(),
             ];
 
             return view('products/show', $params);
@@ -111,6 +111,22 @@ class ProductController extends Controller
         }
     }
 
+    public function updateExpirationDate(Request $request, $id)
+    {
+        $expdate = ExpirationDate::find($id);
+
+        if(isset($expdate)){
+            $data = $request->all();
+            $data['product_id'] = $expdate->product_id;
+            ExpirationDate::create($data);
+            $expdate->delete();
+            
+            return back()->with('success', 'Data atualizada');
+        } else {
+            return back()->with('error', 'A data informada não existe!');
+        }
+    }
+    
     public function update(ProductUpdateRequest $request, $id)
     {
         $product = Product::find($id);
