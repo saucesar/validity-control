@@ -5,6 +5,10 @@
             Data
         </th>
         <th>
+            <i class="far fa-clock"></i>
+            Dias Restantes
+        </th>
+        <th>
             <i class="fas fa-boxes"></i>
             Quantidade
         </th>
@@ -25,6 +29,7 @@
         @foreach($dates as $expdate)
         <tr>
             <td>{{ $expdate->date }}</td>
+            <td>{{ $expdate->daysToExpire() }}</td>
             <td>{{ $expdate->amount }}</td>
             <td>{{ $expdate->lote }}</td>
             <td>
