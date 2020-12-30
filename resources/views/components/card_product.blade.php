@@ -15,6 +15,15 @@
         @endif
     </div>
     <div class="collapse multi-collapse {{ $collapse_class ?? '' }}" id="collapseproduct{{ $product->id }}">
-        @include('components.table_exp_dates', ['dates' => $product->expirationDates ])    
+        <div class="row">
+            <div class="col">
+                @include('components.table_exp_dates', ['dates' => $product->expirationDates ])    
+            </div>
+        </div>
+        <div class="row ml-1 mb-2">
+            <div class="col">
+                <b>Quantidade Total: </b>{{ $product->totalAmount() }}
+            </div>
+        </div>
     </div>
 </div>
