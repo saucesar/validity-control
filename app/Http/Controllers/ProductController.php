@@ -71,7 +71,7 @@ class ProductController extends Controller
 
         $params = [
             'user' => $user,
-            'products' => $user->getProductsByExpiration(intval($days)),
+            'products' => $user->productsByExpiration(intval($days)),
         ];
 
         return view('products/index', $params);
