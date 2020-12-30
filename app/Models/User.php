@@ -70,7 +70,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->access_granted ? Product::where('company_id', $this->company->id)->orderBy('description')->paginate(15) : null;
     }
 
-    public function getProductsByExpiration($days)
+    public function productsByExpiration($days)
     {
         $initial_date = Carbon::now();
         $final_date = Carbon::now()->addDays($days);
@@ -78,13 +78,14 @@ class User extends Authenticatable implements JWTSubject
         return $this->access_granted ? Product::where('company_id', $this->company->id)
                                               ->join('expiration_dates', 'expiration_dates.product_id', '=', 'products.id')
                                               ->whereBetween('expiration_dates.date', [$initial_date, $final_date])
+                                              ->where('expiration_dates.deleted_at', '=', null)
                                               ->distinct(['products.id'])
                                               ->select('products.*')
                                               ->paginate(15)
                                      : null;
     }
 
-    public function getAccessRequests()
+    public function accessRequests()
     {
         if(!$this->isCompanyOwner()){
             return null;
