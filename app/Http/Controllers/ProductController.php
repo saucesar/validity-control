@@ -46,7 +46,10 @@ class ProductController extends Controller
 
         $products = Product::orWhere('barcode', 'like', "%$search%")
                            ->orWhere('description', 'like', "%$search%")
-                           ->where('company_id', $user->company->id);
+                           ->join('expiration_dates', 'products.id', '=', 'expiration_dates.product_id')
+                           ->orWhere('expiration_dates.lote', 'like', "%$search%")
+                           ->where('company_id', $user->company->id)
+                           ->select('products.*');
         
         $params = [
             'user' => $user,
