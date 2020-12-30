@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/home', HomeController::class."@index")->name('home.index');
     Route::resource('products', ProductController::class)->except(['edit'])->middleware(['authorization']);
     Route::post('products/add-date/{product}', ProductController::class.'@addDate')->name('product.addDate');
+    Route::put('products/edit-date/{expdate}', ProductController::class.'@updateExpirationDate')->name('product.updateExpdate');
     Route::match(['get', 'post'], 'products/search', ProductController::class.'@generalSearch')->name('products.search')->middleware(['user.granted']);
     Route::delete('products/remove-date/{expiration_date}', ProductController::class.'@removeDate')->name('product.removeDate');
     Route::match(['get', 'post'], 'products/by-expiration-days/{days?}',  ProductController::class.'@expirationDays')->name('products.byExpiration');
