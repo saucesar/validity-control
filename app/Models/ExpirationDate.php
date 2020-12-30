@@ -28,6 +28,19 @@ class ExpirationDate extends Model
         return $this->belongsTo(Product::class, 'product_id', 'id')->withTrashed();
     }
 
+    public function daysToExpire()
+    {
+        return Carbon::parse($this->date)->diffInDays(Carbon::now());
+    }
+
+    public function statusClass()
+    {
+        if($this->daysToExpire() >= 30){ return 'bg-green'; }
+        else if($this->daysToExpire() >= 20){ return 'bg-light-green'; }
+        else if($this->daysToExpire() >= 10){ return 'bg-orange'; }
+        else { return 'bg-red'; }
+    }
+
     public static function byDays($company_id, $days = 3)
     {
         return ExpirationDate::join('products', 'products.id', '=', 'expiration_dates.product_id')
