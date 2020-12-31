@@ -80,8 +80,43 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3"></div>
+            @foreach($dates as $dt)
+                @include('components.modal_date_graphic', ['date' => $dt])
+
+                <script type="text/javascript">
+                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.setOnLoadCallback(setData);
+
+                    function setData() {
+
+                    var array = [['Data', 'Quantidade', { role: 'style' }, { role: 'annotation' }]];
+
+                    var date = "<?= $dt?>";
+                    var graphicData = <?= $graphicData; ?>;
+
+                    for(j = 0; j < graphicData[date].length; j++){
+                        array.push(graphicData[date][j])
+                    }
+                    
+                    var data = new google.visualization.arrayToDataTable(array);
+
+                    var options = {
+                        'title':'Evolução da quantidade ({{$dt}})',
+                        'width':700,
+                        'height':400,
+                    };
+
+                    // Instantiate and draw our chart, passing in some options.
+                    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div{{$dt}}'));
+                    chart.draw(data, options);
+                    }
+                    </script>
+            @endforeach
         </div>
     </div>
 </div>
 @endsection
+
+@push('head_scripts')
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+@endpush
