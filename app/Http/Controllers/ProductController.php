@@ -99,10 +99,28 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if(isset($product)){
+            
+            $dates = Array();
+            $graphicData = Array();
+            
+            foreach($product->expirationDates as $expdate){
+                $expdates = ExpirationDate::where('date', $expdate->date)->where('product_id', $product->id)
+                                          ->withTrashed()->orderBy('created_at')->get();
+                
+                $dates[] = $expdate->date;
+                $graphicData[$expdate->date] = [];
+    
+                foreach($expdates as $dt){
+                    $graphicData[$expdate->date][] = [$dt->created_at->format('d-m-Y'), $dt->amount, 'blue',  "$dt->amount"];
+                }
+            }
+            
             $params = [
                 'user' => Auth::user(),
                 'product' => $product,
                 'historic' => ExpirationDate::where('product_id', $id)->where('deleted_at', '<>', null)->withTrashed()->orderBy('date', 'desc')->get(),
+                'dates' => $dates,
+                'graphicData' => json_encode($graphicData),
             ];
 
             return view('products/show', $params);
