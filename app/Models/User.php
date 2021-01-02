@@ -42,6 +42,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         ];
     }
     
+    public function firstName()
+    {
+        return explode(' ', $this->name)[0];
+    }
+    
     public function getJWTIdentifier()
     {
         return $this->getKey();
