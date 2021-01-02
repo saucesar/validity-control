@@ -15,8 +15,6 @@
                             @csrf
                             @include('components/messages')
 
-                            <input type="hidden" name="webmode" value="true">
-
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
@@ -37,14 +35,25 @@
                                     </div>
                                     <div class="col">
                                         <div class="form-check">
-                                            <a href="{{ route('users.create') }}">É novo? cadastre-se.</a>
+                                        @if (Route::has('password.request'))
+                                            <a class="btn btn-link" href="{{ route('password.request') }}">{{ __('Esqueceu a senha?') }}</a>
+                                        @endif
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <br>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Login</button>
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-primary">Login</button>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-check">
+                                            <a class="btn btn-link" href="{{ route('users.create') }}">É novo? cadastre-se.</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
