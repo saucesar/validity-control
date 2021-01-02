@@ -17,16 +17,12 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    if(Auth::user()){
-        return redirect()->route('home.index');
-    } else {
-        return view('users.login');
-    }
-})->name('root');
+Route::get('/', HomeController::class.'@checkLogin')->name('login');
 
 Route::post('users/login', UserController::class.'@login')->name('users.login');
 Route::resource('users', UserController::class)->except(['edit', 'index', 'show']);
+
+Auth::routes(['verify' => true]);
 
 Route::middleware(['auth'])->group(function (){
     Route::post('users/logout', UserController::class.'@logout')->name('users.logout');
