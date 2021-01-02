@@ -8,6 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+    public function checkLogin()
+    {
+        if(Auth::user()){
+            return redirect()->route('home.index');
+        } else {
+            return view('users.login');
+        }
+    }
+
     public function index(){
         $user = Auth::user();
 
