@@ -28,7 +28,7 @@ class ProductController extends Controller
     public function store(ProductStoreRequest $request)
     {
         $exists = Product::where('barcode', $request->barcode)
-                         ->where('company_id', Auth::guard('api')->user()->company->id)
+                         ->where('company_id', Auth::user()->company->id)
                          ->first();
         
         if($exists){
