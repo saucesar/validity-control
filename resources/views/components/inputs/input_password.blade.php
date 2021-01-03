@@ -1,0 +1,1 @@
+@include('components.inputs.input_text', ['name' => $name, 'label' => $label, 'type' => 'password'])
