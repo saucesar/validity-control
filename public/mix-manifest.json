@@ -1,0 +1,10 @@
+{
+    "/bootstrap/css/bootstrap.css": "/bootstrap/css/bootstrap.css",
+    "/js/jquery.js": "/js/jquery.js",
+    "/bootstrap/js/util.js": "/bootstrap/js/util.js",
+    "/bootstrap/js/bootstrap.js": "/bootstrap/js/bootstrap.js",
+    "/js/jquery.min.js": "/js/jquery.min.js",
+    "/bootstrap/js/util.min.js": "/bootstrap/js/util.min.js",
+    "/bootstrap/js/bootstrap.min.js": "/bootstrap/js/bootstrap.min.js",
+    "/bootstrap/css/bootstrap.min.css": "/bootstrap/css/bootstrap.min.css"
+}
