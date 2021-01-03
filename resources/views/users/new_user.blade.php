@@ -11,6 +11,9 @@
                         <h5 class="card-title">VC</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Novo Usuário</h6>
                         <br>
+                        @include('components.alerts.success')
+                        @include('components.alerts.error')
+
                         <form action="{{ route('users.store') }}" method="POST">
                             @csrf
                             <div class="form-group">
