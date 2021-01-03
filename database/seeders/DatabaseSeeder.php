@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123456'),
             'company_id' => 1,
             'access_granted' => true,
+            'email_verified_at' => now(),
         ]);
 
         if(env('APP_ENV') == 'local'){
@@ -37,6 +38,7 @@ class DatabaseSeeder extends Seeder
                     'password' => bcrypt('123456'),
                     'company_id' => 1,
                     'access_granted' => false,
+                    'email_verified_at' => now(),
                 ]);
             }
         }
