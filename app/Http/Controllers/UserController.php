@@ -133,8 +133,12 @@ class UserController extends Controller
         if(!isset($user)){
             return back()->with('error', 'Usuário não encontrado !!');
         } else {
-            $user->update(['password' => bcrypt($request->newpass)]);
-            return back()->with('success', 'Senha Atualizada!');
+            if(Hash::check($request->oldpass, $user->password)){
+                $user->update(['password' => bcrypt($request->newpass)]);
+                return back()->with('success', 'Senha Atualizada!');
+            } else {
+                return back()->withErrors(['oldpass' => 'A senha informada está incorreta!'])->withInput();
+            }
         }
    }
 }
