@@ -15,8 +15,7 @@ class UpdateUserResquest extends FormRequest
     {
         return [
             'name' => 'required|min:5',
-            'oldpass' => 'required',
-            'newpass' => 'required|min:6|confirmed',
+            'email' => 'required|email:rfc',
         ];
     }
 }
