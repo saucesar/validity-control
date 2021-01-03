@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangeUserPasswordRequest;
 use App\Http\Requests\StoreUserResquest;
 use App\Http\Requests\UpdateUserResquest;
 use App\Models\Company;
@@ -94,14 +95,13 @@ class UserController extends Controller
             
         if(!isset($user)){
             return back()->with('error', 'Usuário não encontrado !!');
-        } else if(Hash::check($request->oldpass, $user->password)){
-            $data = $request->all();
-            $data['password'] = bcrypt($request->newpass);
-
-            $user->update($data);
-            return back()->with('success', 'Informações Atualizadas!');
         } else {
-            return back()->with('error', 'A senha antiga está errada!')->withInput();
+            if($request->email != $user->email && User::where('email', $request->email)->exists()){
+                return back()->withErrors(['email' => 'O email informado já pertence a outro usuário!!']);
+            }
+            $user->update($request->all());
+
+            return back()->with('success', 'Informações Atualizadas!');
         }
     }
 
@@ -111,7 +111,7 @@ class UserController extends Controller
             
         if(isset($user)){
             $user->delete();
-            return redirect()->route('root')->with('success', 'Usuário deletado!');
+            return redirect()->route('login')->with('success', 'Usuário deletado!');
         } else {
             return back()->with('error', 'Usuário não encontrado!');
         }
@@ -125,4 +125,16 @@ class UserController extends Controller
 
         return view('users/info', $params);
     }
+
+    public function changePassword(ChangeUserPasswordRequest $request, $id)
+    {
+        $user = User::find($id);
+            
+        if(!isset($user)){
+            return back()->with('error', 'Usuário não encontrado !!');
+        } else {
+            $user->update(['password' => bcrypt($request->newpass)]);
+            return back()->with('success', 'Senha Atualizada!');
+        }
+   }
 }
