@@ -13,7 +13,7 @@ class HomeController extends Controller
         if(Auth::user()){
             return redirect()->route('home.index');
         } else {
-            return view('users.login');
+            return view('auth.login');
         }
     }
 
