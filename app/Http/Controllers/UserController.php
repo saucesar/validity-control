@@ -10,7 +10,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -53,13 +52,12 @@ class UserController extends Controller
     public function store(StoreUserResquest $request)
     {
         $access_granted = false;
-
         if(is_numeric($request->company)){
             $company = Company::find($request->company);
         } else {
             $company = Company::create(['name' => $request->company]);
             $access_granted = true;
-        }        
+        }
         if(!isset($company)){
             return back()->with('error', 'Empresa informada não existe!');
         }
@@ -67,10 +65,12 @@ class UserController extends Controller
         $data = $request->all();
         $data['company_id'] = $company->id;
         $data['access_granted'] = $access_granted;
-
+        
         $user = User::create($data);
 
         if(isset($user)){
+            $company->owner_id = $user->id;
+            $company->save();
             Auth::login($user, true);
             return redirect()->route('home.index')->with('success', "Bem vindo {$user->name}");
         } else {
