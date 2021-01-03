@@ -64,9 +64,10 @@ class UserController extends Controller
             return back()->with('error', 'Empresa informada não existe!');
         }
 
-        $data = $request->all();
+        $data = $request->except(['_token', 'password_confirmation']);
         $data['company_id'] = $company->id;
         $data['access_granted'] = $access_granted;
+        $data['password'] = bcrypt($data['password']);
         
         $user = User::create($data);
 
