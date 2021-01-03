@@ -52,11 +52,13 @@ class UserController extends Controller
     public function store(StoreUserResquest $request)
     {
         $access_granted = false;
+        $new_company = false;
         if(is_numeric($request->company)){
             $company = Company::find($request->company);
         } else {
             $company = Company::create(['name' => $request->company]);
             $access_granted = true;
+            $new_company = true;
         }
         if(!isset($company)){
             return back()->with('error', 'Empresa informada não existe!');
@@ -69,8 +71,10 @@ class UserController extends Controller
         $user = User::create($data);
 
         if(isset($user)){
-            $company->owner_id = $user->id;
-            $company->save();
+            if($new_company){
+                $company->owner_id = $user->id;
+                $company->save();
+            }
             Auth::login($user, true);
             return redirect()->route('home.index')->with('success', "Bem vindo {$user->name}");
         } else {
