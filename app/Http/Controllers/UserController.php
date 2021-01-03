@@ -62,7 +62,7 @@ class UserController extends Controller
             $new_company = true;
         }
         if(!isset($company)){
-            return back()->with('error', 'Empresa informada não existe!');
+            return back()->withErrors(['company' => 'Empresa informada não existe!'])->withInput();
         }
 
         $data = $request->except(['_token', 'password_confirmation']);
