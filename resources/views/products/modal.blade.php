@@ -1,4 +1,4 @@
-<div class="modal" id="modalProduct{{ $product->id }}" tabindex="-1" role="dialog" aria-labelledby="modalProductLabel" aria-hidden="true">
+<div class="modal" id="modalProduct{{ $product->id ?? 'New' }}" tabindex="-1" role="dialog" aria-labelledby="modalProductLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,9 +7,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('products.update', $product) }}" method="post">
+            <form action="{{ isset($product) ? route('products.update', $product) : route('products.store') }}" method="post">
                 @csrf
-                @method('put')
+                @if(isset($product))
+                    @method('put')
+                @endif
                 <div class="modal-body text-left">
                     @include('products.form', ['product' => $product])
                 </div>

@@ -59,8 +59,14 @@
             </div>
             <div class="col-6">
                 @include('components.products_list')
+                @include('products.modal', ['product' => null])
             </div>
             <div class="col-3">
+                <div class="card card-body mb-4" style="min-width: 18em;">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalProductNew" title="Adicionar produto.">
+                        Adicionar produto
+                    </button>
+                </div>
                 <div class="card card-body mb-4" style="min-width: 18em;">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false"
                             title="Exibir datas.">
