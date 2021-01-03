@@ -11,12 +11,10 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.scripts('node_modules/jquery/dist/jquery.js', 'public/js/jquery.js')
-   .scripts('node_modules/bootstrap/js/dist/util.js', 'public/bootstrap/js/util.js')
+mix.scripts('node_modules/bootstrap/js/dist/util.js', 'public/bootstrap/js/util.js')
    .scripts('node_modules/bootstrap/dist/js/bootstrap.js', 'public/bootstrap/js/bootstrap.js')
    .sass('node_modules/bootstrap/scss/bootstrap.scss', 'public/bootstrap/css/bootstrap.css')
    .minify([
-       'public/js/jquery.js',
        'public/bootstrap/js/util.js',
        'public/bootstrap/js/bootstrap.js',
        'public/bootstrap/css/bootstrap.css',
