@@ -25,15 +25,21 @@ Route::resource('users', UserController::class)->except(['edit', 'index', 'show'
 Auth::routes(['verify' => true]);
 
 Route::middleware(['auth', 'verified'])->group(function (){
-    Route::post('users/logout', UserController::class.'@logout')->name('users.logout');
-    Route::get('users/access-request/{user}/{status}', UserController::class.'@accessRequest')->name('users.accessRequest');
-    Route::get('users/info', UserController::class.'@information')->name('users.information');
-
     Route::get('/home', HomeController::class."@index")->name('home.index');
+
+    Route::prefix('users')->group(function(){
+        Route::post('change-password/{user}', UserController::class.'@changePassword')->name('users.changePassword');
+        Route::post('logout', UserController::class.'@logout')->name('users.logout');
+        Route::get('access-request/{user}/{status}', UserController::class.'@accessRequest')->name('users.accessRequest');
+        Route::get('info', UserController::class.'@information')->name('users.information');
+    });
+    
     Route::resource('products', ProductController::class)->except(['edit'])->middleware(['authorization']);
-    Route::post('products/add-date/{product}', ProductController::class.'@addDate')->name('product.addDate');
-    Route::put('products/edit-date/{expdate}', ProductController::class.'@updateExpirationDate')->name('product.updateExpdate');
-    Route::match(['get', 'post'], 'products/search', ProductController::class.'@generalSearch')->name('products.search')->middleware(['user.granted']);
-    Route::delete('products/remove-date/{expiration_date}', ProductController::class.'@removeDate')->name('product.removeDate');
-    Route::match(['get', 'post'], 'products/by-expiration-days/{days?}',  ProductController::class.'@expirationDays')->name('products.byExpiration');
+    Route::prefix('products')->group(function(){
+        Route::post('add-date/{product}', ProductController::class.'@addDate')->name('product.addDate');
+        Route::put('edit-date/{expdate}', ProductController::class.'@updateExpirationDate')->name('product.updateExpdate');
+        Route::match(['get', 'post'], 'search', ProductController::class.'@generalSearch')->name('products.search')->middleware(['user.granted']);
+        Route::delete('remove-date/{expiration_date}', ProductController::class.'@removeDate')->name('product.removeDate');
+        Route::match(['get', 'post'], 'by-expiration-days/{days?}',  ProductController::class.'@expirationDays')->name('products.byExpiration');    
+    });
 });
