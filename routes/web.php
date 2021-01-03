@@ -24,7 +24,7 @@ Route::resource('users', UserController::class)->except(['edit', 'index', 'show'
 
 Auth::routes(['verify' => true]);
 
-Route::middleware(['auth'])->group(function (){
+Route::middleware(['auth', 'verified'])->group(function (){
     Route::post('users/logout', UserController::class.'@logout')->name('users.logout');
     Route::get('users/access-request/{user}/{status}', UserController::class.'@accessRequest')->name('users.accessRequest');
     Route::get('users/info', UserController::class.'@information')->name('users.information');
