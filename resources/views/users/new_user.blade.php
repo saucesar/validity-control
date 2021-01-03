@@ -13,36 +13,29 @@
                         <br>
                         <form action="{{ route('users.store') }}" method="POST">
                             @csrf
-                            @include('components/messages')
-
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col">
-                                        <label for="password">Seu Nome</label>
-                                        <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
+                                        @include('components.inputs.input_text', ['name' => 'name', 'label' => 'Seu Nome'])
                                     </div>
                                     <div class="col">
-                                        <label for="email">Email</label>
-                                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                        @include('components.inputs.input_text', ['name' => 'email', 'label' => 'Seu Email', 'type' => 'email'])
                                     </div>
                                 </div>
                             </div>
                             <br>
                             <div class="form-group">
-                                <label for="company">Nome da sua Empresa</label>
-                                <input type="text" class="form-control" name="company" value="{{ old('company') }}" required>
+                                @include('components.inputs.input_text', ['name' => 'company', 'label' => 'Nome da sua Empresa'])
                                 <small>Para ingressar em uma empresa existente, coloque aqui o id da empresa.</small>
                             </div>
                             <br>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col">
-                                        <label for="password">Senha</label>
-                                        <input type="password" class="form-control" name="password" value="{{ old('password') }}" required>
+                                        @include('components.inputs.input_password', ['name' => 'password', 'label' => 'Senha'])
                                     </div>
                                     <div class="col">
-                                        <label for="password_confirm">Confirme Senha</label>
-                                        <input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}" required>
+                                        @include('components.inputs.input_password', ['name' => 'password_confirmation', 'label' => 'Confirme a Senha'])
                                     </div>
                                 </div>
                             </div>
