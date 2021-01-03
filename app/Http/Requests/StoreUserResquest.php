@@ -18,6 +18,7 @@ class StoreUserResquest extends FormRequest
             'email' => 'required|email:rfc|unique:users',
             'company' => 'required',
             'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required|min:6',
         ];
     }
 }
