@@ -11,6 +11,7 @@
         <div class="row d-flex justify-content-center">
             <div class="col-9">
                 @include('components.alerts.success')
+                @include('components.alerts.error')
             </div>
         </div>
         <div class="row mt-5 d-flex justify-content-center">
@@ -23,18 +24,10 @@
             @method('put')
             <div class="row mt-2 d-flex justify-content-center">
                 <div class="col-4">
-                    <label for="name">Nome</label>
-                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" required>
-                    @error('name')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
+                    @include('components.inputs.input_text', ['name' => 'name', 'label' => 'Nome', 'value' => $user->name])
                 </div>
                 <div class="col-5">
-                    <label for="email">Email</label>
-                    <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required>
-                    @error('email')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
+                    @include('components.inputs.input_text', ['name' => 'email', 'label' => 'Email', 'type' => 'email', 'value' => $user->email])
                 </div>
             </div>
             <div class="row mt-2 d-flex justify-content-center">
@@ -51,26 +44,14 @@
         <form action="{{ route('users.changePassword', $user) }}" method="post">
             @csrf
             <div class="row mt-3 d-flex justify-content-center">
-                <div class="col-3 {{ $errors->has('oldpass') ? 'is-invalid' : '' }}">
-                    <label for="oldpass">Senha antiga</label>
-                    <input type="password" class="form-control @error('oldpass') is-invalid @enderror" name="oldpass" value="{{ old('oldpass') }}" required>
-                    @error('oldpass')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
+                <div class="col-3">
+                    @include('components.inputs.input_password', ['name' => 'oldpass', 'label' => 'Senha antiga'])
                 </div>
                 <div class="col-3">
-                    <label for="newpass">Nova senha</label>
-                    <input type="password" class="form-control @error('newpass') is-invalid @enderror" name="newpass" value="{{ old('newpass') }}" required>
-                    @error('newpass')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
+                    @include('components.inputs.input_password', ['name' => 'newpass', 'label' => 'Nova senha'])
                 </div>
                 <div class="col-3">
-                    <label for="newpass_confirmation">Confirme a nova senha</label>
-                    <input type="password" class="form-control @error('newpass') is-invalid @enderror" name="newpass_confirmation" value="{{ old('newpass_confirmation') }}" required>
-                    @error('newpass')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
+                    @include('components.inputs.input_password', ['name' => 'newpass_confirmation', 'label' => 'Confirme a nova senha'])
                 </div>
             </div>
             <div class="row mt-2 d-flex justify-content-center">
@@ -88,14 +69,33 @@
                 <h5>Sobre a empresa</h5>
             </div>
         </div>
-        <div class="row mt-2 mb-5 d-flex justify-content-center">
-            <div class="col-9">
-                <h6>
-                    Chama-se <b>{{ $user->company->name }}</b>, Você é <b>{{ $user->isCompanyOwner() ? 'Proprietário' : 'Funcionário' }}</b>, 
-                    o ID da empresa é <b>{{ $user->company->id }}</b>.
-                </h6>
+        <form action="{{ route('company.update', $user->company) }}" method="post">
+            @csrf
+            <div class="row mt-2 d-flex justify-content-center">
+                <div class="col-3">
+                    @include('components.inputs.input_text', ['name' => 'company_name', 'label' => 'Nome', 'value' => $user->company->name])
+                </div>
+                <div class="col-3">
+                    <label for="company_id" title="Este id pode ser usado para que funcionaŕios  solicitem acesso ao dados da empresa.">
+                        ID da empresa
+                    </label>
+                    <input type="number" class="form-control" name="company_id" value="{{ $user->company->id }}" readonly>
+                </div>
+                <div class="col-3">
+                    <label for="role">Seu papel na empresa</label>
+                    <input type="text" class="form-control" name="role" value="{{ $user->isCompanyOwner() ? 'Proprietário' : 'Funcionário' }}" readonly>
+                </div>
             </div>
-        </div>
+            <div class="row mt-2 mb-5 d-flex justify-content-center">
+                <div class="col-3">
+                    <button class="btn btn-primary" type="submit" title="Mudar senha." {{ $user->isCompanyOwner() ? '' : 'disabled' }}>
+                        Salvar
+                    </button>
+                </div>
+                <div class="col-3"></div>
+                <div class="col-3"></div>
+            </div>
+        </form>
     </div>
 </div>
 @endsection
