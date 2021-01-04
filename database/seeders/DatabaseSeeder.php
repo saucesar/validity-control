@@ -10,16 +10,16 @@ class DatabaseSeeder extends Seeder
     
     public function run()
     {
+        DB::table('companies')->insert([
+            'name' => 'MY COMPANY',
+            'owner_id' => 1,
+        ]);
+
         if(env('APP_ENV') == 'local'){
             $this->call(CompanySeeder::class);
             $this->call(ProductSeeder::class);
             $this->call(ExpirationDateSeeder::class);
         }
-
-        DB::table('companies')->insert([
-            'name' => 'MY COMPANY',
-            'owner_id' => 1,
-        ]);
 
         DB::table('users')->insert([
             'name' => 'cesar',
