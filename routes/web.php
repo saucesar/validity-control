@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,10 @@ Route::middleware(['auth', 'verified'])->group(function (){
         Route::get('info', UserController::class.'@information')->name('users.information');
     });
     
+    Route::prefix('company')->group(function(){
+        Route::post('update/{company}', CompanyController::class.'@update')->name('company.update')->middleware(['authorization']);
+    });
+
     Route::resource('products', ProductController::class)->except(['edit'])->middleware(['authorization']);
     Route::prefix('products')->group(function(){
         Route::post('add-date/{product}', ProductController::class.'@addDate')->name('product.addDate');
