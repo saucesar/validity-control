@@ -1,1 +1,1 @@
-@include('components.inputs.input_text', ['name' => $name, 'label' => $label, 'type' => 'password'])
+@include('components.inputs.input_text', ['name' => $name, 'label' => $label, 'type' => 'password', 'value' => ($value ?? null)])
