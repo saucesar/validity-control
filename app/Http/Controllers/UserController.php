@@ -119,11 +119,7 @@ class UserController extends Controller
 
     public function information()
     {
-        $params = [
-            'user' => Auth::user(),
-        ];
-
-        return view('users/info', $params);
+        return view('users/info');
     }
 
     public function changePassword(ChangeUserPasswordRequest $request, $id)

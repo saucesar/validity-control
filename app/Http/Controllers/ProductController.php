@@ -15,11 +15,8 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-
         $params = [
-            'user' => $user,
-            'products' => $user->getProducts(),
+            'products' => Auth::user()->getProducts(),
         ];
 
         return view('products/index', $params);
@@ -42,17 +39,15 @@ class ProductController extends Controller
     public function generalSearch(Request $request)
     {
         $search = $request->search;
-        $user = Auth::user();
 
         $products = Product::orWhere('barcode', 'like', "%$search%")
                            ->orWhere('description', 'like', "%$search%")
                            ->join('expiration_dates', 'products.id', '=', 'expiration_dates.product_id')
                            ->orWhere('expiration_dates.lote', 'like', "%$search%")
-                           ->where('company_id', $user->company->id)
+                           ->where('company_id', Auth::user()->company->id)
                            ->select('products.*');
         
         $params = [
-            'user' => $user,
             'products' => $products->paginate(10),
             'searchData' => $request->except('_token'),
         ];
@@ -62,16 +57,13 @@ class ProductController extends Controller
 
     public function expirationDays(Request $request ,$days = null)
     {
-        $user = Auth::user();
-
         if(!isset($days)){
             $days = intval($request->days);
             !$days ? $days = 30 : $days;
         }
 
         $params = [
-            'user' => $user,
-            'products' => $user->productsByExpiration(intval($days)),
+            'products' => Auth::user()->productsByExpiration(intval($days)),
         ];
 
         return view('products/index', $params);
@@ -116,7 +108,6 @@ class ProductController extends Controller
             }
             
             $params = [
-                'user' => Auth::user(),
                 'product' => $product,
                 'historic' => ExpirationDate::where('product_id', $id)->where('deleted_at', '<>', null)->withTrashed()->orderBy('date', 'desc')->get(),
                 'dates' => $dates,

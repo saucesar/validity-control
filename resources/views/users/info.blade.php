@@ -19,15 +19,15 @@
                 <h5>Sobre você</h5>
             </div>
         </div>
-        <form action="{{ route('users.update', $user) }}" method="post">
+        <form action="{{ route('users.update', auth()->user()) }}" method="post">
             @csrf
             @method('put')
             <div class="row mt-2 d-flex justify-content-center">
                 <div class="col-4">
-                    @include('components.inputs.input_text', ['name' => 'name', 'label' => 'Nome', 'value' => $user->name])
+                    @include('components.inputs.input_text', ['name' => 'name', 'label' => 'Nome', 'value' => auth()->user()->name])
                 </div>
                 <div class="col-5">
-                    @include('components.inputs.input_text', ['name' => 'email', 'label' => 'Email', 'type' => 'email', 'value' => $user->email])
+                    @include('components.inputs.input_text', ['name' => 'email', 'label' => 'Email', 'type' => 'email', 'value' => auth()->user()->email])
                 </div>
             </div>
             <div class="row mt-2 d-flex justify-content-center">
@@ -41,7 +41,7 @@
                 <h5>Configuração de senha</h5>
             </div>
         </div>
-        <form action="{{ route('users.changePassword', $user) }}" method="post">
+        <form action="{{ route('users.changePassword', auth()->user()) }}" method="post">
             @csrf
             <div class="row mt-3 d-flex justify-content-center">
                 <div class="col-3">
@@ -69,26 +69,26 @@
                 <h5>Sobre a empresa</h5>
             </div>
         </div>
-        <form action="{{ route('company.update', $user->company) }}" method="post">
+        <form action="{{ route('company.update', auth()->user()->company) }}" method="post">
             @csrf
             <div class="row mt-2 d-flex justify-content-center">
                 <div class="col-3">
-                    @include('components.inputs.input_text', ['name' => 'company_name', 'label' => 'Nome', 'value' => $user->company->name])
+                    @include('components.inputs.input_text', ['name' => 'company_name', 'label' => 'Nome', 'value' => auth()->user()->company->name])
                 </div>
                 <div class="col-3">
                     <label for="company_id" title="Este id pode ser usado para que funcionaŕios  solicitem acesso ao dados da empresa.">
                         ID da empresa
                     </label>
-                    <input type="number" class="form-control" name="company_id" value="{{ $user->company->id }}" readonly>
+                    <input type="number" class="form-control" name="company_id" value="{{ auth()->user()->company->id }}" readonly>
                 </div>
                 <div class="col-3">
                     <label for="role">Seu papel na empresa</label>
-                    <input type="text" class="form-control" name="role" value="{{ $user->isCompanyOwner() ? 'Proprietário' : 'Funcionário' }}" readonly>
+                    <input type="text" class="form-control" name="role" value="{{ auth()->user()->isCompanyOwner() ? 'Proprietário' : 'Funcionário' }}" readonly>
                 </div>
             </div>
             <div class="row mt-2 mb-5 d-flex justify-content-center">
                 <div class="col-3">
-                    <button class="btn btn-primary" type="submit" title="Mudar senha." {{ $user->isCompanyOwner() ? '' : 'disabled' }}>
+                    <button class="btn btn-primary" type="submit" title="Mudar senha." {{ auth()->user()->isCompanyOwner() ? '' : 'disabled' }}>
                         Salvar
                     </button>
                 </div>

@@ -21,7 +21,7 @@
     </div>
     <div class="btn-group">
         <a class="btn btn-outline-light btn-sm" href="#">
-            Olá {{ $user->firstName() }} ({{ $user->email }})
+            Olá {{ auth()->user()->firstName() }} ({{ auth()->user()->email }})
         </a>
         <button class="btn btn-outline-light btn-sm" type="button" id="dropPerfil" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
