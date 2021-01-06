@@ -16,7 +16,6 @@ class ProductStoreRequest extends FormRequest
         return [
             'barcode' => 'required|numeric|digits:13',
             'description' => 'required|min:5|max:256',
-            'company_id' => 'required|numeric|min:1',
         ];
     }
 }

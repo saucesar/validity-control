@@ -32,7 +32,9 @@ class ProductController extends Controller
         if($exists){
             return back()->with('error', 'Existe um produto com o codigo informado!');
         } else {
-            Product::create($request->all());
+            $data = $request->all();
+            $data['company_id'] = Auth::user()->company->id;
+            Product::create($data);
             return back()->with('success', 'Produto criado!');
         }
     }
