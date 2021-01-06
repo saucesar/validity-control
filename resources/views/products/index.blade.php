@@ -63,13 +63,28 @@
             </div>
             <div class="col-3">
                 <div class="card card-body mb-4" style="min-width: 18em;">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalProductNew" title="Adicionar produto.">
-                        Adicionar produto
-                    </button>
+                    <div class="row d-flex justify-content-between">
+                        <div class="col">
+                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalProductNew" title="Adicionar produto.">
+                                <i class="fas fa-plus-circle"></i>
+                                Add
+                            </button>    
+                        </div>
+                        <div class="col">
+                            <form action="{{ route('products.toPDF') }}" method="post" target="_blank">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-block" title="Gera um pdf com a lista de itens.">
+                                    <i class="fas fa-file-pdf"></i>
+                                    PDF
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="card card-body mb-4" style="min-width: 18em;">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false"
                             title="Exibir datas.">
+                        <i class="fas fa-angle-double-down"></i>
                         Expandir todos
                     </button>
                 </div>
