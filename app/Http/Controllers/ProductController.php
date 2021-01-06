@@ -10,6 +10,7 @@ use App\Models\ExpirationDate;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class ProductController extends Controller
 {
@@ -158,5 +159,14 @@ class ProductController extends Controller
         } else {
             return back()->with('error', 'Produto não encontrado!');
         }
+    }
+
+    public function productsToPdf()
+    {
+        $pdf = PDF::loadView('products.pdf', ['title' => 'TITLE', 'products' => Auth::user()->getProductsWithoutPaginate()]);
+        //$pdf->setPaper('A4', 'landscape');
+
+        return $pdf->stream('products.pdf');
+        
     }
 }
