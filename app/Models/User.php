@@ -73,7 +73,18 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
     public function getProducts()
     {
-        return $this->access_granted ? Product::where('company_id', $this->company->id)->orderBy('description')->paginate(15) : null;
+        return $this->access_granted ? $this->queryProducts()->paginate(15) : null;
+    }
+
+    public function getProductsWithoutPaginate()
+    {
+        return $this->access_granted ? $this->queryProducts()->get() : null;
+    }
+
+
+    private function queryProducts()
+    {
+        return Product::where('company_id', $this->company->id)->orderBy('description');
     }
 
     public function productsByExpiration($days)
