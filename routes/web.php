@@ -45,6 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
         Route::put('edit-date/{expdate}', [ProductController::class, 'updateExpirationDate'])->name('product.updateExpdate');
         Route::match(['get', 'post'], 'search', [ProductController::class, 'generalSearch'])->name('products.search')->middleware(['user.granted']);
         Route::delete('remove-date/{expiration_date}', [ProductController::class, 'removeDate'])->name('product.removeDate');
-        Route::match(['get', 'post'], 'by-expiration-days/{days?}',  [ProductController::class, 'expirationDays'])->name('products.byExpiration');    
+        Route::match(['get', 'post'], 'by-expiration-days/{days?}',  [ProductController::class, 'expirationDays'])->name('products.byExpiration');
+        Route::post('pdf', [ProductController::class, 'productsToPdf'])->name('products.toPDF');
     });
 });
