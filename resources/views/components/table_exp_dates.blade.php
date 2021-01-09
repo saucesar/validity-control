@@ -18,6 +18,9 @@
             <i class="fas fa-pallet"></i>
             Lote
         </th>
+        @if(auth()->user()->isCompanyOwner())
+        <th>Add Por</th>
+        @endif
         <th>
             @if(!isset($is_historic))
             <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalAddDate{{ $product->id }}"
@@ -41,6 +44,9 @@
             @endif
             <td>{{ $expdate->amount }}</td>
             <td>{{ $expdate->lote }}</td>
+            @if(auth()->user()->isCompanyOwner())
+            <td>{{ $expdate->addedBy->firstName() }}</td>
+            @endif
             <td>
             @if(!isset($is_historic))
                 <div class="btn-group" role="group">
