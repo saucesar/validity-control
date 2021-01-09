@@ -62,7 +62,7 @@
                 @include('components.products.modal', ['product' => null])
             </div>
             <div class="col-3">
-                <div class="card card-body mb-4" style="min-width: 18em;">
+                <div class="card card-body min-card-width mb-4">
                     <div class="row d-flex justify-content-between">
                         <div class="col">
                             <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalProductNew" title="Adicionar produto.">
@@ -81,14 +81,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="card card-body mb-4" style="min-width: 18em;">
+                <div class="card card-body min-card-width mb-4">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false"
                             title="Exibir datas.">
                         <i class="fas fa-angle-double-down"></i>
                         Expandir todos
                     </button>
                 </div>
-                <div class="card card-body mb-4" style="min-width: 18em;">
+                <div class="card card-body min-card-width mb-4">
                     <div class="row">
                         <div class="col">
                             <small><b>Produtos a vencer em ...</b></small>
@@ -126,7 +126,7 @@
                                 @csrf
                                 <div class="btn-group" role="group">
                                     <input type="number" name="days" class="form-control" placeholder="Insira os dias">
-                                    <button class="btn btn-sm btn-success">Ok</button>
+                                    <button class="btn btn-success">Ok</button>
                                 </div>
                             </form>
                         </div>
