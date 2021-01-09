@@ -56,4 +56,14 @@ class ExpirationDate extends Model
                              ->select('expiration_dates.*')
                              ->get();
     }
+
+    public static function expired($company_id)
+    {
+        return ExpirationDate::join('products', 'products.id', '=', 'expiration_dates.product_id')
+                             ->where('products.company_id', $company_id)
+                             ->whereDate('expiration_dates.date', '<=', Carbon::now())
+                             ->distinct(['products.id'])
+                             ->select('expiration_dates.*')
+                             ->get();
+    }
 }
