@@ -25,7 +25,7 @@
         <div class="row mt-4 d-flex justify-content-start">
             <div class="col-3">
                 @if(isset($products))
-                <div class="card card-body mb-4">
+                <div class="card shadow card-body mb-4">
                     <div class="row">
                         <div class="col">
                             <small><b>Produtos encontrados: {{ $products->total() }}</b></small>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 @endif
-                <div class="card card-body mb-4">
+                <div class="card shadow card-body mb-4">
                     <div class="col">
                         <div class="row">
                             <div class="col-2"><span class="btn bg-red"></span></div>
@@ -62,7 +62,7 @@
                 @include('components.products.modal', ['product' => null])
             </div>
             <div class="col-3">
-                <div class="card card-body min-card-width mb-4">
+                <div class="card shadow card-body min-card-width mb-4">
                     <div class="row d-flex justify-content-between">
                         <div class="col">
                             <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalProductNew" title="Adicionar produto.">
@@ -81,14 +81,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="card card-body min-card-width mb-4">
+                <div class="card shadow card-body min-card-width mb-4">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false"
                             title="Exibir datas.">
                         <i class="fas fa-angle-double-down"></i>
                         Expandir todos
                     </button>
                 </div>
-                <div class="card card-body min-card-width mb-4">
+                <div class="card shadow card-body min-card-width mb-4">
                     <div class="row">
                         <div class="col">
                             <small><b>Produtos a vencer em ...</b></small>

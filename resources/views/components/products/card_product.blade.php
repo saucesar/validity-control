@@ -1,6 +1,6 @@
 @include('components.exp_dates.modal_add_date', ['product' => $product])
 
-<div class="card mb-2" >
+<div class="card shadow mb-4" >
     <div class="card-body row d-flex justify-content-between">
         <div class="col">
             <h5 class="card-title" title="Detalhes do produto"><a href="{{ route('products.show', $product) }}">{{ $product->description }}</a></h5>
