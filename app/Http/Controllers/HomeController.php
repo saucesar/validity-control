@@ -23,7 +23,7 @@ class HomeController extends Controller
         $params = [
             'user' => $user,
             'access_requests' => $user->accessRequests(),
-            'critical_date' => $user->access_granted ? ExpirationDate::byDays($user->company->id) : null,
+            'critical_dates' => $user->access_granted ? ExpirationDate::byDays($user->company->id) : null,
             'expired_products' => $user->access_granted ? ExpirationDate::expired($user->company->id) : null,
             'users_granted' => $user->isCompanyOwner() ? User::where('company_id', $user->company->id)
                                                              ->where('access_granted', true)
