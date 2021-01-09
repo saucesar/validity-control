@@ -81,7 +81,7 @@
                 </div>
             </div>
             @foreach($dates as $dt)
-                @include('components.modal_date_graphic', ['date' => $dt])
+                @include('components.exp_dates.modal_date_graphic', ['date' => $dt])
 
                 <script type="text/javascript">
                     google.charts.load('current', {'packages':['corechart']});
