@@ -37,7 +37,7 @@
                     <div class="row d-flex justify-content-around">
                         <div class="col-2">
                             <button class="btn btn-primary" type="button" title="Editar produto" data-toggle="modal"
-                                    data-target="#modalProduct{{ $product->id }}" {{ $user->isCompanyOwner() ? '' : 'disabled' }}>
+                                    data-target="#modalProduct{{ $product->id }}" {{ auth()->user()->isCompanyOwner() ? '' : 'disabled' }}>
                                 <i class="fas fa-pen-square"></i>
                             </button>
                             @include('products.modal', ['product' => $product])
@@ -47,7 +47,7 @@
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-danger" type="submit" title="Deletar este produto"
-                                        onclick="return confirm('Tem certeza?');" {{ $user->isCompanyOwner() ? '' : 'disabled' }}>
+                                        onclick="return confirm('Tem certeza?');" {{ auth()->user()->isCompanyOwner() ? '' : 'disabled' }}>
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
