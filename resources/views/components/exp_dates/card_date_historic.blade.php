@@ -1,4 +1,4 @@
-<div class="card card-body min-card-width mb-4">
+<div class="card shadow card-body min-card-width mb-4">
     <div class="row">
         <div class="col">
             <h5 class="card-title">
