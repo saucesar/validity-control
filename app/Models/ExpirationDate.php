@@ -11,7 +11,7 @@ class ExpirationDate extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['date', 'amount', 'lote', 'product_id'];
+    protected $fillable = ['date', 'amount', 'lote', 'product_id', 'user_id'];
 
     public function toArray()
     {
@@ -20,12 +20,18 @@ class ExpirationDate extends Model
             'amount' => $this->amount,
             'lote' => $this->lote,
             'product_id' => $this->product_id,
+            'user_id' => $this->user_id,
         ];
     }
 
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id')->withTrashed();
+    }
+
+    public function addedBy()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function daysToExpire()

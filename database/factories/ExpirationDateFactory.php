@@ -19,6 +19,7 @@ class ExpirationDateFactory extends Factory
             'amount' => $this->faker->numberBetween(100, 999),
             'lote' => Str::random(10),
             'product_id' => $this->faker->numberBetween(1, 99),
+            'user_id' => $this->faker->numberBetween(1, 5),
         ];
     }
 }
