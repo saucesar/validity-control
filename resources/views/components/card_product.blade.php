@@ -1,4 +1,4 @@
-@include('components.modalAddDate', ['product' => $product])
+@include('components.exp_dates.modal_add_date', ['product' => $product])
 
 <div class="card mb-2" >
     <div class="card-body row d-flex justify-content-between">
@@ -17,7 +17,7 @@
     <div class="collapse multi-collapse {{ $collapse_class ?? '' }}" id="collapseproduct{{ $product->id }}">
         <div class="row">
             <div class="col">
-                @include('components.table_exp_dates', ['dates' => $product->expirationDates ])    
+                @include('components.exp_dates.table_exp_dates', ['dates' => $product->expirationDates ])    
             </div>
         </div>
         <div class="row ml-1 mb-2">

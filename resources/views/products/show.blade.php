@@ -72,7 +72,7 @@
                     <div class="row">
                         <div class="col min-card-height-2x">
                             @if(count($historic) > 0)
-                                @include('components.table_exp_dates', ['dates' => $historic, 'is_historic' => true])
+                                @include('components.exp_dates.table_exp_dates', ['dates' => $historic, 'is_historic' => true])
                             @else
                                 <p>Nada por aqui...</p>
                             @endif
