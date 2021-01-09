@@ -1,6 +1,6 @@
 @if(isset($products))
     @foreach($products as $product)
-        @include('components.card_product', ['product' => $product])
+        @include('components.products.card_product', ['product' => $product])
     @endforeach
     @if(isset($searchData))
         {{ $products->appends($searchData)->links() }}

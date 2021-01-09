@@ -58,8 +58,8 @@
                 </div>
             </div>
             <div class="col-6">
-                @include('components.products_list')
-                @include('products.modal', ['product' => null])
+                @include('components.products.products_list')
+                @include('components.products.modal', ['product' => null])
             </div>
             <div class="col-3">
                 <div class="card card-body mb-4" style="min-width: 18em;">

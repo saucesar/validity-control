@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="col-6">
-                @include('components.card_product', ['product' => $product, 'collapse_class' => 'show'])
+                @include('components.products.card_product', ['product' => $product, 'collapse_class' => 'show'])
             </div>
             <div class="col-3">
                 <div class="card card-body action-card">
@@ -40,7 +40,7 @@
                                     data-target="#modalProduct{{ $product->id }}" {{ auth()->user()->isCompanyOwner() ? '' : 'disabled' }}>
                                 <i class="fas fa-pen-square"></i>
                             </button>
-                            @include('products.modal', ['product' => $product])
+                            @include('components.products.modal', ['product' => $product])
                         </div>
                         <div class="col-2">
                             <form action="{{ route('products.destroy', $product) }}" method="post">
