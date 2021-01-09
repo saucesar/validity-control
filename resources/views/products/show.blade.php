@@ -60,25 +60,7 @@
         <div class="row">
             <div class="col-3"></div>
             <div class="col-6">
-                <div class="card card-body mb-4" style="min-width: 18em;">
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title">
-                                <i class="far fa-file-alt"></i>
-                                Historico de datas
-                            </h5>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col min-card-height-2x">
-                            @if(count($historic) > 0)
-                                @include('components.exp_dates.table_exp_dates', ['dates' => $historic, 'is_historic' => true])
-                            @else
-                                <p>Nada por aqui...</p>
-                            @endif
-                        </div>
-                    </div>
-                </div>
+                @include('components.exp_dates.card_date_historic', ['dates' => $historic])
             </div>
             @foreach($dates as $dt)
                 @include('components.exp_dates.modal_date_graphic', ['date' => $dt])
