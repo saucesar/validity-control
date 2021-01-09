@@ -25,37 +25,16 @@
         </div>
         <div class="row mt-4 d-flex justify-content-start">
             <div class="col-4">
-                @if(isset($critical_date) && count($critical_date) > 0)
-                <div class="card card-body min-card-width">
-                    <div class="row">
-                        <div class="col">
-                            <small><b>Produtos em data critica ( 3 dias )</b></small>
-                        </div>
-                    </div>
-                    <table class="table critical-date-table">
-                        <thead>
-                            <th>Data</th>
-                            <th>Quantidade</th>
-                            <th>Produto</th>
-                        </thead>
-                        <tbody>
-                            @foreach($critical_date as $cdate)
-                            <tr>
-                                <td>{{ $cdate->date }}</td>
-                                <td>{{ $cdate->amount }}</td>
-                                <td><a href="{{ route('products.show', $cdate->product->id) }}">{{ $cdate->product->description }}</a></td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                @if(isset($critical_dates) && count($critical_dates) > 0)
+                @include('components.exp_dates.card_exp_dates', ['dates' => $critical_dates, 'title' => 'Produtos em data critica ( 3 dias )'])
                 @endif
                 @if(isset($expired_products) && count($expired_products) > 0)
+                @include('components.exp_dates.card_exp_dates', ['dates' => $expired_products, 'title' => 'Produtos vencidos'])
                 @endif
             </div>
             <div class="col-4">
                 @if(isset($users_granted))
-                <div class="card card-body min-card-width">
+                <div class="card card-body shadow min-card-width">
                     <div class="row">
                         <div class="col">
                             <small><b>Usuários permitidos</b></small>
@@ -87,7 +66,7 @@
             </div>
             <div class="col-4">
                 @if(isset($access_requests))
-                <div class="card card-body min-card-width">
+                <div class="card card-body shadow min-card-width">
                     <div class="row">
                         <div class="col">
                             <small><b>Solicitações de Acesso</b></small>
