@@ -15,12 +15,6 @@ class DatabaseSeeder extends Seeder
             'owner_id' => 1,
         ]);
 
-        if(env('APP_ENV') == 'local'){
-            $this->call(CompanySeeder::class);
-            $this->call(ProductSeeder::class);
-            $this->call(ExpirationDateSeeder::class);
-        }
-
         DB::table('users')->insert([
             'name' => 'cesar',
             'email' => 'cesar@vc.com',
@@ -42,5 +36,12 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
+        
+        if(env('APP_ENV') == 'local'){
+            $this->call(CompanySeeder::class);
+            $this->call(ProductSeeder::class);
+            $this->call(ExpirationDateSeeder::class);
+        }
+
     }
 }
