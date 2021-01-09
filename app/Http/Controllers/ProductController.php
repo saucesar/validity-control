@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ExpirationDateRequest;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\ExpirationDate;
@@ -72,24 +71,6 @@ class ProductController extends Controller
         return view('products/index', $params);
     }
 
-    public function addDate(ExpirationDateRequest $request, $id)
-    {
-        $data = $request->all();
-        $data['product_id'] = $id;
-
-        ExpirationDate::create($data);
-
-        return back()->with('success', 'Data adicionada!');
-    }
-
-    public function removeDate($id)
-    {
-        $date = ExpirationDate::find($id);
-        $date->delete();
-
-        return back()->with('success', 'Data removida com sucesso!');
-    }
-
     public function show($id){
         $product = Product::find($id);
 
@@ -120,22 +101,6 @@ class ProductController extends Controller
             return view('products/show', $params);
         } else {
             return back()->with('error', 'Produto não encontrado!');
-        }
-    }
-
-    public function updateExpirationDate(Request $request, $id)
-    {
-        $expdate = ExpirationDate::find($id);
-
-        if(isset($expdate)){
-            $data = $request->all();
-            $data['product_id'] = $expdate->product_id;
-            ExpirationDate::create($data);
-            $expdate->delete();
-            
-            return back()->with('success', 'Data atualizada');
-        } else {
-            return back()->with('error', 'A data informada não existe!');
         }
     }
     
