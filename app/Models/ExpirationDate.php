@@ -36,7 +36,7 @@ class ExpirationDate extends Model
 
     public function daysToExpire()
     {
-        return Carbon::parse($this->date)->diffInDays(Carbon::now());
+        return Carbon::now()->diffInDays(Carbon::parse($this->date), false);
     }
 
     public function statusClass()
@@ -53,7 +53,7 @@ class ExpirationDate extends Model
                              ->where('products.company_id', $company_id)
                              ->whereBetween('expiration_dates.date', [Carbon::now(), Carbon::now()->addDays($days)])
                              ->distinct(['products.id'])
-                             ->select('expiration_dates.*')
+                             ->select(['expiration_dates.date','expiration_dates.amount',  'expiration_dates.product_id', ])
                              ->get();
     }
 
@@ -61,9 +61,9 @@ class ExpirationDate extends Model
     {
         return ExpirationDate::join('products', 'products.id', '=', 'expiration_dates.product_id')
                              ->where('products.company_id', $company_id)
-                             ->whereDate('expiration_dates.date', '<=', Carbon::now())
+                             ->whereDate('expiration_dates.date', '<', Carbon::now())
                              ->distinct(['products.id'])
-                             ->select('expiration_dates.*')
+                             ->select(['expiration_dates.date','expiration_dates.amount',  'expiration_dates.product_id', ])
                              ->get();
     }
 }
