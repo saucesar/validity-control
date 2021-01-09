@@ -65,7 +65,7 @@
             @endif
             </td>
         </tr>
-        @include('components.modalEditDate', ['expdate' => $expdate])
+        @include('components.exp_dates.modal_edit_date', ['expdate' => $expdate])
         @endforeach
     </tbody>
 </table>
