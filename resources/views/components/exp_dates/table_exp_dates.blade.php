@@ -1,4 +1,4 @@
-<table class="table table-hover table-borderless text-center zoom-90 {{ $table_historic_class ?? '' }}">
+<table class="table table-hover table-borderless text-center zoom-80 {{ $table_historic_class ?? '' }}">
     <thead>
         <th>
             <i class="far fa-calendar-alt"></i>
@@ -19,7 +19,10 @@
             Lote
         </th>
         @if(auth()->user()->isCompanyOwner())
-        <th>Add Por</th>
+        <th>
+            <i class="fas fa-user"></i>
+            Add Por
+        </th>
         @endif
         <th>
             @if(!isset($is_historic))
@@ -32,9 +35,9 @@
     </thead>
     <tbody>
         @foreach($dates as $expdate)
-        <tr>
+        <tr class="{{ $expdate->daysToExpire() < 0 ? 'border border-danger text-danger' : '' }}">
             <td>
-                <button type="button" class="btn" data-toggle="modal" data-target="#modalShowGrafic{{ $expdate->date }}"
+                <button type="button" class="btn {{ $expdate->daysToExpire() < 0 ? 'text-danger' : '' }}" data-toggle="modal" data-target="#modalShowGrafic{{ $expdate->date }}"
                         title="Clique aqui para ver o gráfico.">
                     {{ $expdate->date }}
                 </button>
