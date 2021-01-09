@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             <div class="col-3 text-center">
-                <div class="card card-body mb-4 action-card">
+                <div class="card shadow card-body mb-4 action-card">
                     <div class="row">
                         <div class="col">
                             <img src="https://www.cognex.com/api/Sitecore/Barcode/Get?data={{ $product->barcode }}&code=S_EAN13&width=300&imageType=PNG&foreColor=%23000000&backColor=%23FFFFFF&rotation=RotateNoneFlipNone"
@@ -28,7 +28,7 @@
                 @include('components.products.card_product', ['product' => $product, 'collapse_class' => 'show'])
             </div>
             <div class="col-3">
-                <div class="card card-body action-card">
+                <div class="card shadow card-body action-card">
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title">O que deseja fazer <i class="far fa-question-circle"></i></h5>
