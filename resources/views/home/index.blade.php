@@ -26,7 +26,7 @@
         <div class="row mt-4 d-flex justify-content-start">
             <div class="col-4">
                 @if(isset($critical_date) && count($critical_date) > 0)
-                <div class="card card-body" style="min-width: 18em;">
+                <div class="card card-body min-card-width">
                     <div class="row">
                         <div class="col">
                             <small><b>Produtos em data critica ( 3 dias )</b></small>
@@ -50,13 +50,15 @@
                     </table>
                 </div>
                 @endif
+                @if(isset($expired_products) && count($expired_products) > 0)
+                @endif
             </div>
             <div class="col-4">
                 @if(isset($users_granted))
-                <div class="card card-body" style="min-width: 18em;">
+                <div class="card card-body min-card-width">
                     <div class="row">
                         <div class="col">
-                            <small><b>Usuários com permissão de acesso</b></small>
+                            <small><b>Usuários permitidos</b></small>
                         </div>
                     </div>
 
@@ -85,27 +87,33 @@
             </div>
             <div class="col-4">
                 @if(isset($access_requests))
-                <div class="card card-body" style="min-width: 18em;">
+                <div class="card card-body min-card-width">
                     <div class="row">
                         <div class="col">
                             <small><b>Solicitações de Acesso</b></small>
                         </div>
                     </div>
-                    @foreach($access_requests as $request)
-                        <div class="row">
-                            <div class="col">
-                                <small>{{ $request->name }}</small>
-                            </div>
-                            <div class="col">
-                                <a class="btn btn-sm btn-success" href="{{ route('users.accessRequest', [$request, 'granted']) }}" style="zoom: 75%;" title="Aprovar acesso.">
-                                    <i class="far fa-thumbs-up"></i>
-                                </a>
-                                <a class="btn btn-sm btn-danger" href="{{ route('users.accessRequest', [$request, 'denied']) }}" style="zoom: 75%;" title="Negar acesso.">
-                                    <i class="far fa-thumbs-down"></i>
-                                </a>
-                            </div>
-                        </div>
-                    @endforeach
+                    <table class="table">
+                        <thead>
+                            <th><small>Nome</small></th>
+                            <th><small>Ações</small></th>
+                        </thead>
+                        <tbody>
+                        @foreach($access_requests as $request)
+                            <tr>
+                                <td><small>{{ $request->name }}</small></td>
+                                <td>
+                                    <a class="btn btn-sm btn-success" href="{{ route('users.accessRequest', [$request, 'granted']) }}" style="zoom: 75%;" title="Aprovar acesso.">
+                                        <i class="far fa-thumbs-up"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-danger" href="{{ route('users.accessRequest', [$request, 'denied']) }}" style="zoom: 75%;" title="Negar acesso.">
+                                        <i class="far fa-thumbs-down"></i>
+                                    </a>
+                                </td>
+                            </tr>        
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
                 @endif
             </div>
