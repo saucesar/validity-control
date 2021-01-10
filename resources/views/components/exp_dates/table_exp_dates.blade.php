@@ -35,9 +35,9 @@
     </thead>
     <tbody>
         @foreach($dates as $expdate)
-        <tr class="{{ $expdate->daysToExpire() < 0 ? 'border border-danger text-danger' : '' }}">
+        <tr class="{{ $expdate->daysToExpire() <=3 ? 'border border-danger text-danger' : '' }}">
             <td>
-                <button type="button" class="btn {{ $expdate->daysToExpire() < 0 ? 'text-danger' : '' }}" data-toggle="modal" data-target="#modalShowGrafic{{ $expdate->date }}"
+                <button type="button" class="btn {{ $expdate->daysToExpire() <= 3 ? 'text-danger' : '' }}" data-toggle="modal" data-target="#modalShowGrafic{{ $expdate->date }}"
                         title="Clique aqui para ver o gráfico.">
                     {{ $expdate->date }}
                 </button>
