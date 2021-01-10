@@ -28,7 +28,7 @@
                 <div class="card shadow card-body mb-4">
                     <div class="row">
                         <div class="col">
-                            <small><b>Produtos encontrados: {{ $products->total() }}</b></small>
+                            <small><b>Resultados encontrados: {{ $products->total() }}</b></small>
                         </div>
                     </div>
                     <div class="row">
@@ -91,7 +91,7 @@
                 <div class="card shadow card-body min-card-width mb-4">
                     <div class="row">
                         <div class="col">
-                            <small><b>Produtos a vencer em ...</b></small>
+                            <small><b>Produtos para os próximos ...</b></small>
                         </div>
                     </div>
                     <div class="row">

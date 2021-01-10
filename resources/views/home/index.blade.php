@@ -45,7 +45,7 @@
                         <thead>
                             <th><small>Nome</small></th>
                             <th><small>Email</small></th>
-                            <th></th>
+                            <th><small>Ações</small></th>
                         </thead>
                         <tbody>
                         @foreach($users_granted as $granted)
