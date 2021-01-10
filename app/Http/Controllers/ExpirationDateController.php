@@ -37,12 +37,16 @@ class ExpirationDateController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $date = ExpirationDate::find($id);
         $date->delete();
-
-        return back()->with('success', 'Data removida com sucesso!');
+     
+        if(isset($request->redirect)){
+            return redirect()->route('products.index')->with('success', 'Data removida com sucesso!');
+        } else {
+            return back()->with('success', 'Data removida com sucesso!');
+        }
     }
 
 }

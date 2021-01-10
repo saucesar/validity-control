@@ -58,6 +58,9 @@
                     </button>
                     <form action="{{ route('product.removeDate', $expdate) }}" method="post">
                         @csrf
+                        @if(isset($searchData))
+                            <input type="hidden" name="redirect" value="products.index">
+                        @endif
                         @method('delete')
                         <button type="submit" class="btn btn-sm btn-outline-danger"onclick="return confirm('Deseja remover?');"
                                 title="remover {{ $expdate->date }} ?">
