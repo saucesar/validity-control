@@ -17,6 +17,12 @@
                     Produtos
                 </a>
             </li>
+            <li class="nav-item nav-lg {{ isset($active) && $active == 'categories' ? 'active' : '' }}">
+                <a class="nav-link btn-sm btn-primary" href="#">
+                    <i class="fas fa-cube"></i>
+                    Categorias
+                </a>
+            </li>
         </ul>
     </div>
     <div class="btn-group">
