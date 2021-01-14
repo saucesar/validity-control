@@ -11,7 +11,7 @@
 
     <title>{{ $title ?? 'VC' }}</title>
 </head>
-<body class="{{ $bodyclass ?? '' }}">
+<body class="{{ $bodyclass ?? '' }} container-fluid">
     @if(!isset($navoff))
         @include('layouts.navbar')
     @endif

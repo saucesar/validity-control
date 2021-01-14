@@ -1,9 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+    </button>
     <a class="navbar-brand" href="{{ '' }}">
         <i class="fab fa-rebel"></i>
         <small>VC</small>
     </a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item nav-lg {{ !isset($active) ? 'active' : '' }}">
                 <a class="nav-link btn-sm btn-primary" href="{{ route('home.index') }}">
@@ -54,5 +57,4 @@
             </div>
         </div>
     </div>
-
 </nav>
