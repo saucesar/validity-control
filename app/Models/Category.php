@@ -13,4 +13,13 @@ class Category extends Model
     protected $fillable = ['name', 'send_to', 'company_id'];
 
     protected $casts = ['send_to' => 'array'];
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
+
+    public function products(){
+        return $this->hasMany(Product::class, 'category_id', 'id');
+    }
 }
