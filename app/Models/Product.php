@@ -10,7 +10,7 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['barcode', 'description', 'company_id'];
+    protected $fillable = ['barcode', 'description', 'company_id', 'category_id'];
 
     public function toArray()
     {
