@@ -21,7 +21,7 @@
                 </a>
             </li>
             <li class="nav-item nav-lg {{ isset($active) && $active == 'categories' ? 'active' : '' }}">
-                <a class="nav-link btn-sm btn-primary" href="#">
+                <a class="nav-link btn-sm btn-primary" href="{{ route('categories.index') }}">
                     <i class="fas fa-cube"></i>
                     Categorias
                 </a>
