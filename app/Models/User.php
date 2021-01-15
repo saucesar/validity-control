@@ -32,6 +32,8 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    protected $perPage = 5;
+
     public function toArray()
     {
         return [
@@ -73,7 +75,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
     public function getProducts()
     {
-        return $this->access_granted ? $this->queryProducts()->paginate(15) : null;
+        return $this->access_granted ? $this->queryProducts()->paginate($this->perPage) : null;
     }
 
     public function getProductsWithoutPaginate()
@@ -98,7 +100,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
                                               ->where('expiration_dates.deleted_at', '=', null)
                                               ->distinct(['products.id'])
                                               ->select('products.*')
-                                              ->paginate(15)
+                                              ->paginate($this->perPage)
                                      : null;
     }
 
