@@ -1,5 +1,7 @@
 .bg-login{
     background-color: rgba(0, 120, 255, 0.8);
+    background-image: url('img/bg-2.jpg');
+    background-size: cover;
 }
 
 .min-card-width{
