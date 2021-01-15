@@ -30,13 +30,27 @@
     </div>
     <div class="btn-group">
         <a class="btn btn-outline-light btn-sm" href="#">
-            Olá {{ auth()->user()->firstName() }} ({{ auth()->user()->email }})
+            Olá {{ auth()->user()->firstName() }}
         </a>
-        <button class="btn btn-outline-light btn-sm" type="button" id="dropPerfil" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
+    </div>
+    <div class="btn-group dropleft">
+        <button class="btn btn-outline-light btn-sm" type="button"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="far fa-bell"></i>
+            <span class="badge badge-light">4</span>
+        </button>
+        <div class="dropdown-menu">
+            <h6 class="dropdown-header">Notificações</h6>
+            <a class="btn" href="#" title="My notify"> Notify 1</a>
+            <div class="dropdown-divider"></div>
+            <a class="btn" href="#" title="My notify"> Notify 2</a>
+        </div>
+    </div>
+    <div class="btn-group dropleft">
+        <button class="btn btn-outline-light btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-cog"></i>
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropPerfil">
+        <div class="dropdown-menu">
+            <h6 class="dropdown-header">Configurações</h6>
             <div class="dropdown-item d-flex justify-content-center">
                 <a class="btn" href="{{ route('users.information') }}" title="Informações sobre sua conta.">
                     Conta
@@ -45,7 +59,7 @@
             <div class="dropdown-divider"></div>
             <div class="dropdown-item">
                 <a class="btn" href="{{ '#' }}" title="Configuração padrão do sistema.">
-                    Configurações
+                    Preferências
                 </a>
             </div>
             <div class="dropdown-divider"></div>
