@@ -36,6 +36,11 @@
                     </div>
                     <div class="row d-flex justify-content-around">
                         <div class="col-2">
+                            <a href="#graphics"class="btn btn-warning" title="Veja o gráfico de evolução.">
+                               <i class="fas fa-chart-bar"></i>
+                            </a>
+                        </div>
+                        <div class="col-2">
                             <button class="btn btn-primary" type="button" title="Editar produto" data-toggle="modal"
                                     data-target="#modalProduct{{ $product->id }}" {{ auth()->user()->isCompanyOwner() ? '' : 'disabled' }}>
                                 <i class="fas fa-pen-square"></i>
@@ -52,7 +57,6 @@
                                 </button>
                             </form>
                         </div>
-                        <div class="col-2"></div>
                     </div>
                 </div>
             </div>
@@ -62,9 +66,14 @@
             <div class="col-6">
                 @include('components.exp_dates.card_date_historic', ['dates' => $historic])
             </div>
+        </div>
+        <div class="row" id="graphics">
+            <div class="col">
             @foreach($dates as $dt)
-                @include('components.exp_dates.modal_date_graphic', ['date' => $dt])
-
+                <div class="card card-body mb-3 shadow">
+                    <div class="col-3" id="chart_div{{$dt}}"></div>
+                </div>
+                
                 <script type="text/javascript">
                     google.charts.load('current', {'packages':['corechart']});
                     google.charts.setOnLoadCallback(setData);
@@ -83,7 +92,7 @@
                     var data = new google.visualization.arrayToDataTable(array);
 
                     var options = {
-                        'title':'Evolução da quantidade ({{$dt}})',
+                        'title':'Evolução diária ({{$dt}})',
                         'width':700,
                         'height':400,
                     };
@@ -94,6 +103,7 @@
                     }
                     </script>
             @endforeach
+            </div>
         </div>
     </div>
 </div>
