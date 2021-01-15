@@ -36,7 +36,7 @@
     <tbody>
         @foreach($dates as $expdate)
         <tr class="{{ $expdate->daysToExpire() <=3 && !isset($is_historic) ? 'border border-danger text-danger' : '' }}">
-            <td>{{ $expdate->date }}</td>
+            <td>{{ $expdate->date() }}</td>
             @if(!isset($is_historic))
             <td>{{ $expdate->daysToExpire() }}</td>
             @endif

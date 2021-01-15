@@ -15,7 +15,7 @@
             @foreach($dates as $key => $date)
             <tr>
                 <td>{{ ++$key }}</td>
-                <td>{{ $date->date }}</td>
+                <td>{{ $date->date() }}</td>
                 <td>{{ $date->amount }}</td>
                 <td><a href="{{ route('products.show', $date->product->id) }}">{{ $date->product->description }}</a>
                 </td>
