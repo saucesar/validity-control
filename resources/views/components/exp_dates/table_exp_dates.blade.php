@@ -36,12 +36,7 @@
     <tbody>
         @foreach($dates as $expdate)
         <tr class="{{ $expdate->daysToExpire() <=3 && !isset($is_historic) ? 'border border-danger text-danger' : '' }}">
-            <td>
-                <button type="button" class="btn {{ $expdate->daysToExpire() <= 3 && !isset($is_historic) ? 'text-danger' : '' }}" data-toggle="modal" data-target="#modalShowGrafic{{ $expdate->date }}"
-                        title="Clique aqui para ver o gráfico.">
-                    {{ $expdate->date }}
-                </button>
-            </td>
+            <td>{{ $expdate->date }}</td>
             @if(!isset($is_historic))
             <td>{{ $expdate->daysToExpire() }}</td>
             @endif
