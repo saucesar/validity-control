@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -24,6 +25,10 @@ class DatabaseSeeder extends Seeder
             'access_granted' => true,
             'email_verified_at' => now(),
         ]);
+        
+        if(env('APP_ENV') == 'local'){
+            $this->call(CategorySeeder::class);
+        }
 
         for($i = 1; $i <= 10; $i++){
             DB::table('users')->insert([
@@ -39,15 +44,14 @@ class DatabaseSeeder extends Seeder
                 'barcode' => "78911112222$i",
                 'description' => Str::random(),
                 'company_id' => 1,
+                'category_id' => 2,
             ]);
         }
 
-        
         if(env('APP_ENV') == 'local'){
             $this->call(CompanySeeder::class);
             $this->call(ProductSeeder::class);
             $this->call(ExpirationDateSeeder::class);
         }
-
     }
 }
