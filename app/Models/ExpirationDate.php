@@ -12,7 +12,7 @@ class ExpirationDate extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['date', 'amount', 'lote', 'product_id', 'user_id'];
-
+    
     public function toArray()
     {
         return [
@@ -22,6 +22,11 @@ class ExpirationDate extends Model
             'product_id' => $this->product_id,
             'user_id' => $this->user_id,
         ];
+    }
+    
+    public function date()
+    {
+        return Carbon::parse($this->date)->format('d-m-Y');
     }
 
     public function product()
