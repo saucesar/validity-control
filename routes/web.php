@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ExpirationDateController;
 use App\Http\Controllers\UserController;
@@ -52,4 +53,6 @@ Route::middleware(['auth', 'verified'])->group(function (){
         Route::put('edit-date/{expdate}', [ExpirationDateController::class, 'update'])->name('product.updateExpdate');
         Route::delete('remove-date/{expiration_date}', [ExpirationDateController::class, 'destroy'])->name('product.removeDate');
     });
+
+    Route::resource('categories', CategoryController::class);
 });
