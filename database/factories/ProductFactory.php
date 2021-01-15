@@ -16,6 +16,7 @@ class ProductFactory extends Factory
             'barcode' => $this->faker->numberBetween(10000, 99999).''.$this->faker->numberBetween(10000, 99999).''.$this->faker->numberBetween(100, 999),
             'description' => $this->faker->name,
             'company_id' => 1,
+            'category_id' => $this->faker->numberBetween(1, 20),
         ];
     }
 }
