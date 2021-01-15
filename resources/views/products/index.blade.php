@@ -22,7 +22,22 @@
             </div>
             <div class="col-3"></div>
         </div>
-        <div class="row mt-4 d-flex justify-content-start">
+
+        <div class="row mt-5">
+            <div class="col-3"></div>
+            <div class="col-6">
+            @if(isset($products))
+                @if(isset($searchData))
+                    {{ $products->appends($searchData)->links() }}
+                @else
+                    {{ $products->links() }}
+                @endif
+            @endif
+            </div>
+            <div class="col-3"></div>
+        </div>
+
+        <div class="row d-flex justify-content-start">
             <div class="col-3">
                 @if(isset($products))
                 <div class="card shadow card-body mb-4">
