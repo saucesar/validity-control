@@ -4,7 +4,20 @@
     <div class="card-body row d-flex justify-content-between">
         <div class="col-9">
             <h5 class="card-title" title="Detalhes do produto"><a href="{{ route('products.show', $product) }}">{{ $product->description }}</a></h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{ $product->barcode }}</h6>
+            <div class="row">
+                <div class="col-5">
+                    <h6 class="card-subtitle mb-2 text-muted" title="Código de barras.">
+                        <i class="fas fa-barcode"></i>
+                        {{ $product->barcode }}
+                    </h6>
+                </div>
+                <div class="col-7">
+                    <h6 class="card-subtitle mb-2 text-muted" title="Categoria">
+                        <i class="fas fa-cube"></i>
+                        <a href="#">{{ $product->category->name }}</a>
+                    </h6>
+                </div>
+            </div>
             <span class="btn {{ $product->expirationDates->first() ? $product->expirationDates->first()->statusClass() : '' }}"></span>
         </div>
         <div class="col-1">
