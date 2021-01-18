@@ -77,8 +77,11 @@
                 @include('components.products.modal', ['product' => null])
             </div>
             <div class="col-3">
-                <div class="card shadow card-body min-card-width mb-4">
-                    <div class="row d-flex justify-content-between">
+                <div class="card shadow min-card-width mb-4">
+                    <div class="card-header">
+                        <b>O que quer fazer?</b>
+                    </div>
+                    <div class="row card-body d-flex justify-content-between">
                         <div class="col">
                             <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalProductNew" title="Adicionar produto.">
                                 <i class="fas fa-plus-circle"></i>
@@ -95,13 +98,15 @@
                             </form>
                         </div>
                     </div>
-                </div>
-                <div class="card shadow card-body min-card-width mb-4">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false"
-                            title="Exibir datas.">
-                        <i class="fas fa-angle-double-down"></i>
-                        Expandir todos
-                    </button>
+                    <div class="row card-body d-flex justify-content-between">
+                        <div class="col">
+                            <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false"
+                                title="Exibir datas.">
+                                <i class="fas fa-angle-double-down"></i>
+                                Expandir todos
+                            </button>    
+                        </div>
+                    </div>
                 </div>
                 <div class="card shadow card-body min-card-width mb-4">
                     <div class="row">
