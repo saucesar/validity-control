@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -39,8 +38,8 @@ class DatabaseSeeder extends Seeder
                 'access_granted' => false,
                 'email_verified_at' => now(),
             ]);
-
-            DB::table('products')->insert([
+            
+            \App\Models\Product::create([
                 'barcode' => "78911112222$i",
                 'description' => Str::random(),
                 'company_id' => 1,

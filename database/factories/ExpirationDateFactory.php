@@ -15,7 +15,7 @@ class ExpirationDateFactory extends Factory
     public function definition()
     {
         return [
-            'date' => ($this->faker->numberBetween(0, 3)%2 == 0 ) ? Carbon::now()->addDays($this->faker->numberBetween(10, 60)) : Carbon::now()->subDays($this->faker->numberBetween(1, 3)),
+            'date' => Carbon::now()->addDays($this->faker->numberBetween(-5, 60)),
             'amount' => $this->faker->numberBetween(100, 999),
             'lote' => Str::random(10),
             'product_id' => $this->faker->numberBetween(1, 99),
