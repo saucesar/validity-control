@@ -28,6 +28,9 @@
             </div>
         </div>
     </div>
+    <div class="card-footer">
+        Ultima atualização: {{ $product->updated_at->format('d-m-Y H:i:s') }}
+    </div>
     <!--
     <div class="card-footer">
         <span class="btn btn-block {{ $product->expirationDates->first() ? $product->expirationDates->first()->statusClass() : '' }}"></span>
