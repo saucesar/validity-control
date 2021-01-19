@@ -89,19 +89,37 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return Product::where('company_id', $this->company->id)->orderBy('description');
     }
 
-    public function productsByExpiration($days)
+    public function queryProductsByExpDate($days)
     {
         $initial_date = Carbon::now();
         $final_date = Carbon::now()->addDays($days);
+        
+        return Product::where('company_id', $this->company->id)
+                      ->join('expiration_dates', 'expiration_dates.product_id', '=', 'products.id')
+                      ->whereBetween('expiration_dates.date', [$initial_date, $final_date])
+                      ->where('expiration_dates.deleted_at', '=', null)
+                      ->distinct(['products.id'])
+                      ->select('products.*');
 
-        return $this->access_granted ? Product::where('company_id', $this->company->id)
-                                              ->join('expiration_dates', 'expiration_dates.product_id', '=', 'products.id')
-                                              ->whereBetween('expiration_dates.date', [$initial_date, $final_date])
-                                              ->where('expiration_dates.deleted_at', '=', null)
-                                              ->distinct(['products.id'])
-                                              ->select('products.*')
-                                              ->paginate($this->perPage)
+    }
+
+    public function usersGranted()
+    {
+        return User::where('company_id', $this->company->id)
+                   ->where('access_granted', true)
+                   ->where('id', '<>', $this->id)
+                   ->get();
+    }
+
+    public function productsByExpiration($days)
+    {
+        return $this->access_granted ? $this->queryProductsByExpDate($days)->paginate($this->perPage)
                                      : null;
+    }
+
+    public function productsByExpirationNoPage($days=30)
+    {
+        return $this->queryProductsByExpDate($days)->get();
     }
 
     public function accessRequests()
