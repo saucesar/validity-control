@@ -19,19 +19,29 @@ class HomeController extends Controller
 
     public function index(){
         $user = Auth::user();
-
+        
         $params = [
             'user' => $user,
             'access_requests' => $user->accessRequests(),
             'critical_dates' => $user->access_granted ? ExpirationDate::byDays($user->company->id) : null,
             'expired_products' => $user->access_granted ? ExpirationDate::expired($user->company->id) : null,
-            'users_granted' => $user->isCompanyOwner() ? User::where('company_id', $user->company->id)
-                                                             ->where('access_granted', true)
-                                                             ->where('id', '<>', $user->id)
-                                                             ->get()
-                                                       : null,
+            'users_granted' => $user->isCompanyOwner() ? $user->usersGranted() : null,
+            'graphic_data' => $this->graphicData($user),
         ];
 
         return view('home/index', $params);
+    }
+
+    private function graphicData(User $user)
+    {
+        $array = [
+            ['Categoria', 'Produtos por categoria'],
+        ];
+
+        foreach($user->company->categories as $category){
+            $array[] = [$category->name, $user->queryProductsByExpDate(30)->where('category_id', $category->id)->count()];
+        }
+        
+        return json_encode($array);
     }
 }
