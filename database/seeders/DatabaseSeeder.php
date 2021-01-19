@@ -39,11 +39,17 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
             ]);
             
+            \App\Models\Category::create([
+                'name' => Str::random(),
+                'send_to' => ["cesar$i@vc.com"],
+                'company_id' => 1,
+            ]);
+
             \App\Models\Product::create([
                 'barcode' => "78911112222$i",
                 'description' => Str::random(),
                 'company_id' => 1,
-                'category_id' => 2,
+                'category_id' => 1,
             ]);
         }
 
