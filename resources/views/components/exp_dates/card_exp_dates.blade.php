@@ -1,4 +1,4 @@
-<div class="card min-card-width mb-5 shadow">
+<div class="card card-sized min-card-width mb-5 shadow">
     <div class="card-header {{ isset($danger) ? 'text-danger' : 'text-warning' }}">
         @if(isset($danger))
         <i class="fas fa-exclamation-triangle"></i>
@@ -7,7 +7,7 @@
         @endif
         <b>{{ $title ?? '' }}</b>
     </div>
-    <div class="card-body">
+    <div class="card-body overflow-auto">
         <table class="table critical-date-table">
             <thead>
                 <th>#</th>
