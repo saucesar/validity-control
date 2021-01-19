@@ -16,14 +16,23 @@
                 @include('components.search_form', ['route' => route('products.search') ])
             </div>
         </div>
-        <div class="row d-flex justify-content-center">
+        <div class="row mt-5 d-flex justify-content-center">
             <div class="col-2"></div>
             <div class="col-8">
                 @include('components.messages')
             </div>
             <div class="col-2"></div>
         </div>
-        <div class="row mt-4 d-flex justify-content-start">
+
+        <div class="row mt-5 mb-2">
+            <div class="col d-flex justify-content-center">
+                <div class="card card-body chart-categories">
+                    <div id="piechart" class="chart-categories"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row d-flex justify-content-start">
             <div class="col-4">
                 @if(isset($critical_dates) && count($critical_dates) > 0)
                     @include('components.exp_dates.card_exp_dates', ['dates' => $critical_dates, 'title' => 'Produtos em data critica ( 3 dias )'])
@@ -46,3 +55,29 @@
     </div>
 </div>
 @endsection
+
+@push('head_scripts')
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+@endpush
+
+@push('scripts')
+<script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    var graphicData = <?= $graphic_data; ?>;
+
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable(graphicData);
+
+        var options = {
+            title: 'Produtos com até 30 dias ( Por categoria )',
+            //is3D: true,
+            pieHole:0.4,
+            //sliceVisibilityThreshold: 0.05,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+    }
+</script>
+@endpush
