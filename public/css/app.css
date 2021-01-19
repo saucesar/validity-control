@@ -64,3 +64,8 @@
 body {
     background-color: rgba(251, 251, 251, 0.786);
 }
+
+.chart-categories {
+    width: 55.5em;
+    height: 35em;
+}
