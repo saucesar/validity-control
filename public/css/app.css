@@ -1,31 +1,35 @@
-.bg-login{
+.bg-login {
     background-color: rgba(0, 120, 255, 0.8);
     background-image: url('img/bg-2.jpg');
     background-size: cover;
 }
 
-.min-card-width{
+.card-sized {
+    height: 30em;
+}
+
+.min-card-width {
     min-width: 18em;
 }
 
-.min-card-height{
+.min-card-height {
     min-height: 11.9em;
 }
 
-.min-card-width-2x{
+.min-card-width-2x {
     min-width: 36em;
 }
 
-.min-card-height-2x{
+.min-card-height-2x {
     min-height: 18em;
 }
 
-.action-card{
+.action-card {
     min-width: 18em;
     min-height: 11.2em;
 }
 
-.historic-table, .critical-date-table{
+.historic-table, .critical-date-table {
     zoom: 60%;
 }
 
@@ -45,15 +49,15 @@
     background-color: green;
 }
 
-.zoom-90{
+.zoom-90 {
     zoom: 90%;
 }
 
-.zoom-80{
+.zoom-80 {
     zoom: 80%;
 }
 
-.zoom-70{
+.zoom-70 {
     zoom: 70%;
 }
 
