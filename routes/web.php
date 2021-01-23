@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AmountInOutController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ExpirationDateController;
@@ -55,4 +56,8 @@ Route::middleware(['auth', 'verified'])->group(function (){
     });
 
     Route::resource('categories', CategoryController::class);
+
+    Route::prefix('amountInOut')->group(function(){
+        Route::post('store/{expDateId}', [AmountInOutController::class, 'store'])->name('amountInOut.store');
+    });
 });
