@@ -23,14 +23,6 @@
             </div>
             <div class="col-2"></div>
         </div>
-
-        <div class="row mt-5 mb-2">
-            <div class="col d-flex justify-content-center">
-                <div class="card card-body chart-categories">
-                    <div id="piechart" class="chart-categories"></div>
-                </div>
-            </div>
-        </div>
         
         <div class="row d-flex justify-content-start">
             <div class="col-4">
@@ -50,6 +42,14 @@
                 @if(isset($access_requests))
                     @include('components.users.card_access_requests', ['requests' => $access_requests])
                 @endif
+            </div>
+        </div>
+
+        <div class="row mt-5 mb-2">
+            <div class="col d-flex justify-content-center">
+                <div class="card card-body chart-categories">
+                    <div id="piechart" class="chart-categories"></div>
+                </div>
             </div>
         </div>
     </div>
