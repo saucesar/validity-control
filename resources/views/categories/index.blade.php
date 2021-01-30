@@ -14,14 +14,52 @@
             </div>
         </div>
         <br>
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-3"></div>
+            <div class="col-6">
+                @include('components.messages')
+            </div>
+            <div class="col-3"></div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-3"></div>
+            <div class="col-6">
+                @if(isset($searchData))
+                    {{ $categories->appends($searchData)->links() }}
+                @else
+                    {{ $categories->links() }}
+                @endif
+            </div>
+            <div class="col-3"></div>
+        </div>
         <div class="row">
             <div class="col-3">
-
+                @if(isset($categories))
+                <div class="card shadow card-body mb-4">
+                    <div class="row">
+                        <div class="col">
+                            <small><b>Resultados encontrados: {{ $categories->total() }}</b></small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col"></div>
+                    </div>
+                </div>
+                @endif
             </div>
             <div class="col-6">
-                @foreach($categories as $category)
-                
-                @endforeach
+                <div class="card-deck">
+                    @include('components.categories.categories_list', ['categories' => $categories])
+                </div>
+                <div>
+                    @if(isset($searchData))
+                        {{ $categories->appends($searchData)->links() }}
+                    @else
+                        {{ $categories->links() }}
+                    @endif
+                </div>
             </div>
             <div class="col-3">
                 <div class="card shadow card-body min-card-width mb-4">
