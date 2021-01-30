@@ -10,6 +10,8 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public static $page = 5;
+
     protected $fillable = ['name', 'send_to', 'company_id'];
 
     protected $casts = ['send_to' => 'array'];
