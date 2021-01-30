@@ -6,6 +6,7 @@
 
 .card-sized {
     height: 30em;
+    min-width: 20em;
 }
 
 .min-card-width {
@@ -66,6 +67,6 @@ body {
 }
 
 .chart-categories {
-    width: 55.5em;
-    height: 35em;
+    min-width: 40em;
+    min-height: 30em;
 }
