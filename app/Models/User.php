@@ -105,10 +105,12 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
     public function usersGranted()
     {
-        return User::where('company_id', $this->company->id)
+
+        $users = User::where('company_id', $this->company->id)
                    ->where('access_granted', true)
                    ->where('id', '<>', $this->id)
                    ->get();
+        return count($users) > 0 ? $users : null;
     }
 
     public function productsByExpiration($days)
