@@ -1,4 +1,4 @@
-<div class="card card-sized min-card-width mb-5 shadow">
+<div class="card card-sized mb-5 shadow">
     <div class="card-header {{ isset($danger) ? 'text-danger' : 'text-warning' }}">
         @if(isset($danger))
         <i class="fas fa-exclamation-triangle"></i>

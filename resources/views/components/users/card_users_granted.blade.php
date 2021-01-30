@@ -1,4 +1,4 @@
-<div class="card card-sized shadow min-card-width">
+<div class="card card-sized shadow">
     <div class="card-header">
         <i class="fas fa-user"></i>
         <b>Usuários permitidos</b>
