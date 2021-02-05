@@ -65,10 +65,11 @@
                 <div class="card shadow card-body min-card-width mb-4">
                     <div class="row d-flex justify-content-between">
                         <div class="col">
-                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#" title="Adicionar categoria.">
+                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalCategoryNew" title="Adicionar categoria.">
                                 <i class="fas fa-plus-circle"></i>
                                 Add
-                            </button>    
+                            </button>
+                            @include('components.categories.modal_add')
                         </div>
                     </div>
                 </div>
