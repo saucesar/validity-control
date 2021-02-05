@@ -16,13 +16,11 @@
                             @include('components/messages')
 
                             <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
+                                @include('components.inputs.input_text', ['name' => 'email', 'prepend' => 'fas fa-at', 'label' => 'Email', 'value' =>old('email') ])
                             </div>
                             <br>
                             <div class="form-group">
-                                <label for="password">Senha</label>
-                                <input type="password" class="form-control" id="password" name="password" value="{{ old('password') }}" required>
+                                @include('components.inputs.input_password', ['name' => 'password', 'prepend' => 'fas fa-lock', 'label' => 'Senha', 'value' =>old('password') ])
                             </div>
                             <br>
                             <div class="form-group">
