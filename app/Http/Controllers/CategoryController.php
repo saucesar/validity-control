@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,25 +17,31 @@ class CategoryController extends Controller
         return view('categories/index', $params);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $data['send_to'] = $this->removeNull($data['send_to']);
+        $data['company_id']  =  Auth::user()->company->id;
+
+        $category = Category::create($data);
+
+        if(isset($category)) {
+            return back()->with('success', 'Categoria adicionada!');
+        } else {
+            return back()->with('error', 'Falha ao adicionar categoria!');
+        }
+    }
+
+    private function removeNull($array)
+    {
+        $a = [];
+        foreach($array as $element) {
+            if($element != null) {
+                $a[] = $element;
+            }
+        }
+
+        return $a;
     }
 
     /**
