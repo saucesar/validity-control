@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
         Route::match(['get', 'post'], 'search', [ProductController::class, 'generalSearch'])->name('products.search')->middleware(['user.granted']);
         Route::match(['get', 'post'], 'by-expiration-days/{days?}',  [ProductController::class, 'expirationDays'])->name('products.byExpiration');
         Route::post('pdf', [ProductController::class, 'productsToPdf'])->name('products.toPDF');
+        Route::get('/by-category/{category_id}', [ProductController::class, 'byCategory'])->name('products.byCategory');
     });
 
     Route::prefix('expiration-dates')->group(function(){
