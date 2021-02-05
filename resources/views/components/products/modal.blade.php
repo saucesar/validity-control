@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalProductLabel">Edição de produto</h5>
+                <h5 class="modal-title" id="modalProductLabel">{{ isset($product) ? 'Edição de produto' : 'Novo Produto' }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
