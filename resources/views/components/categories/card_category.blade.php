@@ -9,23 +9,11 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <p>
-                    <button class="btn btn-sm btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseProducts{{ $category->id }}" aria-expanded="false">
+                    <a  class="btn btn-sm btn-outline-primary"  class="btn btn-sm btn-outline-primary" href="{{ route('products.byCategory', $category->id) }}">
                         <i class="fas fa-cubes"></i>
                         Total de Produtos: {{ count($category->products) }}
-                    </button>
+                    </a>
                 </p>
-                <div class="collapse" id="collapseProducts{{ $category->id }}">
-                    <table class="table table-hover">
-                        <tbody>
-                            @foreach($category->products as $product)
-                            <tr>
-                                <td>{{ $product->barcode }}</td>
-                                <td><a href="{{ route('products.show', $product) }}">{{ $product->description }}</a></td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
             </li>
             <li class="list-group-item">
                 <p title="Produtos desta categoria serão enviados para este(s) email(s).">
