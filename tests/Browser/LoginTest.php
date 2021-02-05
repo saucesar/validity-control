@@ -10,8 +10,6 @@ use Illuminate\Support\Str;
 
 class LoginTest extends DuskTestCase
 {
-    use DatabaseMigrations;
-
     private $company;
     private $user;
 
@@ -20,11 +18,11 @@ class LoginTest extends DuskTestCase
         $user = $this->user;
 
         $this->browse(function ($browser) use ($user) {
+            $browser->maximize();
             $browser->visit('/')
                     ->type('email', $user->email)
                     ->type('password', 'testpass')
                     ->press('Login')
-                    ->screenshot('home')
                     ->assertPathIs('/home');
         });
     }

@@ -11,8 +11,6 @@ use Illuminate\Support\Str;
 
 class ProductsIndexTest extends DuskTestCase
 {
-    use DatabaseMigrations;
-
     private $company;
     private $user;
 
@@ -21,10 +19,10 @@ class ProductsIndexTest extends DuskTestCase
         $user = $this->user;
         
         $this->browse(function (Browser $browser) use ($user) {
+            $browser->maximize();
             $browser->loginAs($user)
                     ->visit('/products')
-                    ->assertSee('Produtos')
-                    ->screenshot('products');
+                    ->assertSee('Produtos');
         });
     }
 
