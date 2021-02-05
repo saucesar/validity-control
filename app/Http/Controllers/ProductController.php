@@ -57,6 +57,19 @@ class ProductController extends Controller
         return view('products/index', $params);
     }
 
+    public function byCategory($category_id) {
+        $products = Product::where('company_id', Auth::user()->company->id)
+                           ->where('category_id', $category_id)
+                           ->select('products.*')
+                           ->paginate(10);
+
+        $params = [
+            'products' => $products,
+        ];
+            
+        return view('products/index', $params);
+    }
+
     public function expirationDays(Request $request ,$days = null)
     {
         if(!isset($days)){
