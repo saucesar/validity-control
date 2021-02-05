@@ -24,10 +24,10 @@
             @method('put')
             <div class="row mt-2 d-flex justify-content-center">
                 <div class="col-4">
-                    @include('components.inputs.input_text', ['name' => 'name', 'label' => 'Nome', 'value' => auth()->user()->name])
+                    @include('components.inputs.input_text', ['name' => 'name', 'prepend' => 'fas fa-user', 'label' => 'Nome', 'value' => auth()->user()->name])
                 </div>
                 <div class="col-5">
-                    @include('components.inputs.input_text', ['name' => 'email', 'label' => 'Email', 'type' => 'email', 'value' => auth()->user()->email])
+                    @include('components.inputs.input_text', ['name' => 'email', 'prepend' => 'fas fa-at', 'label' => 'Email', 'type' => 'email', 'value' => auth()->user()->email])
                 </div>
             </div>
             <div class="row mt-2 d-flex justify-content-center">
@@ -45,13 +45,13 @@
             @csrf
             <div class="row mt-3 d-flex justify-content-center">
                 <div class="col-3">
-                    @include('components.inputs.input_password', ['name' => 'oldpass', 'label' => 'Senha antiga'])
+                    @include('components.inputs.input_password', ['name' => 'oldpass', 'prepend' => 'fas fa-lock', 'label' => 'Senha antiga'])
                 </div>
                 <div class="col-3">
-                    @include('components.inputs.input_password', ['name' => 'newpass', 'label' => 'Nova senha'])
+                    @include('components.inputs.input_password', ['name' => 'newpass', 'prepend' => 'fas fa-lock', 'label' => 'Nova senha'])
                 </div>
                 <div class="col-3">
-                    @include('components.inputs.input_password', ['name' => 'newpass_confirmation', 'label' => 'Confirme a nova senha'])
+                    @include('components.inputs.input_password', ['name' => 'newpass_confirmation', 'prepend' => 'fas fa-lock', 'label' => 'Confirme a nova senha'])
                 </div>
             </div>
             <div class="row mt-2 d-flex justify-content-center">
@@ -73,7 +73,7 @@
             @csrf
             <div class="row mt-2 d-flex justify-content-center">
                 <div class="col-3">
-                    @include('components.inputs.input_text', ['name' => 'company_name', 'label' => 'Nome', 'value' => auth()->user()->company->name])
+                    @include('components.inputs.input_text', ['name' => 'company_name', 'prepend' => 'far fa-building', 'label' => 'Nome', 'value' => auth()->user()->company->name])
                 </div>
                 <div class="col-3">
                     <label for="company_id" title="Este id pode ser usado para que funcionaŕios  solicitem acesso ao dados da empresa.">
