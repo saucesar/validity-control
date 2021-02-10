@@ -57,6 +57,9 @@ Route::middleware(['auth', 'verified'])->group(function (){
     });
 
     Route::resource('categories', CategoryController::class);
+    Route::prefix('categories')->group(function(){
+        Route::post('add-email/{category}', [CategoryController::class, 'addEmail'])->name('categories.addEmail');
+    });
 
     Route::prefix('amountInOut')->group(function(){
         Route::post('store/{expDateId}', [AmountInOutController::class, 'store'])->name('amountInOut.store');

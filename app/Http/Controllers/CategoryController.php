@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryEmailRequest;
 use App\Models\Category;
+use App\Models\EmailCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -76,6 +78,21 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function addEmail(CategoryEmailRequest $request, $id){
+        
+        if(Category::find($id)){
+            $exists = EmailCategory::where('email', $request->email)->where('category_id', $id)->exists();
+            if($exists){
+                return back()->with('error', 'Email já adicionado!');
+            }
+
+            EmailCategory::create(['email' => $request->email, 'category_id' => $id]);
+            return back()->with('success', 'Email adicionado!');
+        } else {
+            return back()->with('error', 'Categoria não encontrada!');
+        }
     }
 
     /**
