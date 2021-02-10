@@ -16,19 +16,34 @@
                 </p>
             </li>
             <li class="list-group-item">
-                <p title="Produtos desta categoria serão enviados para este(s) email(s).">
-                    <i class="far fa-envelope"></i>
-                    Enviar para:
-                </p>
-                <ul>
-                    @foreach($category->send_to as $email)
-                    <li>{{ $email }}</li>
-                    @endforeach
-                </ul>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p title="Produtos desta categoria serão enviados para este(s) email(s).">
+                            <i class="far fa-envelope"></i>
+                            Enviar para:
+                        </p>    
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalAddEmail{{ $category->id }}"
+                                title="Adicionar email.">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <ul>
+                            @foreach($category->emails as $emailcategory)
+                            <li>{{ $emailcategory->email }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>
     <div class="card-footer">
         Ultima atualização: {{ $category->updated_at }}
     </div>
+    @include('components.categories.modal_add_email', ['category' => $category])
 </div>
