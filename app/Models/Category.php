@@ -12,13 +12,18 @@ class Category extends Model
 
     public static $page = 5;
 
-    protected $fillable = ['name', 'send_to', 'company_id'];
+    protected $fillable = ['name', 'company_id'];
 
     protected $casts = ['send_to' => 'array'];
 
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
+
+    public function emails()
+    {
+        return $this->hasMany(EmailCategory::class, 'category_id', 'id');
     }
 
     public function products(){
