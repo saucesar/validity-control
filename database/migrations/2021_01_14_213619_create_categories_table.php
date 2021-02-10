@@ -11,7 +11,6 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->json('send_to');
 
             $table->integer('company_id');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');

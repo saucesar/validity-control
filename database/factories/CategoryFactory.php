@@ -13,7 +13,6 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'send_to' => [$this->faker->email, $this->faker->email],
             'company_id' => 1,
         ];
     }
