@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         
         if(env('APP_ENV') == 'local'){
             $this->call(CategorySeeder::class);
+            $this->call(EmailCategorySeeder::class);
         }
 
         for($i = 1; $i <= 10; $i++){
@@ -37,12 +38,6 @@ class DatabaseSeeder extends Seeder
                 'company_id' => 1,
                 'access_granted' => false,
                 'email_verified_at' => now(),
-            ]);
-            
-            \App\Models\Category::create([
-                'name' => Str::random(),
-                'send_to' => ["cesar$i@vc.com"],
-                'company_id' => 1,
             ]);
 
             \App\Models\Product::create([
