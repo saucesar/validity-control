@@ -1,27 +1,22 @@
-<table class="table table-hover table-borderless text-center zoom-80 {{ $table_historic_class ?? '' }}">
+<table class="table table-hover text-center zoom-80 {{ $table_historic_class ?? '' }}">
     <thead>
         <th>
-            <i class="far fa-calendar-alt"></i>
-            Data
+            <i class="far fa-calendar-alt" title="Data de validade"></i>
         </th>
         @if(!isset($is_historic))
         <th>
-            <i class="far fa-clock"></i>
-            Dias Restantes
+            <i class="far fa-clock" title="Dias Restantes"></i>
         </th>
         @endif
         <th>
-            <i class="fas fa-boxes"></i>
-            Quantidade
+            <i class="fas fa-boxes" title="Quantidade"></i>
         </th>
         <th>
-            <i class="fas fa-pallet"></i>
-            Lote
+            <i class="fas fa-pallet" title="Lote"></i>
         </th>
         @if(auth()->user()->isCompanyOwner())
         <th>
-            <i class="fas fa-user"></i>
-            Add Por
+            <i class="fas fa-user" title="Adicionado por..."></i>
         </th>
         @endif
         <th>
