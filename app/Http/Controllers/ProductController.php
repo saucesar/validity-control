@@ -45,13 +45,13 @@ class ProductController extends Controller
 
         $products = Product::orWhere('barcode', 'like', "%$search%")
                            ->orWhere('description', 'like', "%$search%")
-                           ->join('expiration_dates', 'products.id', '=', 'expiration_dates.product_id')
-                           ->orWhere('expiration_dates.lote', 'like', "%$search%")
                            ->where('company_id', Auth::user()->company->id)
+                           ->distinct(['products.id'])
                            ->select('products.*');
         
         $params = [
             'products' => $products->paginate(10),
+            'categories' => Auth::user()->company->categories,
             'searchData' => $request->except('_token'),
         ];
 
@@ -81,6 +81,7 @@ class ProductController extends Controller
 
         $params = [
             'products' => Auth::user()->productsByExpiration(intval($days)),
+            'categories' => Auth::user()->company->categories,
         ];
 
         return view('products/index', $params);
