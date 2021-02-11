@@ -66,6 +66,7 @@ class ProductController extends Controller
 
         $params = [
             'products' => $products,
+            'categories' => Auth::user()->company->categories,
         ];
             
         return view('products/index', $params);
