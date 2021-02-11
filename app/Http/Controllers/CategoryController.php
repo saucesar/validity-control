@@ -105,4 +105,16 @@ class CategoryController extends Controller
     {
         //
     }
+
+    public function deteleEmail($id){
+        $email = EmailCategory::find($id);
+
+        if(isset($email)) {
+            $email->delete();
+
+            return back()->with('success', 'Email removido!');
+        } else {
+            return back()->with('error', 'Email não encontrado');
+        }
+    }
 }

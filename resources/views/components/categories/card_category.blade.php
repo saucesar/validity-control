@@ -8,7 +8,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col">
-                <a  class="btn btn-sm btn-outline-primary"  class="btn btn-outline-primary" href="{{ route('products.byCategory', $category->id) }}">
+                <a  class="btn btn-sm btn-link" href="{{ route('products.byCategory', $category->id) }}">
                     <i class="fas fa-cubes"></i>
                     Total de Produtos: {{ count($category->products) }}
                 </a>
@@ -39,7 +39,15 @@
                                 @foreach($category->emails as $emailcategory)
                                 <tr>
                                     <td>{{ $emailcategory->email }}</td>
-                                    <td></td>
+                                    <td>
+                                        <form action="{{ route('categories.deleteEmail', $emailcategory->id) }}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem Certeza?');">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 @endforeach    
                             </tbody>
