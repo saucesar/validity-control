@@ -19,13 +19,11 @@
             </div>
         </div>
         <div class="row mt-5 d-flex justify-content-center">
-            <div class="col-2"></div>
-            <div class="col-8">
+            <div class="col text-center">
                 @include('components.messages')
             </div>
-            <div class="col-2"></div>
         </div>
-        <div class="d-flex justify-content-between">
+        <div class="card-deck">
             @if(isset($critical_dates) && count($critical_dates) > 0)
                 @include('components.exp_dates.card_exp_dates', ['dates' => $critical_dates, 'title' => 'Produtos em data critica ( 3 dias )'])
             @endif
@@ -39,7 +37,7 @@
                 @include('components.users.card_access_requests', ['requests' => $access_requests])
             @endif
         </div>
-        <div class="d-flex justify-content-between mt-2 mb-2">
+        <div class="d-flex justify-content-between mt-5 mb-2">
             <div id="piechart" class="card shadow chart-categories"></div>
         </div>
     </div>
