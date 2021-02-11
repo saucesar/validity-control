@@ -22,7 +22,6 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $data['send_to'] = $this->removeNull($data['send_to']);
         $data['company_id']  =  Auth::user()->company->id;
 
         $category = Category::create($data);
@@ -34,16 +33,16 @@ class CategoryController extends Controller
         }
     }
 
-    private function removeNull($array)
+    public function search(Request $request)
     {
-        $a = [];
-        foreach($array as $element) {
-            if($element != null) {
-                $a[] = $element;
-            }
-        }
+        $search = $request->search;
 
-        return $a;
+        $params = [
+            'categories' => Category::where('company_id', Auth::user()->company->id)->where('name', 'like', "%$search%")->paginate(Category::$page),
+            'searchData' => $request->except('_token'),
+        ];
+
+        return view('categories/index', $params);
     }
 
     /**
