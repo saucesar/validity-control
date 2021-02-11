@@ -17,6 +17,7 @@ class ProductController extends Controller
     {
         $params = [
             'products' => Auth::user()->getProducts(),
+            'categories' => Auth::user()->company->categories,
         ];
 
         return view('products/index', $params);
@@ -106,6 +107,7 @@ class ProductController extends Controller
             
             $params = [
                 'product' => $product,
+                'categories' => Auth::user()->company->categories,
                 'historic' => ExpirationDate::where('product_id', $id)->where('deleted_at', '<>', null)->withTrashed()->orderBy('date', 'desc')->get(),
                 'dates' => $dates,
                 'graphicData' => json_encode($graphicData),
