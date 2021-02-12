@@ -9,12 +9,17 @@
             <div class="col">
                 <div class="row">
                     <div class="col">
-                        <label for="send_to[]">Enviar para:</label>
+                        <label for="emails[]">Enviar para:</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-10" id="emails-col">
-                        <input type="email" class="form-control" name="send_to[]">
+                        <input type="email" class="form-control" name="emails[]"><br>
+                        @if(isset($category))
+                            @foreach($category->emails as $emailcat)
+                            <input type="email" class="form-control" name="emails[]" value="{{ $emailcat->email }}"><br>
+                            @endforeach
+                        @endif
                     </div>
                     <div class="col-2">
                         <button class="btn btn-success" type="button" onclick="addEmail()" id="btnAddEmail">
@@ -25,7 +30,7 @@
             </div>
             <script>
                 var colunm = document.getElementById('emails-col');
-                var element = '<input type="email" class="form-control" name="send_to[]"><br>';
+                var element = '<input type="email" class="form-control" name="emails[]"><br>';
                 function addEmail() {
                     //colunm.append(element);
                     $(colunm).prepend(element)
@@ -47,7 +52,7 @@
 
                 function checkEmails() {
                 var button = document.getElementById('btnAddEmail');
-                    button.disabled = !(checkInputArray("send_to[]"));
+                    button.disabled = !(checkInputArray("emails[]"));
                 }
 
                 setInterval(checkEmails, 100);
