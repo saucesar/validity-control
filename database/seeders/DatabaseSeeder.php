@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
         
+        \App\Models\Category::factory()->times(1)->create();
+
         if(env('APP_ENV') == 'local'){
             $this->call(CategorySeeder::class);
             $this->call(EmailCategorySeeder::class);
