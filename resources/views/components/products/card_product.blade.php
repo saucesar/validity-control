@@ -14,7 +14,7 @@
                 <div class="col-7">
                     <h6 class="card-subtitle mb-2 text-muted" title="Categoria">
                         <i class="fas fa-cube"></i>
-                        <a href="#" class="text-muted">{{ $product->category->name }}</a>
+                        <a href="{{ route('products.byCategory', $product->category->id) }}" class="text-muted">{{ $product->category->name }}</a>
                     </h6>
                 </div>
             </div>
