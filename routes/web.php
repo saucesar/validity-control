@@ -60,6 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
     Route::prefix('categories')->group(function(){
         Route::match(['get', 'post'], 'to/search', [CategoryController::class, 'search'])->name('categories.search');
         Route::post('add-email/{category}', [CategoryController::class, 'addEmail'])->name('categories.addEmail');
+        Route::put('email/update/{email}', [CategoryController::class, 'editEmail'])->name('categories.editEmail');
         Route::delete('email/destroy/{email}', [CategoryController::class, 'deteleEmail'])->name('categories.deleteEmail');
     });
 
