@@ -1,4 +1,4 @@
-<div class="modal" id="modalAddEmail{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="modalAddEmailLabel" aria-hidden="true">
+<div class="modal" id="modalEmail{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="modalAddEmailLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
