@@ -23,10 +23,18 @@ class CategoryController extends Controller
     {
         $data = $request->all();
         $data['company_id']  =  Auth::user()->company->id;
-
         $category = Category::create($data);
-
+        
         if(isset($category)) {
+
+            foreach($request->emails as $email) {
+                $exists = EmailCategory::where('email', $email)->where('category_id', $category->id)->exists();
+
+                if(!$exists && isset($email)) {
+                    EmailCategory::create(['email' => $email, 'category_id' => $category->id]);
+                }
+            }
+
             return back()->with('success', 'Categoria adicionada!');
         } else {
             return back()->with('error', 'Falha ao adicionar categoria!');
@@ -79,8 +87,8 @@ class CategoryController extends Controller
         //
     }
 
-    public function addEmail(CategoryEmailRequest $request, $id){
-        
+    public function addEmail(Request $request, $id){
+        //dd($request->all());
         if(Category::find($id)){
             $exists = EmailCategory::where('email', $request->email)->where('category_id', $id)->exists();
             if($exists){
@@ -94,15 +102,28 @@ class CategoryController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function editEmail(Request $request, $id)
+    {
+        $emailCategory = EmailCategory::find($id);
+
+        if(isset($emailCategory)) {
+            $emailCategory->update($request->all());
+            return back()->with('success', 'Email atualizado!');
+        } else {
+            return back()->with('error', 'Email informado não existe!');
+        }
+    }
+
     public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+
+        if(isset($category)) {
+            $category->delete();
+            return redirect()->route('categories.index')->with('success', 'Categoria deletada!');
+        } else {
+            return back()->with('error', 'Categoria não encontrada!');
+        }
     }
 
     public function deteleEmail($id){
