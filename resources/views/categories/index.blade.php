@@ -10,11 +10,10 @@
         </div>
         <div class="row mt-4">
             <div class="col">
-                @include('components.search_form', ['route' => '#' ])
+                @include('components.search_form', ['route' => route('categories.search') ])
             </div>
         </div>
         <br>
-
         <div class="row d-flex justify-content-center">
             <div class="col-3"></div>
             <div class="col-6">
@@ -70,6 +69,14 @@
                                 Add
                             </button>
                             @include('components.categories.modal_add')
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target=".multicollapse">
+                                <i class="fas fa-angle-double-down"></i>
+                                Expandir Todos
+                            </button>
                         </div>
                     </div>
                 </div>
