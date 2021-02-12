@@ -44,7 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
 
     Route::resource('products', ProductController::class)->except(['edit'])->middleware(['authorization']);
     Route::prefix('products')->group(function(){
-        Route::match(['get', 'post'], 'search', [ProductController::class, 'generalSearch'])->name('products.search')->middleware(['user.granted']);
+        Route::match(['get', 'post'], 'to/search', [ProductController::class, 'generalSearch'])->name('products.search')->middleware(['user.granted']);
         Route::match(['get', 'post'], 'by-expiration-days/{days?}',  [ProductController::class, 'expirationDays'])->name('products.byExpiration');
         Route::post('pdf', [ProductController::class, 'productsToPdf'])->name('products.toPDF');
         Route::get('/by-category/{category_id}', [ProductController::class, 'byCategory'])->name('products.byCategory');
@@ -58,6 +58,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
 
     Route::resource('categories', CategoryController::class);
     Route::prefix('categories')->group(function(){
+        Route::match(['get', 'post'], 'to/search', [CategoryController::class, 'search'])->name('categories.search');
         Route::post('add-email/{category}', [CategoryController::class, 'addEmail'])->name('categories.addEmail');
         Route::delete('email/destroy/{email}', [CategoryController::class, 'deteleEmail'])->name('categories.deleteEmail');
     });
