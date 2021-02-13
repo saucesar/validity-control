@@ -19,14 +19,14 @@ class HomeController extends Controller
 
     public function index(){
         $user = Auth::user();
-        
+
         $params = [
             'user' => $user,
             'access_requests' => $user->accessRequests(),
             'critical_dates' => $user->access_granted ? ExpirationDate::byDays($user->company->id) : null,
             'expired_products' => $user->access_granted ? ExpirationDate::expired($user->company->id) : null,
             'users_granted' => $user->isCompanyOwner() ? $user->usersGranted() : null,
-            'graphic_data' => $this->graphicData($user),
+            'graphic_data' => $user->access_granted ? $this->graphicData($user) : null,
         ];
 
         return view('home/index', $params);

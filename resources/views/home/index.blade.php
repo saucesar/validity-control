@@ -37,9 +37,22 @@
                 @include('components.users.card_access_requests', ['requests' => $access_requests])
             @endif
         </div>
+        @if(isset($graphic_data))
         <div class="d-flex justify-content-between mt-5 mb-2">
             <div id="piechart" class="card shadow chart-categories"></div>
         </div>
+        @endif
+        @if(!auth()->user()->access_granted)
+        <div class="row text-center">
+            <div class="col">
+                @if(auth()->user()->access_denied)
+                <h4>Seu acesso aos dados da empresa <b>{{ auth()->user()->company->name }}</b> foi negado pelo proprietário.</h4>
+                @else
+                <h4>Aguardando aprovação de acesso aos dados da empresa <b>{{ auth()->user()->company->name }}(Proprietario: {{auth()->user()->company->owner->email}})</b>.</h4>
+                @endif
+            </div>
+        </div>
+        @endif
     </div>
     @endsection
 
@@ -48,6 +61,7 @@
     @endpush
 
     @push('scripts')
+    @if(isset($graphic_data))
     <script type="text/javascript">
     google.charts.load("current", {
         packages: ["corechart"]
@@ -70,4 +84,5 @@
         chart.draw(data, options);
     }
     </script>
+    @endif
     @endpush
