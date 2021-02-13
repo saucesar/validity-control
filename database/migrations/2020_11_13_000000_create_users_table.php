@@ -14,9 +14,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', ['owner', 'employee']);
 
-            $table->integer('company_id');
-            $table->foreign('company_id')->references('id')->on('companies');
+            $table->integer('company_id')->nullable();
             
             $table->boolean('access_granted')->default(false);
             $table->boolean('access_denied')->default(false);
