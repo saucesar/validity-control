@@ -12,7 +12,11 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('owner_id')->nullable();
+            $table->string('cnpj')->unique();
+
+            $table->integer('owner_id');
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
             $table->softDeletes();
         });
