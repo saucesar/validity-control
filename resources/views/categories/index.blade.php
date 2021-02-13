@@ -21,7 +21,7 @@
             </div>
             <div class="col-3"></div>
         </div>
-
+        @if(isset($categories))
         <div class="row mt-5">
             <div class="col-3"></div>
             <div class="col-6">
@@ -82,6 +82,17 @@
                 </div>
             </div>
         </div>
+        @else
+        <div class="row text-center">
+            <div class="col">
+                @if(auth()->user()->access_denied)
+                <h4>Seu acesso aos dados da empresa <b>{{ auth()->user()->company->name }}</b> foi negado pelo proprietário.</h4>
+                @else
+                <h4>Aguardando aprovação de acesso aos dados da empresa <b>{{ auth()->user()->company->name }}(Proprietario: {{auth()->user()->company->owner->email}})</b>.</h4>
+                @endif
+            </div>
+        </div>
+        @endif
     </div>
 </div>
 @endsection

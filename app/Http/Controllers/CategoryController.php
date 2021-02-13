@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function index()
     {
         $params = [
-            'categories' => Auth::user()->company->categoriesPaginated(),
+            'categories' => Auth::user()->access_granted ? Auth::user()->company->categoriesPaginated() : null,
         ];
 
         return view('categories/index', $params);
