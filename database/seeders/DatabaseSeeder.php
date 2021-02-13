@@ -11,20 +11,23 @@ class DatabaseSeeder extends Seeder
     
     public function run()
     {
-        DB::table('companies')->insert([
-            'name' => 'MY COMPANY',
-            'owner_id' => 1,
-        ]);
 
         DB::table('users')->insert([
             'name' => 'cesar',
             'email' => 'cesar@vc.com',
             'password' => bcrypt('123456'),
             'company_id' => 1,
+            'role' => 'owner',
             'access_granted' => true,
             'email_verified_at' => now(),
         ]);
         
+        DB::table('companies')->insert([
+            'name' => 'MY COMPANY',
+            'cnpj' => '11.111.111/1111-11',
+            'owner_id' => 1,
+        ]);
+
         \App\Models\Category::factory()->times(1)->create();
 
         if(env('APP_ENV') == 'local'){
@@ -38,6 +41,7 @@ class DatabaseSeeder extends Seeder
                 'email' => "cesar$i@vc.com",
                 'password' => bcrypt('123456'),
                 'company_id' => 1,
+                'role' => 'employee',
                 'access_granted' => false,
                 'email_verified_at' => now(),
             ]);
@@ -54,6 +58,15 @@ class DatabaseSeeder extends Seeder
             $this->call(CompanySeeder::class);
             $this->call(ProductSeeder::class);
             $this->call(ExpirationDateSeeder::class);
+
+            DB::table('users')->insert([
+                'name' => 'sau cesar',
+                'email' => 'saucesar@vc.com',
+                'password' => bcrypt('123456'),
+                'access_granted' => true,
+                'role' => 'employee',
+                'email_verified_at' => now(),
+            ]);
         }
     }
 }
