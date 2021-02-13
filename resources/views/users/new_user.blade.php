@@ -1,5 +1,10 @@
 @extends('layouts.app', ['navoff' => true, 'bodyclass' => "bg-login", 'title' => 'VC - Novo Usuário'])
 
+@push('head_scripts')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+@endpush
+
 @section('content')
 <div class="container">
     <div class="row d-flex justify-content-center">
@@ -26,12 +31,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <br>
-                            <div class="form-group">
-                                @include('components.inputs.input_text', ['name' => 'company', 'label' => 'Nome da sua Empresa'])
-                                <small>Para ingressar em uma empresa existente, coloque aqui o id da empresa.</small>
-                            </div>
-                            <br>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col">
@@ -41,6 +40,14 @@
                                         @include('components.inputs.input_password', ['name' => 'password_confirmation', 'label' => 'Confirme a Senha'])
                                     </div>
                                 </div>
+                            </div>
+                            <div class="form-check row">
+                                <input type="radio" id="owner" name="role" value="owner" {{ old('role') == 'owner' ? 'checked' : '' }} required>
+                                <label for="owner">Sou Proprietário</label>
+                            </div>
+                            <div class="form-check row">
+                                <input type="radio" id="employee" name="role" value="employee" {{ old('role') == 'employee' ? 'checked' : '' }} required>
+                                <label for="employee">Sou Funcionário</label>
                             </div>
                             <br>
                             <div class="form-group">
