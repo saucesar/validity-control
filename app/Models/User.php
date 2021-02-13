@@ -22,6 +22,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'company_id',
         'access_granted',
         'access_denied',
+        'role',
     ];
 
     protected $hidden = [
