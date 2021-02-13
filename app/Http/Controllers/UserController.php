@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChangeUserPasswordRequest;
-use App\Http\Requests\StoreUserResquest;
+use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserResquest;
-use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -50,33 +49,14 @@ class UserController extends Controller
         return back()->with('success', $msg);
     }
 
-    public function store(StoreUserResquest $request)
-    {
-        $access_granted = false;
-        $new_company = false;
-        if(is_numeric($request->company)){
-            $company = Company::find($request->company);
-        } else {
-            $company = Company::create(['name' => $request->company]);
-            $access_granted = true;
-            $new_company = true;
-        }
-        if(!isset($company)){
-            return back()->withErrors(['company' => 'Empresa informada não existe!'])->withInput();
-        }
-
+    public function store(StoreUserRequest $request)
+    {   
         $data = $request->except(['_token', 'password_confirmation']);
-        $data['company_id'] = $company->id;
-        $data['access_granted'] = $access_granted;
+        $data['access_granted'] = false;
         $data['password'] = bcrypt($data['password']);
         
         $user = User::create($data);
-
         if(isset($user)){
-            if($new_company){
-                $company->owner_id = $user->id;
-                $company->save();
-            }
             Auth::login($user, true);
             return redirect()->route('home.index')->with('success', "Bem vindo {$user->name}");
         } else {
