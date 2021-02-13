@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'authorization' => \App\Http\Middleware\AuthorizationMiddleware::class,
         'user.granted' => \App\Http\Middleware\UserGranted::class,
         'apiJWT' => \App\Http\Middleware\ApiProtectMiddleware::class,
+        'haveCompany' => \App\Http\Middleware\HaveCompany::class,
     ];
 }
