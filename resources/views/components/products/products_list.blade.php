@@ -13,7 +13,7 @@
         @if(auth()->user()->access_denied)
         <h4>Seu acesso aos dados da empresa <b>{{ auth()->user()->company->name }}</b> foi negado pelo proprietário.</h4>
         @else
-        <h4>Aguardando aprovação de acesso aos dados da empresa <b>{{ auth()->user()->company->name }}</b>.</h4>
+        <h4>Aguardando aprovação de acesso aos dados da empresa <b>{{ auth()->user()->company->name }}(Proprietario: {{auth()->user()->company->owner->email}})</b>.</h4>
         @endif
     </div>
 </div>
