@@ -73,7 +73,11 @@
             @csrf
             <div class="row mt-2 d-flex justify-content-center">
                 <div class="col-3">
+                    @if(auth()->user()->isCompanyOwner())
                     @include('components.inputs.input_text', ['name' => 'company_name', 'prepend' => 'far fa-building', 'label' => 'Nome', 'value' => auth()->user()->company->name])
+                    @else
+                    @include('components.inputs.input_text', ['name' => 'company_name', 'prepend' => 'far fa-building', 'label' => 'Nome', 'value' => auth()->user()->company->name, 'readonly' => true])
+                    @endif
                 </div>
                 <div class="col-3">
                     <label for="company_id" title="Este id pode ser usado para que funcionaŕios  solicitem acesso ao dados da empresa.">
