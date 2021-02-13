@@ -28,12 +28,11 @@ Route::resource('users', UserController::class)->except(['edit', 'index', 'show'
 
 Auth::routes(['verify' => true]);
 
-Route::middleware(['auth', 'verified'])->group(function (){
+Route::middleware(['auth', 'verified', 'haveCompany'])->group(function (){
     Route::get('/home', [HomeController::class, "index"])->name('home.index');
 
     Route::prefix('users')->group(function(){
         Route::post('change-password/{user}', [UserController::class, 'changePassword'])->name('users.changePassword');
-        Route::post('logout', [UserController::class, 'logout'])->name('users.logout');
         Route::get('access-request/{user}/{status}', [UserController::class, 'accessRequest'])->name('users.accessRequest');
         Route::get('info', [UserController::class, 'information'])->name('users.information');
     });
@@ -58,7 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
 
     Route::resource('categories', CategoryController::class);
     Route::prefix('categories')->group(function(){
-        Route::match(['get', 'post'], 'to/search', [CategoryController::class, 'search'])->name('categories.search');
+        Route::match(['get', 'post'], 'to/search', [CategoryController::class, 'search'])->name('categories.search')->middleware(['authorization']);
         Route::post('add-email/{category}', [CategoryController::class, 'addEmail'])->name('categories.addEmail');
         Route::put('email/update/{email}', [CategoryController::class, 'editEmail'])->name('categories.editEmail');
         Route::delete('email/destroy/{email}', [CategoryController::class, 'deteleEmail'])->name('categories.deleteEmail');
@@ -66,5 +65,14 @@ Route::middleware(['auth', 'verified'])->group(function (){
 
     Route::prefix('amountInOut')->group(function(){
         Route::post('store/{expDateId}', [AmountInOutController::class, 'store'])->name('amountInOut.store');
+    });
+});
+
+Route::middleware(['auth', 'verified'])->group(function(){
+    Route::post('logout', [UserController::class, 'logout'])->name('users.logout');
+
+    Route::prefix('company')->group(function(){
+        Route::get('create', [CompanyController::class, 'create'])->name('companies.create');
+        Route::post('store', [CompanyController::class, 'store'])->name('companies.store');
     });
 });
