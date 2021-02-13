@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             $this->call(EmailCategorySeeder::class);
         }
 
-        for($i = 1; $i <= 10; $i++){
+        for($i = 1; $i <= 5; $i++){
             DB::table('users')->insert([
                 'name' => "cesar$i",
                 'email' => "cesar$i@vc.com",
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'sau cesar',
                 'email' => 'saucesar@vc.com',
                 'password' => bcrypt('123456'),
-                'access_granted' => true,
+                'access_granted' => false,
                 'role' => 'employee',
                 'email_verified_at' => now(),
             ]);
