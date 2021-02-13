@@ -36,12 +36,12 @@
             @if(isset($access_requests))
                 @include('components.users.card_access_requests', ['requests' => $access_requests])
             @endif
+            @if(isset($graphic_data))
+            <div class="d-flex justify-content-between mb-2">
+                <div id="piechart" class="card shadow chart-categories"></div>
+            </div>
+            @endif
         </div>
-        @if(isset($graphic_data))
-        <div class="d-flex justify-content-between mt-5 mb-2">
-            <div id="piechart" class="card shadow chart-categories"></div>
-        </div>
-        @endif
         @if(!auth()->user()->access_granted)
         <div class="row text-center">
             <div class="col">
