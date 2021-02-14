@@ -66,12 +66,24 @@
             <div class="col-6">
                 @include('components.exp_dates.card_date_historic', ['dates' => $historic])
             </div>
+            <div class="col-3">
+                <div class="card shadow mb-4">
+                    <div class="card-header">Alterações recentes</div>
+                    <div class="card-body">
+                        @foreach($recentChanges as $recent)
+                            <div class="row">
+                                <div class="col">{{ $recent->date }}</div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row" id="graphics">
             <div class="col">
             @foreach($dates as $dt)
                 <div class="card card-body mb-3 shadow">
-                    <div class="col-3" id="chart_div{{$dt}}"></div>
+                    <div class="" id="chart_div{{$dt}}"></div>
                 </div>
                 
                 <script type="text/javascript">
