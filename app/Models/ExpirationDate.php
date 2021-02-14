@@ -37,7 +37,7 @@ class ExpirationDate extends Model
     public function previous()
     {
         if(isset($this->previous_id)) {
-            return $this->hasOne(ExpirationDate::class, 'id','previous_id')->withtrashed();
+            return $this->hasOne(ExpirationDate::class, 'id','previous_id')->withTrashed();
         } else {
             return null;
         }
