@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AmountInOutController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ExpirationDateController;
@@ -61,10 +60,6 @@ Route::middleware(['auth', 'verified', 'haveCompany'])->group(function (){
         Route::post('add-email/{category}', [CategoryController::class, 'addEmail'])->name('categories.addEmail');
         Route::put('email/update/{email}', [CategoryController::class, 'editEmail'])->name('categories.editEmail');
         Route::delete('email/destroy/{email}', [CategoryController::class, 'deteleEmail'])->name('categories.deleteEmail');
-    });
-
-    Route::prefix('amountInOut')->group(function(){
-        Route::post('store/{expDateId}', [AmountInOutController::class, 'store'])->name('amountInOut.store');
     });
 });
 
