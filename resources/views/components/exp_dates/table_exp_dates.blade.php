@@ -43,15 +43,8 @@
             <td>
             @if(!isset($is_historic))
                 <div class="btn-group" role="group">
-                    <button class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#modalAmountIn{{ $expdate->id }}" title="Entrada de estoque">
-                        <i class="fas fa-level-down-alt"></i>
-                    </button>
-                    
-                    <button class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#modalAmountOut{{ $expdate->id }}" title="Saída de estoque">
-                        <i class="fas fa-level-up-alt"></i>
-                    </button>
                     <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modalEditDate{{ $expdate->id }}">
-                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-pen"></i>
                     </button>
                     <form action="{{ route('product.removeDate', $expdate) }}" method="post">
                         @csrf
@@ -69,8 +62,6 @@
             </td>
         </tr>
         @include('components.exp_dates.modal_edit_date', ['expdate' => $expdate])
-        @include('components.exp_dates.modal_amount_in_out', ['id' => "modalAmountIn{$expdate->id}", 'type' => 'in', 'title' => 'Entrada de quantidade', 'expdate' => $expdate])
-        @include('components.exp_dates.modal_amount_in_out', ['id' => "modalAmountOut{$expdate->id}", 'type' => 'out', 'title' => 'Saida de quantidade', 'expdate' => $expdate])
         @endforeach
     </tbody>
 </table>
