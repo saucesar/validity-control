@@ -91,34 +91,70 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if(isset($product)){
-            
-            $dates = Array();
-            $graphicData = Array();
-            
-            foreach($product->expirationDates as $expdate){
-                $expdates = ExpirationDate::where('date', $expdate->date)->where('product_id', $product->id)
-                                          ->withTrashed()->orderBy('created_at')->get();
-                
-                $dates[] = $expdate->date;
-                $graphicData[$expdate->date] = [];
-    
-                foreach($expdates as $dt){
-                    $graphicData[$expdate->date][] = [$dt->created_at->format('d-m-Y'), $dt->amount, 'blue',  "$dt->amount"];
-                }
-            }
-            
+            $graphic = $this->graficData($product);
+            $group = $this->agroupDates($id);
+
+            $recentChanges = ExpirationDate::where('product_id', $id)
+                                           ->where('previous_id', '<>', null)
+                                           ->orderBy('id', 'desc')
+                                           ->take(10)
+                                           ->get();
+            //dd($recentChanges);            
             $params = [
                 'product' => $product,
                 'categories' => Auth::user()->company->categories,
-                'historic' => ExpirationDate::where('product_id', $id)->where('deleted_at', '<>', null)->withTrashed()->orderBy('date', 'desc')->get(),
-                'dates' => $dates,
-                'graphicData' => json_encode($graphicData),
+                'historic' => $group,
+                'recentChanges' => $recentChanges,
+                'dates' => $graphic['dates'],
+                'graphicData' => json_encode($graphic['graphicData']),
             ];
 
             return view('products/show', $params);
         } else {
             return back()->with('error', 'Produto não encontrado!');
         }
+    }
+
+    private function agroupDates($productId)
+    {
+        $expdates = ExpirationDate::where('product_id', $productId)
+                                  ->withTrashed()
+                                  ->orderBy('date', 'desc')
+                                  ->distinct(['expiration_dates.date'])
+                                  ->take(10)
+                                  ->get();
+        $group = [];
+
+        foreach($expdates as $expdate) {
+            $group[$expdate->date] = ExpirationDate::where('product_id', $productId)
+                                                   ->where('date', $expdate->date)
+                                                   ->withTrashed()
+                                                   ->orderBy('date', 'desc')
+                                                   ->get();
+
+        }
+
+        return $group;
+    }
+
+    private function graficData(Product $product)
+    {
+        $dates = Array();
+        $graphicData = Array();
+        
+        foreach($product->expirationDates as $expdate){
+            $expdates = ExpirationDate::where('date', $expdate->date)->where('product_id', $product->id)
+                                      ->withTrashed()->orderBy('created_at')->get();
+            
+            $dates[] = $expdate->date;
+            $graphicData[$expdate->date] = [];
+
+            foreach($expdates as $dt){
+                $graphicData[$expdate->date][] = [$dt->created_at->format('d-m-Y'), $dt->amount, 'blue',  "$dt->amount"];
+            }
+        }
+
+        return ['dates' => $dates, 'graphicData' => $graphicData];
     }
     
     public function update(ProductUpdateRequest $request, $id)
