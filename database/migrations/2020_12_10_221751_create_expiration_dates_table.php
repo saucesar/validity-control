@@ -13,6 +13,7 @@ class CreateExpirationDatesTable extends Migration
             $table->id();
             $table->date('date');
             $table->integer('amount');
+            $table->integer('previous_id')->nullable();
             $table->string('lote')->nullable();
 
             $table->integer('product_id');
