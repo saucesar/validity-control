@@ -27,6 +27,7 @@ class ExpirationDateController extends Controller
         if(isset($expdate)){
             $data = $request->all();
             $data['product_id'] = $expdate->product_id;
+            $data['previous_id'] = $expdate->id;
             $data['user_id'] = Auth::user()->id;
             ExpirationDate::create($data);
             $expdate->delete();
