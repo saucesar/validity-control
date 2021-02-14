@@ -99,7 +99,7 @@ class ProductController extends Controller
                                            ->orderBy('id', 'desc')
                                            ->take(10)
                                            ->get();
-            //dd($recentChanges);            
+            
             $params = [
                 'product' => $product,
                 'categories' => Auth::user()->company->categories,
