@@ -38,6 +38,20 @@ class ExpirationDateController extends Controller
         }
     }
 
+    public function restorePrevious(Request $request, $id)
+    {
+        $expdate = ExpirationDate::find($id);
+
+        if($expdate) {
+            $expdate->previous->restore();
+            $expdate->forceDelete();
+            
+            return back()->with('success', 'Alteração desfeita!');
+        } else {
+            return back()->with('error', 'Data não encontrada!');
+        }
+    }
+
     public function destroy(Request $request, $id)
     {
         $date = ExpirationDate::find($id);

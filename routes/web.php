@@ -52,6 +52,7 @@ Route::middleware(['auth', 'verified', 'haveCompany'])->group(function (){
         Route::post('add-date/{product}', [ExpirationDateController::class, 'store'])->name('product.addDate');
         Route::put('edit-date/{expdate}', [ExpirationDateController::class, 'update'])->name('product.updateExpdate');
         Route::delete('remove-date/{expiration_date}', [ExpirationDateController::class, 'destroy'])->name('product.removeDate');
+        Route::post('restore-previous/{expdate}', [ExpirationDateController::class, 'restorePrevious'])->name('expdates.restorePrevious');
     });
 
     Route::resource('categories', CategoryController::class);

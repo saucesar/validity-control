@@ -70,10 +70,30 @@
                 <div class="card shadow mb-4">
                     <div class="card-header">Alterações recentes</div>
                     <div class="card-body">
+                        <div class="dropdown-divider"></div>
                         @foreach($recentChanges as $recent)
                             <div class="row">
-                                <div class="col">{{ $recent->date }}</div>
+                                <div class="col-4">
+                                    <small>{{ $recent->date }}</small>
+                                </div>
+                                <div class="col">
+                                    <small>{{ $recent->amount }}</small>
+                                </div>
+                                <div class="col">
+                                    <small>{{ $recent->addedBy->name }}</small>
+                                </div>
+                                <div class="col-3">
+                                    @if(auth()->user()->isCompanyOwner())
+                                    <form action="{{ route('expdates.restorePrevious', $recent->id) }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Desfazer alteração" onclick="return confirm('Desfazer alteração?')">
+                                            <i class="fas fa-undo-alt"></i>
+                                        </button>
+                                    </form>
+                                    @endif
+                                </div>
                             </div>
+                            <div class="dropdown-divider"></div>
                         @endforeach
                     </div>
                 </div>
