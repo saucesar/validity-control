@@ -20,11 +20,11 @@
                     <div class="row mb-2">
                         <div class="col">
                             <label for="amount">Quantidade atual</label>
-                            <input type="number" name="amount" class="form-control" value="{{ $expdate->amount }}" readonly>
+                            <input type="number" name="amount" class="form-control" value="{{ $expdate->amount }}">
                         </div>
                         <div class="col">
                             <label for="lote">Lote</label>
-                            <input type="text" name="lote" class="form-control" value="{{ $expdate->lote }}" readonly>
+                            <input type="text" name="lote" class="form-control" value="{{ $expdate->lote }}">
                         </div>
                     </div>
                 </div>
