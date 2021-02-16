@@ -13,8 +13,8 @@ class CompanyFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'cnpj' => '11.111.111/0001-'.$this->faker->numberBetween(10, 99),
-            'owner_id' => $this->faker->numberBetween(1, 2),
+            'cnpj' => '11.111.111/'.$this->faker->numberBetween(1000, 9999).'-'.$this->faker->numberBetween(10, 99),
+            'owner_id' => 1,
         ];
     }
 }

@@ -46,6 +46,16 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
             ]);
 
+            DB::table('users')->insert([
+                'name' => "cesars$i",
+                'email' => "cesars$i@vc.com",
+                'password' => bcrypt('123456'),
+                'company_id' => null,
+                'role' => 'employee',
+                'access_granted' => false,
+                'email_verified_at' => now(),
+            ]);
+
             \App\Models\Product::create([
                 'barcode' => "78911112222$i",
                 'description' => Str::random(),
