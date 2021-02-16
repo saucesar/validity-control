@@ -3,13 +3,12 @@
 namespace Tests\Browser;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
-use Illuminate\Support\Str;
 
 class LoginTest extends DuskTestCase
 {
+    use DatabaseMigrations;
+
     private $company;
     private $user;
 
@@ -21,7 +20,7 @@ class LoginTest extends DuskTestCase
             $browser->maximize();
             $browser->visit('/')
                     ->type('email', $user->email)
-                    ->type('password', 'testpass')
+                    ->type('password', '123456')
                     ->press('Login')
                     ->assertPathIs('/home');
         });
@@ -30,24 +29,11 @@ class LoginTest extends DuskTestCase
     protected function setUp(): void
     {
         parent::setUp();
+        
+        \App\Models\User::factory()->times(1)->create();
+        $this->user = \App\Models\User::first();
 
-        $this->company = \App\Models\Company::create([
-            'name' => 'Test Company',
-        ]);
-
-        $this->user = \App\Models\User::create([
-            'name' => 'User test',
-            'email' => Str::random(10)."@test.com",
-            'password' => Hash::make('testpass'),
-            'company_id' => $this->company->id,
-            'access_granted' => true,
-            'access_denied' => false,
-        ]);
-
-        $this->user->email_verified_at = now();
-        $this->user->save();
-
-        $this->company->owner_id = $this->user->id;
-        $this->company->save();
+        \App\Models\Company::factory()->times(1)->create();
+        $this->company = \App\Models\Company::first();
     }
 }
