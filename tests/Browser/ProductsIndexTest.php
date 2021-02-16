@@ -5,12 +5,11 @@ namespace Tests\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-
 
 class ProductsIndexTest extends DuskTestCase
 {
+    use DatabaseMigrations;
+
     private $company;
     private $user;
 
@@ -30,23 +29,10 @@ class ProductsIndexTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->company = \App\Models\Company::create([
-            'name' => 'Test Company',
-        ]);
+        \App\Models\User::factory()->times(1)->create();
+        $this->user = \App\Models\User::first();
 
-        $this->user = \App\Models\User::create([
-            'name' => 'User test',
-            'email' => Str::random(10)."@test.com",
-            'password' => Hash::make('testpass'),
-            'company_id' => $this->company->id,
-            'access_granted' => true,
-            'access_denied' => false,
-        ]);
-
-        $this->user->email_verified_at = now();
-        $this->user->save();
-
-        $this->company->owner_id = $this->user->id;
-        $this->company->save();
+        \App\Models\Company::factory()->times(1)->create();
+        $this->company = \App\Models\Company::first();
     }
 }
