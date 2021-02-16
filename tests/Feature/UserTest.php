@@ -48,4 +48,16 @@ class UserTest extends TestCase
         $response = $this->post('users/create', ['name' => 'cesar', 'email' => 'cesarcesar@vc.com', 'password' => '111111', 'password_confirmation' => '111121']);
         $response->assertSee('The password confirmation does not match.');
     }
+
+    public function testUserLogin()
+    {
+        $response = $this->post('/users/login', ['email' => \App\Models\User::first()->email, 'password' => '123456']);
+        $response->assertRedirect('/home');
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        \App\Models\User::factory()->times(2)->create();        
+    }
 }
