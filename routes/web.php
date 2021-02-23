@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RoadmapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,10 @@ Route::middleware(['auth', 'verified', 'haveCompany'])->group(function (){
         Route::post('add-email/{category}', [CategoryController::class, 'addEmail'])->name('categories.addEmail');
         Route::put('email/update/{email}', [CategoryController::class, 'editEmail'])->name('categories.editEmail');
         Route::delete('email/destroy/{email}', [CategoryController::class, 'deteleEmail'])->name('categories.deleteEmail');
+    });
+
+    Route::prefix('roadmap')->group(function(){
+        Route::get('/', [RoadmapController::class, 'index'])->name('roadmap.index');
     });
 });
 
