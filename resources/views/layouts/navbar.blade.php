@@ -14,6 +14,12 @@
                     Home
                 </a>
             </li>
+            <li class="nav-item nav-lg {{ isset($active) && $active == 'roadmap' ? 'active' : '' }}">
+                <a class="nav-link btn-sm btn-primary" href="{{ route('roadmap.index') }}">
+                    <i class="fas fa-scroll"></i>
+                    Roteiro
+                </a>
+            </li>
             <li class="nav-item nav-lg {{ isset($active) && $active == 'products' ? 'active' : '' }}">
                 <a class="nav-link btn-sm btn-primary" href="{{ route('products.index') }}">
                     <i class="fas fa-cubes"></i>
