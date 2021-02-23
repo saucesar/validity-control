@@ -80,4 +80,12 @@ class ExpirationDate extends Model
                              ->select(['expiration_dates.date','expiration_dates.amount',  'expiration_dates.product_id', ])
                              ->get();
     }
+
+    public static function roadMap($companyId, $initialDate, $finalDate)
+    {
+        return ExpirationDate::join('products', 'products.id', '=', 'expiration_dates.product_id')
+                             ->where('products.company_id', $companyId)
+                             ->whereBetween('expiration_dates.date', [$initialDate, $finalDate])
+                             ->orderBy('expiration_dates.date');
+    }
 }
