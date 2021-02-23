@@ -93,16 +93,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
     public function queryProductsByExpDate($days)
     {
-        $initial_date = Carbon::now();
-        $final_date = Carbon::now()->addDays($days);
+        $initialDate = Carbon::now();
+        $finalDate = Carbon::now()->addDays($days);
         
-        return Product::where('company_id', $this->company->id)
-                      ->join('expiration_dates', 'expiration_dates.product_id', '=', 'products.id')
-                      ->whereBetween('expiration_dates.date', [$initial_date, $final_date])
-                      ->where('expiration_dates.deleted_at', '=', null)
-                      ->distinct(['products.id'])
-                      ->select('products.*');
-
+        return Product::ByExpirationDate($this->company->id, $initialDate, $finalDate);
     }
 
     public function usersGranted()
@@ -137,5 +131,13 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
                         ->where('access_denied', false);
         
         return $requests->exists() ? $requests->get() : null;
+    }
+
+    public function makeRoadMap($days)
+    {
+        $initialDate = Carbon::now();
+        $finalDate = Carbon::now()->addDays($days);
+        
+        return ExpirationDate::roadMap($this->company->id, $initialDate, $finalDate)->paginate(5);
     }
 }
