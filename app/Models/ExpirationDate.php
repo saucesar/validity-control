@@ -86,6 +86,7 @@ class ExpirationDate extends Model
         return ExpirationDate::join('products', 'products.id', '=', 'expiration_dates.product_id')
                              ->where('products.company_id', $companyId)
                              ->whereBetween('expiration_dates.date', [$initialDate, $finalDate])
+                             ->whereDate('expiration_dates.updated_at', '<', Carbon::now())
                              ->orderBy('expiration_dates.date');
     }
 }
