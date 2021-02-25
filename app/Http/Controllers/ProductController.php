@@ -65,7 +65,7 @@ class ProductController extends Controller
         $products = Product::where('company_id', Auth::user()->company->id)
                            ->where('category_id', $category_id)
                            ->select('products.*')
-                           ->paginate(10);
+                           ->paginate(5);
 
         $params = [
             'products' => $products,
