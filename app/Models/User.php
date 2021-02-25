@@ -75,9 +75,9 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return ($this->company->owner->id == $this->id);
     }
 
-    public function getProducts()
+    public function getProducts(string $orderBy = 'description')
     {
-        return $this->access_granted ? $this->queryProducts()->paginate($this->perPage) : null;
+        return $this->access_granted ? $this->queryProducts($orderBy)->paginate($this->perPage) : null;
     }
 
     public function getProductsWithoutPaginate()
@@ -86,9 +86,13 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     }
 
 
-    private function queryProducts()
+    private function queryProducts(string $orderBy = 'description')
     {
-        return Product::where('company_id', $this->company->id)->orderBy('description');
+        if($orderBy == 'expiration_dates.date') {
+            return Product::ByExpirationDate($this->company->id, Carbon::now(), Carbon::now()->addDays(30));
+        } else {
+            return Product::where('company_id', $this->company->id)->orderBy($orderBy);
+        }
     }
 
     public function queryProductsByExpDate($days)
