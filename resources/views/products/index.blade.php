@@ -51,6 +51,21 @@
                     </div>
                 </div>
                 @endif
+                <div class="card shadow mb-4">
+                    <div class="card-header">
+                        <b>Ordenar por</b>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <a class="btn btn-block btn-primary" href="{{ route('products.index') }}?orderBy=products.description">Descrição</a>
+                            </div>
+                            <div class="col">
+                                <a class="btn btn-block btn-primary" href="{{ route('products.index') }}?orderBy=expiration_dates.date">Validade</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @include('components.card_color_legend')
             </div>
             <div class="col-6">
