@@ -55,16 +55,9 @@ class Product extends Model
                       ->join('expiration_dates', 'expiration_dates.product_id', '=', 'products.id')
                       ->whereBetween('expiration_dates.date', [$initialDate, $finalDate])
                       ->where('expiration_dates.deleted_at', '=', null)
-                      ->orderBy('expiration_dates.date')
                       ->distinct(['products.id'])
+                      ->orderBy('products.id')
+                      ->orderBy('expiration_dates.date')
                       ->select('products.*');
-    }
-
-    public static function roadMap($companyId, $initialDate, $finalDate)
-    {
-        return Product::where('company_id', $companyId)
-                      ->join('expiration_dates', 'expiration_dates.product_id', '=', 'products.id')
-                      ->whereBetween('expiration_dates.date', [$initialDate, $finalDate])
-                      ->orderBy('expiration_dates.date', 'desc');
     }
 }
