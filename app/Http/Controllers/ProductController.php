@@ -13,11 +13,14 @@ use Barryvdh\DomPDF\Facade as PDF;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $orderBy = isset($request->all()['orderBy']) ? $request->all()['orderBy'] : null;
+        
         $params = [
-            'products' => Auth::user()->getProducts(),
+            'products' => isset($orderBy) ? Auth::user()->getProducts($orderBy) : Auth::user()->getProducts() ,
             'categories' => Auth::user()->company->categories,
+            'searchData' => isset($request->all()['orderBy']) ? $request->all() : null,
         ];
 
         return view('products/index', $params);
