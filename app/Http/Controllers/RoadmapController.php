@@ -9,9 +9,9 @@ class RoadmapController extends Controller
     public function index()
     {
         $params = [
-            'expdates' => auth()->user()->makeRoadMap(30),
+            'expdates' => auth()->user()->makeRoadMap(),
         ];
 
-        return view('script.index', $params);
+        return view('roadMap.index', $params);
     }
 }
