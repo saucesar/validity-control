@@ -89,7 +89,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     private function queryProducts(string $orderBy = 'description')
     {
         if($orderBy == 'expiration_dates.date') {
-            return Product::ByExpirationDate($this->company->id, Carbon::now(), Carbon::now()->addDays(30));
+            return Product::ByExpirationDate($this->company_id, Carbon::now(), Carbon::now()->addDays(30));
         } else {
             return Product::where('company_id', $this->company->id)->orderBy($orderBy);
         }
@@ -100,13 +100,13 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         $initialDate = Carbon::now();
         $finalDate = Carbon::now()->addDays($days);
         
-        return Product::ByExpirationDate($this->company->id, $initialDate, $finalDate);
+        return Product::ByExpirationDate($this->company_id, $initialDate, $finalDate);
     }
 
     public function usersGranted()
     {
 
-        $users = User::where('company_id', $this->company->id)
+        $users = User::where('company_id', $this->company_id)
                    ->where('access_granted', true)
                    ->where('id', '<>', $this->id)
                    ->get();
@@ -130,18 +130,18 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
             return null;
         }
 
-        $requests = User::where('company_id', $this->company->id)
+        $requests = User::where('company_id', $this->company_id)
                         ->where('access_granted', false)
                         ->where('access_denied', false);
         
         return $requests->exists() ? $requests->get() : null;
     }
 
-    public function makeRoadMap($days)
+    public function makeRoadMap(int $days = 30)
     {
         $initialDate = Carbon::now();
         $finalDate = Carbon::now()->addDays($days);
         
-        return ExpirationDate::roadMap($this->company->id, $initialDate, $finalDate)->paginate(5);
+        return ExpirationDate::roadMap($this->company_id, $initialDate, $finalDate)->paginate(5);
     }
 }
