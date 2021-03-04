@@ -23,9 +23,12 @@ class ExpirationDateController extends Controller
     public function update(Request $request, $id)
     {
         $expdate = ExpirationDate::find($id);
-
         if(isset($expdate)){
             $data = $request->all();
+            if(isset($request->newAmount)){
+                $data['amount'] = $request->newAmount;
+            }
+            $data['date'] = $expdate->date;
             $data['product_id'] = $expdate->product_id;
             $data['previous_id'] = $expdate->id;
             $data['user_id'] = Auth::user()->id;
