@@ -19,35 +19,11 @@
                 @include('components.users.about')
             </div>
         </div>
-        
         <div class="row mt-5 d-flex justify-content-center">
             <div class="col-9">
-                <h5>Configuração de senha</h5>
+                @include('components.users.change_password')
             </div>
         </div>
-        <form action="{{ route('users.changePassword', auth()->user()) }}" method="post">
-            @csrf
-            <div class="row mt-3 d-flex justify-content-center">
-                <div class="col-3">
-                    @include('components.inputs.input_password', ['name' => 'oldpass', 'prepend' => 'fas fa-lock', 'label' => 'Senha antiga'])
-                </div>
-                <div class="col-3">
-                    @include('components.inputs.input_password', ['name' => 'newpass', 'prepend' => 'fas fa-lock', 'label' => 'Nova senha'])
-                </div>
-                <div class="col-3">
-                    @include('components.inputs.input_password', ['name' => 'newpass_confirmation', 'prepend' => 'fas fa-lock', 'label' => 'Confirme a nova senha'])
-                </div>
-            </div>
-            <div class="row mt-2 d-flex justify-content-center">
-                <div class="col-3">
-                    <button class="btn btn-primary" type="submit" title="Mudar senha.">
-                        Mudar senha
-                    </button>
-                </div>
-                <div class="col-3"></div>
-                <div class="col-3"></div>
-            </div>
-        </form>
         <div class="row mt-5 d-flex justify-content-center">
             <div class="col-9">
                 <h5>Sobre a empresa</h5>
