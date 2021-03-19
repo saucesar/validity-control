@@ -7,7 +7,7 @@
                 </div>
                 <div class="col d-flex justify-content-end">
                     <button class="btn btn-primary" type="submit" title="Mudar senha.">
-                        Mudar senha
+                        Salvar
                     </button>
                 </div>
             </div>
