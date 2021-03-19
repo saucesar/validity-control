@@ -16,26 +16,10 @@
         </div>
         <div class="row mt-5 d-flex justify-content-center">
             <div class="col-9">
-                <h5>Sobre você</h5>
+                @include('components.users.about')
             </div>
         </div>
-        <form action="{{ route('users.update', auth()->user()) }}" method="post">
-            @csrf
-            @method('put')
-            <div class="row mt-2 d-flex justify-content-center">
-                <div class="col-4">
-                    @include('components.inputs.input_text', ['name' => 'name', 'prepend' => 'fas fa-user', 'label' => 'Nome', 'value' => auth()->user()->name])
-                </div>
-                <div class="col-5">
-                    @include('components.inputs.input_text', ['name' => 'email', 'prepend' => 'fas fa-at', 'label' => 'Email', 'type' => 'email', 'value' => auth()->user()->email])
-                </div>
-            </div>
-            <div class="row mt-2 d-flex justify-content-center">
-                <div class="col-9">
-                    <button type="submit" class="btn btn-primary">Salvar</button>
-                </div>
-            </div>
-        </form>
+        
         <div class="row mt-5 d-flex justify-content-center">
             <div class="col-9">
                 <h5>Configuração de senha</h5>
