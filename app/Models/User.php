@@ -137,11 +137,16 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $requests->exists() ? $requests->get() : null;
     }
 
-    public function makeRoadMap(int $days = 30)
+    public function makeRoadMap(int $days = 30, int $perPage = 5)
     {
         $initialDate = Carbon::now();
         $finalDate = Carbon::now()->addDays($days);
         
-        return ExpirationDate::roadMap($this->company_id, $initialDate, $finalDate)->paginate(5);
+        $expdates = ExpirationDate::roadMap($this->company_id, $initialDate, $finalDate);
+        if($perPage > 0) {
+            return $expdates->paginate($perPage);
+        } else {
+            return $expdates->get();
+        }
     }
 }
