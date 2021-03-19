@@ -66,6 +66,7 @@ Route::middleware(['auth', 'verified', 'haveCompany'])->group(function (){
 
     Route::prefix('roadmap')->group(function(){
         Route::get('/', [RoadmapController::class, 'index'])->name('roadmap.index');
+        Route::post('/pdf', [RoadmapController::class, 'toPdf'])->name('roadmap.pdf');
     });
 });
 
