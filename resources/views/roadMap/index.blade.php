@@ -25,20 +25,36 @@
             <div class="col-3"></div>
         </div>
 
-        <div class="row d-flex justify-content-start">
+        <div class="row d-flex justify-content-center mt-5">
             <div class="col-3"></div>
+            <div class="col-6">
+                {{ $expdates->links() }}
+            </div>
+            <div class="col-3"></div>
+        </div>
+
+        <div class="row d-flex justify-content-start">
+            <div class="col-3">
+                <div class="card shadow card-body">
+                    <div class="row">
+                        <div class="col">
+                            <small><b>Resultados encontrados: {{ $expdates->total() }}</b></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-6">
                 @foreach($expdates as $expdate)
                 <form action="{{ route('product.updateExpdate', $expdate->id) }}" method="post">
                     @csrf
                     @method('put')
-                    <div class="card shadow mt-2 mb-2">
+                    <div class="card shadow mb-2">
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <p><strong><a href="{{ route('products.show', $expdate->product->id) }}">{{ $expdate->product->description }}</a></strong></p>
                                 <button class="btn btn-success" type="submit">Salvar</button>
                             </div>
-                            <p><strong>Validade({{ $expdate->id }}): </strong>{{ $expdate->date() }}</p>
+                            <p><strong>Validade: </strong>{{ $expdate->date() }}</p>
                             <p><strong>Lote: </strong>{{ $expdate->lote }}</p>
                             <div class="row">
                                 <div class="col">
@@ -58,7 +74,21 @@
                 </form>
                 @endforeach
             </div>
-            <div class="col-3"></div>
+            <div class="col-3">
+                <div class="card shadow min-card-width mb-4">
+                    <div class="row card-body d-flex justify-content-between">
+                        <div class="col">
+                            <form action="{{ route('roadmap.pdf') }}" method="post" target="_blank">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-block" title="Gera um pdf com a lista de itens.">
+                                    <i class="fas fa-file-pdf"></i>
+                                    PDF
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-3"></div>
